@@ -1,0 +1,58 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+model Fornecedor {
+  id           Int         @id @default(autoincrement())
+  razao_social String      @db.VarChar(40)
+  entradas     Entrada[]
+  @@map("fornecedores")
+}
+
+model Secretaria {
+  id           Int         @id @default(autoincrement())
+  nome         String      @db.VarChar(40)
+  saidas       Saida[]     
+  @@map("secretarias")
+}
+
+model Produto {
+  id           Int        @id @default(autoincrement())
+  nome         String     @db.VarChar(60) 
+  quant        Int        @db.SmallInt
+  preco        Decimal    @db.Decimal(9,2)
+  categoria    String     @db.VarChar(40)
+  saidas       Saida[]
+  entradas     Entrada[]
+  @@map("produtos")
+}
+
+model Entrada {
+  id         Int        @id @default(autoincrement())
+  data       DateTime   @default(now())
+  numDocumento  Int?     
+  fornecedor Fornecedor @relation(fields: [fornecedorId], references: [id])
+  fornecedorId Int
+  produto    Produto    @relation(fields: [produtoId], references: [id])
+  produtoId  Int
+  quant      Int
+  observacoes String?   @db.VarChar(60)
+  @@map("entradas")
+}
+
+model Saida {
+  id         Int        @id @default(autoincrement())
+  data       DateTime   @default(now())
+  secretaria Secretaria @relation(fields: [secretariaId], references: [id])
+  secretariaId Int
+  produto    Produto    @relation(fields: [produtoId], references: [id])
+  produtoId  Int
+  quant      Int
+  observacoes String?   @db.VarChar(60)
+  @@map("saidas")
+}
