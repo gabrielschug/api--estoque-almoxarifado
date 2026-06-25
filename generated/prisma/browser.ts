@@ -42,3 +42,8 @@ export type Entrada = Prisma.EntradaModel
  * 
  */
 export type Saida = Prisma.SaidaModel
+/**
+ * Model Usuario
+ * 
+ */
+export type Usuario = Prisma.UsuarioModel

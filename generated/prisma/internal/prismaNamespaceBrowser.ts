@@ -55,7 +55,8 @@ export const ModelName = {
   Secretaria: 'Secretaria',
   Produto: 'Produto',
   Entrada: 'Entrada',
-  Saida: 'Saida'
+  Saida: 'Saida',
+  Usuario: 'Usuario'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -126,6 +127,18 @@ export const SaidaScalarFieldEnum = {
 export type SaidaScalarFieldEnum = (typeof SaidaScalarFieldEnum)[keyof typeof SaidaScalarFieldEnum]
 
 
+export const UsuarioScalarFieldEnum = {
+  id: 'id',
+  nome: 'nome',
+  email: 'email',
+  senha: 'senha',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type UsuarioScalarFieldEnum = (typeof UsuarioScalarFieldEnum)[keyof typeof UsuarioScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -176,4 +189,13 @@ export const SaidaOrderByRelevanceFieldEnum = {
 } as const
 
 export type SaidaOrderByRelevanceFieldEnum = (typeof SaidaOrderByRelevanceFieldEnum)[keyof typeof SaidaOrderByRelevanceFieldEnum]
+
+
+export const UsuarioOrderByRelevanceFieldEnum = {
+  nome: 'nome',
+  email: 'email',
+  senha: 'senha'
+} as const
+
+export type UsuarioOrderByRelevanceFieldEnum = (typeof UsuarioOrderByRelevanceFieldEnum)[keyof typeof UsuarioOrderByRelevanceFieldEnum]
 
