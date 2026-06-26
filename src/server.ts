@@ -9,6 +9,7 @@ import routesEntradas from "./routes/entradas"
 import routesSaidas from "./routes/saidas"
 import routesRelatorios from "./routes/relatorios"
 import routesUsuarios from "./routes/usuarios"
+import routesLogin from "./routes/login"
 
 
 app.use(express.json())
@@ -20,6 +21,7 @@ app.use("/entradas", routesEntradas)
 app.use("/saidas", routesSaidas)
 app.use("/relatorios", routesRelatorios)
 app.use("/usuarios", routesUsuarios)
+app.use("/login", routesLogin)
 
 app.get('/', (req, res) => {
   res.send('API: Sistema de Estoque')
