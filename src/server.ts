@@ -8,6 +8,7 @@ import routesProdutos from "./routes/produtos"
 import routesEntradas from "./routes/entradas"
 import routesSaidas from "./routes/saidas"
 import routesRelatorios from "./routes/relatorios"
+import routesUsuarios from "./routes/usuarios"
 
 
 app.use(express.json())
@@ -18,7 +19,7 @@ app.use("/produtos", routesProdutos)
 app.use("/entradas", routesEntradas)
 app.use("/saidas", routesSaidas)
 app.use("/relatorios", routesRelatorios)
-
+app.use("/usuarios", routesUsuarios)
 
 app.get('/', (req, res) => {
   res.send('API: Sistema de Estoque')
