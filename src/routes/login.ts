@@ -1,9 +1,16 @@
 import { prisma } from "../../lib/prisma"
 import { Router } from "express"
 import bcrypt from 'bcrypt'
+import { z } from 'zod'
 import jwt from 'jsonwebtoken'
+import { geraCodigo } from "./utils/geraCodigo"
+import { enviaEmail__CodigoRecuperacao } from "./relatorios"
 
 const router = Router()
+
+const emailSchema = z.object({
+  email: z.email().min(10, {message: "E-mail, deve possuir, no mínimo, 10 caracteres"}),
+})
 
 router.post("/", async (req, res) => {
   const {email, senha} = req.body
@@ -54,11 +61,39 @@ router.post("/", async (req, res) => {
 
 
 router.post("/recuperacao", async (req, res) => {
-const email = req.body
+  const valida = emailSchema.safeParse(req.body)
+  if(!valida.success) {
+    res.status(400).json({ erro: valida.error })
+    return
+  }
 
+  const emailUsuario = valida.data.email
 
+  try {
+    const dadosUsuario = await prisma.usuario.findUnique({
+      where: {email: emailUsuario}
+    })
 
+    if (dadosUsuario == null) {
+      res.status(400).json({ erro: "Usuário não encontrado."})
+      return
+    }
 
+    const nomeUsuario = dadosUsuario.nome
+
+    const codigo = geraCodigo()
+
+    const salvandoCodigo = await prisma.usuario.update({
+      where: { email: emailUsuario},
+      data: {codRecuperacao: codigo}
+    })
+
+    const enviaEmail = await enviaEmail__CodigoRecuperacao(codigo, emailUsuario, nomeUsuario)
+
+    res.status(200).json({msg: "Email com o código de recuperação enviado!"})
+  } catch (error){
+    res.status(400).json({erro: error})
+  }
 })
 
 export default router

@@ -290,4 +290,49 @@ router.get("/saidas", async (req,res) => {
     }
 })
 
+//=====< EMAIL RECUPERAÇÃO DE SENHA >=================================
+
+function geraHTML_CodigoRecuperacao(codigo:string){
+  let html =`
+  <div style="font-family: Helvetica, sans-serif; color: #333333; margin: 0 auto; background-color: #ffffff;">
+    <div style="background-color: #2c3e50; color: #ffffff; padding: 20px; text-align: center;">
+      <p style="margin: 4px 0 4px 0; font-size: 16px; color: #bdc3c7;">🏦 | Gestão do Estoque Municipal</p>
+      <h2 style="margin: 0; font-weight: 600; font-size: 28px;">Aqui está seu <span style="color: #c9de27;">Código de Recuperação de Senha</span></h2>
+    </div>
+    <div style="padding: 20px;">
+      <table style="width: 100%; border-collapse: collapse; font-size: 16px; text-align: left;">
+        <tbody>
+          <tr>
+            <td style="padding: 12px; border-bottom: 1px solid #eaeaea; color: #555555; font-size: 28px; text-align: center;">
+              Seu código é:<br><span style="font-weight: bolder;">${codigo}</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <h3 style="text-align: center; color: #b51e0e; margin-top: 20px;">⚠️ ATENÇÃO: Não compartilhe este código com ninguém!</h3>
+    </div>
+    <div style="padding: 20px; text-align: center;">
+      <p style="font-size:12px; margin: 5px 0 0 0; color: #555555;">O envio deste e-mail é automático, favor não responder.<br>2026 | Gabriel Schug | Todos os direitos reservados.</p>
+    </div>
+  </div>`
+
+return html
+}
+
+export async function enviaEmail__CodigoRecuperacao(codigo:string, email:string, nome:string) {
+  
+  const mensagem = geraHTML_CodigoRecuperacao(codigo)
+  const textoPuro = `Gestão do Estoque Municipal\n\nAqui está seu Código de Recuperação de Senha.\n\nSeu código é: ${codigo}\n\n⚠️ ATENÇÃO: Não compartilhe este código com ninguém!\n\nO envio deste e-mail é automático, favor não responder.`
+
+  const info = await transporter.sendMail({
+  from: '"Almoxarifado" <sistema@cpl.com>',
+  to: `"${nome}" <${email}>`,
+  subject: `🔐 Estoque | Seu código é ${codigo}`,
+  text: textoPuro,
+  html: mensagem
+  })
+
+  console.log("Mensagem Enviada: ", info.messageId)
+}
+
 export default router
