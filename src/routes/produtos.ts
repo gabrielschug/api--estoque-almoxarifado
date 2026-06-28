@@ -2,6 +2,7 @@ import { prisma } from "../../lib/prisma"
 import { Router } from 'express'
 import { z } from 'zod'
 import nodemailer from "nodemailer"
+import { VerificaToken } from "../middlewares/verificaToken"
 
 const router = Router()
 
@@ -16,7 +17,7 @@ const produtoSchema = z.object({
                     { message: "A categoria deve possuir, no máximo, 40 caracteres." }),
 })
 
-router.get("/", async (req, res) => {
+router.get("/", VerificaToken, async (req, res) => {
   try {
     const produtos = await prisma.produto.findMany({
         orderBy: {id: 'desc'}

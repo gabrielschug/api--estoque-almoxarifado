@@ -902,7 +902,8 @@ export const UsuarioScalarFieldEnum = {
   email: 'email',
   senha: 'senha',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  codRecuperacao: 'codRecuperacao'
 } as const
 
 export type UsuarioScalarFieldEnum = (typeof UsuarioScalarFieldEnum)[keyof typeof UsuarioScalarFieldEnum]
@@ -963,7 +964,8 @@ export type SaidaOrderByRelevanceFieldEnum = (typeof SaidaOrderByRelevanceFieldE
 export const UsuarioOrderByRelevanceFieldEnum = {
   nome: 'nome',
   email: 'email',
-  senha: 'senha'
+  senha: 'senha',
+  codRecuperacao: 'codRecuperacao'
 } as const
 
 export type UsuarioOrderByRelevanceFieldEnum = (typeof UsuarioOrderByRelevanceFieldEnum)[keyof typeof UsuarioOrderByRelevanceFieldEnum]

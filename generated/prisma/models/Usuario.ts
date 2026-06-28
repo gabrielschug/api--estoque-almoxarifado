@@ -41,6 +41,7 @@ export type UsuarioMinAggregateOutputType = {
   senha: string | null
   createdAt: Date | null
   updatedAt: Date | null
+  codRecuperacao: string | null
 }
 
 export type UsuarioMaxAggregateOutputType = {
@@ -50,6 +51,7 @@ export type UsuarioMaxAggregateOutputType = {
   senha: string | null
   createdAt: Date | null
   updatedAt: Date | null
+  codRecuperacao: string | null
 }
 
 export type UsuarioCountAggregateOutputType = {
@@ -59,6 +61,7 @@ export type UsuarioCountAggregateOutputType = {
   senha: number
   createdAt: number
   updatedAt: number
+  codRecuperacao: number
   _all: number
 }
 
@@ -78,6 +81,7 @@ export type UsuarioMinAggregateInputType = {
   senha?: true
   createdAt?: true
   updatedAt?: true
+  codRecuperacao?: true
 }
 
 export type UsuarioMaxAggregateInputType = {
@@ -87,6 +91,7 @@ export type UsuarioMaxAggregateInputType = {
   senha?: true
   createdAt?: true
   updatedAt?: true
+  codRecuperacao?: true
 }
 
 export type UsuarioCountAggregateInputType = {
@@ -96,6 +101,7 @@ export type UsuarioCountAggregateInputType = {
   senha?: true
   createdAt?: true
   updatedAt?: true
+  codRecuperacao?: true
   _all?: true
 }
 
@@ -192,6 +198,7 @@ export type UsuarioGroupByOutputType = {
   senha: string
   createdAt: Date
   updatedAt: Date
+  codRecuperacao: string | null
   _count: UsuarioCountAggregateOutputType | null
   _avg: UsuarioAvgAggregateOutputType | null
   _sum: UsuarioSumAggregateOutputType | null
@@ -224,6 +231,7 @@ export type UsuarioWhereInput = {
   senha?: Prisma.StringFilter<"Usuario"> | string
   createdAt?: Prisma.DateTimeFilter<"Usuario"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Usuario"> | Date | string
+  codRecuperacao?: Prisma.StringNullableFilter<"Usuario"> | string | null
 }
 
 export type UsuarioOrderByWithRelationInput = {
@@ -233,6 +241,7 @@ export type UsuarioOrderByWithRelationInput = {
   senha?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  codRecuperacao?: Prisma.SortOrderInput | Prisma.SortOrder
   _relevance?: Prisma.UsuarioOrderByRelevanceInput
 }
 
@@ -246,6 +255,7 @@ export type UsuarioWhereUniqueInput = Prisma.AtLeast<{
   senha?: Prisma.StringFilter<"Usuario"> | string
   createdAt?: Prisma.DateTimeFilter<"Usuario"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Usuario"> | Date | string
+  codRecuperacao?: Prisma.StringNullableFilter<"Usuario"> | string | null
 }, "id" | "email">
 
 export type UsuarioOrderByWithAggregationInput = {
@@ -255,6 +265,7 @@ export type UsuarioOrderByWithAggregationInput = {
   senha?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  codRecuperacao?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.UsuarioCountOrderByAggregateInput
   _avg?: Prisma.UsuarioAvgOrderByAggregateInput
   _max?: Prisma.UsuarioMaxOrderByAggregateInput
@@ -272,6 +283,7 @@ export type UsuarioScalarWhereWithAggregatesInput = {
   senha?: Prisma.StringWithAggregatesFilter<"Usuario"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Usuario"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Usuario"> | Date | string
+  codRecuperacao?: Prisma.StringNullableWithAggregatesFilter<"Usuario"> | string | null
 }
 
 export type UsuarioCreateInput = {
@@ -280,6 +292,7 @@ export type UsuarioCreateInput = {
   senha: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  codRecuperacao?: string | null
 }
 
 export type UsuarioUncheckedCreateInput = {
@@ -289,6 +302,7 @@ export type UsuarioUncheckedCreateInput = {
   senha: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  codRecuperacao?: string | null
 }
 
 export type UsuarioUpdateInput = {
@@ -297,6 +311,7 @@ export type UsuarioUpdateInput = {
   senha?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  codRecuperacao?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type UsuarioUncheckedUpdateInput = {
@@ -306,6 +321,7 @@ export type UsuarioUncheckedUpdateInput = {
   senha?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  codRecuperacao?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type UsuarioCreateManyInput = {
@@ -315,6 +331,7 @@ export type UsuarioCreateManyInput = {
   senha: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  codRecuperacao?: string | null
 }
 
 export type UsuarioUpdateManyMutationInput = {
@@ -323,6 +340,7 @@ export type UsuarioUpdateManyMutationInput = {
   senha?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  codRecuperacao?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type UsuarioUncheckedUpdateManyInput = {
@@ -332,6 +350,7 @@ export type UsuarioUncheckedUpdateManyInput = {
   senha?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  codRecuperacao?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type UsuarioOrderByRelevanceInput = {
@@ -347,6 +366,7 @@ export type UsuarioCountOrderByAggregateInput = {
   senha?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  codRecuperacao?: Prisma.SortOrder
 }
 
 export type UsuarioAvgOrderByAggregateInput = {
@@ -360,6 +380,7 @@ export type UsuarioMaxOrderByAggregateInput = {
   senha?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  codRecuperacao?: Prisma.SortOrder
 }
 
 export type UsuarioMinOrderByAggregateInput = {
@@ -369,6 +390,7 @@ export type UsuarioMinOrderByAggregateInput = {
   senha?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  codRecuperacao?: Prisma.SortOrder
 }
 
 export type UsuarioSumOrderByAggregateInput = {
@@ -384,6 +406,7 @@ export type UsuarioSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   senha?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  codRecuperacao?: boolean
 }, ExtArgs["result"]["usuario"]>
 
 
@@ -395,9 +418,10 @@ export type UsuarioSelectScalar = {
   senha?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  codRecuperacao?: boolean
 }
 
-export type UsuarioOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "nome" | "email" | "senha" | "createdAt" | "updatedAt", ExtArgs["result"]["usuario"]>
+export type UsuarioOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "nome" | "email" | "senha" | "createdAt" | "updatedAt" | "codRecuperacao", ExtArgs["result"]["usuario"]>
 
 export type $UsuarioPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Usuario"
@@ -409,6 +433,7 @@ export type $UsuarioPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     senha: string
     createdAt: Date
     updatedAt: Date
+    codRecuperacao: string | null
   }, ExtArgs["result"]["usuario"]>
   composites: {}
 }
@@ -784,6 +809,7 @@ export interface UsuarioFieldRefs {
   readonly senha: Prisma.FieldRef<"Usuario", 'String'>
   readonly createdAt: Prisma.FieldRef<"Usuario", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Usuario", 'DateTime'>
+  readonly codRecuperacao: Prisma.FieldRef<"Usuario", 'String'>
 }
     
 

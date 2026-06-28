@@ -31,7 +31,7 @@ router.post("/", async (req, res) => {
     if (bcrypt.compareSync(senha, usuario.senha)) {
       
       // 4. Geração do Token (JWT)
-      const payload = { userLofadoId: usuario.id, userLogadoNome: usuario.nome }
+      const payload = { userLogadoId: usuario.id, userLogadoNome: usuario.nome }
       const secret = process.env.JWT_SECRET as string
       const options = {expiresIn: '15m'} as object
       const token = jwt.sign(payload, secret, options)
@@ -50,6 +50,15 @@ router.post("/", async (req, res) => {
   } catch (error) {
     res.status(400).json({erro: error})
   }
+})
+
+
+router.post("/recuperacao", async (req, res) => {
+const email = req.body
+
+
+
+
 })
 
 export default router
