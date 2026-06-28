@@ -5,11 +5,18 @@ import { z } from 'zod'
 import jwt from 'jsonwebtoken'
 import { geraCodigo } from "./utils/geraCodigo"
 import { enviaEmail__CodigoRecuperacao } from "./relatorios"
+import { validaSenha } from "./utils/validaSenha"
+import { geraSenha } from "./utils/geraSenha"
 
 const router = Router()
 
 const emailSchema = z.object({
+  email: z.string().email().min(10, {message: "E-mail, deve possuir, no mínimo, 10 caracteres"}),
+})
+const redefinirSchema = z.object({
   email: z.email().min(10, {message: "E-mail, deve possuir, no mínimo, 10 caracteres"}),
+  codRecuperacao: z.string().length(4, {message: "Código, deve possuir, exatamente 4 caracteres"}),
+  novaSenha: z.string().min(8, {message: "Senha, deve possuir, no mínimo, 8 caracteres"})
 })
 
 router.post("/", async (req, res) => {
@@ -59,7 +66,6 @@ router.post("/", async (req, res) => {
   }
 })
 
-
 router.post("/recuperacao", async (req, res) => {
   const valida = emailSchema.safeParse(req.body)
   if(!valida.success) {
@@ -94,6 +100,47 @@ router.post("/recuperacao", async (req, res) => {
   } catch (error){
     res.status(400).json({erro: error})
   }
+})
+
+router.post("/redefinir-senha", async(req, res) => {
+
+const valida = redefinirSchema.safeParse(req.body)
+  if(!valida.success) {
+    res.status(400).json({ erro: valida.error })
+    return
+  }
+
+  const {email, codRecuperacao, novaSenha}  = valida.data
+  console.log(email, codRecuperacao)
+  const dadosUsuario = await prisma.usuario.findFirst({
+  where: {
+    email: email,
+    codRecuperacao: codRecuperacao
+  }
+});
+  if (!dadosUsuario) {
+    res.status(404).json({ erro: "Erro... Código ou email inválidos" })
+    return
+  }
+
+  const mensagemErros = validaSenha(novaSenha)
+  
+    if(mensagemErros.length > 0) {
+      res.status(400).json({erro:mensagemErros})
+      return
+    }
+
+    const hash = geraSenha(novaSenha)
+
+    try {
+      const salvandoNovosDados = await prisma.usuario.update({
+      where: { email },
+      data: {codRecuperacao: null, senha: hash}
+    })
+    res.status(200).json(salvandoNovosDados)
+    } catch (error) {
+      res.status(400).json({error})
+    }
 })
 
 export default router
