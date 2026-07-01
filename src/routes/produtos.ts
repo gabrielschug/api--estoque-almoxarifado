@@ -20,7 +20,7 @@ const produtoSchema = z.object({
 router.get("/", VerificaToken, async (req, res) => {
   try {
     const produtos = await prisma.produto.findMany({
-        orderBy: {id: 'desc'}
+        orderBy: {id: 'asc'}
     })
     res.status(200).json(produtos)
   } catch (error) {

@@ -11,7 +11,7 @@ import { geraSenha } from "./utils/geraSenha"
 const router = Router()
 
 const emailSchema = z.object({
-  email: z.string().email().min(10, {message: "E-mail, deve possuir, no mínimo, 10 caracteres"}),
+  email: z.email().min(10, {message: "E-mail, deve possuir, no mínimo, 10 caracteres"}),
 })
 const redefinirSchema = z.object({
   email: z.email().min(10, {message: "E-mail, deve possuir, no mínimo, 10 caracteres"}),

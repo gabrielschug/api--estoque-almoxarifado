@@ -65,5 +65,15 @@ model Usuario {
   createdAt    DateTime    @default(now())
   updatedAt    DateTime    @updatedAt()
   codRecuperacao String?    @db.VarChar(4)
+  log          Log[]
   @@map("usuarios")
+}
+
+model Log {
+  id          Int         @id @default(autoincrement())
+  descrição   String      @db.VarChar(255)
+  complemento String      @db.Text
+  createdAt   DateTime    @default(now())
+  usuario     Usuario     @relation(fields: [usuarioId], references: [id])
+  usuarioId   Int
 }

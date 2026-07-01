@@ -56,7 +56,8 @@ export const ModelName = {
   Produto: 'Produto',
   Entrada: 'Entrada',
   Saida: 'Saida',
-  Usuario: 'Usuario'
+  Usuario: 'Usuario',
+  Log: 'Log'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -140,6 +141,17 @@ export const UsuarioScalarFieldEnum = {
 export type UsuarioScalarFieldEnum = (typeof UsuarioScalarFieldEnum)[keyof typeof UsuarioScalarFieldEnum]
 
 
+export const LogScalarFieldEnum = {
+  id: 'id',
+  descrição: 'descrição',
+  complemento: 'complemento',
+  createdAt: 'createdAt',
+  usuarioId: 'usuarioId'
+} as const
+
+export type LogScalarFieldEnum = (typeof LogScalarFieldEnum)[keyof typeof LogScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -200,4 +212,12 @@ export const UsuarioOrderByRelevanceFieldEnum = {
 } as const
 
 export type UsuarioOrderByRelevanceFieldEnum = (typeof UsuarioOrderByRelevanceFieldEnum)[keyof typeof UsuarioOrderByRelevanceFieldEnum]
+
+
+export const LogOrderByRelevanceFieldEnum = {
+  descrição: 'descrição',
+  complemento: 'complemento'
+} as const
+
+export type LogOrderByRelevanceFieldEnum = (typeof LogOrderByRelevanceFieldEnum)[keyof typeof LogOrderByRelevanceFieldEnum]
 

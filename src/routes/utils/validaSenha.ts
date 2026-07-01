@@ -18,7 +18,7 @@ export function validaSenha(senha: string) {
     if ((/[A-Z]/).test(letra)) {
       grandes++
     }
-    if ((/[a-z]/).test(letra)) {
+    if ((/[1-9]/).test(letra)) {
       numeros++
     }
     if ((/\W|_/).test(letra)) {

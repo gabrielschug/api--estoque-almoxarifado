@@ -47,3 +47,8 @@ export type Saida = Prisma.SaidaModel
  * 
  */
 export type Usuario = Prisma.UsuarioModel
+/**
+ * Model Log
+ * 
+ */
+export type Log = Prisma.LogModel
