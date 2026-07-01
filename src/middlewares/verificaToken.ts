@@ -17,7 +17,7 @@ declare global {
 }
 
 export function VerificaToken(req:Request, res:Response, next:NextFunction) {
-  console.log("Esta rota irá solicitar o token")
+  console.log("Solicitando Token...")
 
   const { authorization } = req.headers
 
@@ -30,7 +30,6 @@ export function VerificaToken(req:Request, res:Response, next:NextFunction) {
 
   try {
     const decode = jwt.verify(token, process.env.JWT_SECRET as string)
-    console.log(decode)
     const {userLogadoId, userLogadoNome} = decode as TokenInterface
 
     req.userLogadoId = userLogadoId

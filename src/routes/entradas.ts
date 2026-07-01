@@ -1,6 +1,7 @@
 import { prisma } from "../../lib/prisma"
 import { Router } from 'express'
 import { z } from 'zod'
+import { VerificaToken } from "../middlewares/verificaToken"
 
 const router = Router()
 
@@ -173,7 +174,7 @@ router.put("/:id", async (req, res) => {
   }
 })
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", VerificaToken, async (req, res) => {
   const { id } = req.params
 
   const entradaId = Number(id)
@@ -193,13 +194,21 @@ router.delete("/:id", async (req, res) => {
       return
     }
 
-    const [entradaDeletada, produtoAtualizado] = await prisma.$transaction([
+    const [entradaDeletada, produtoAtualizado, logCriado] = await prisma.$transaction([
       prisma.entrada.delete({
         where: { id: entradaId }
       }),
       prisma.produto.update({
         where: { id: entrada.produtoId },
         data: { quant: { decrement: entrada.quant } }
+      }),
+      prisma.log.create({
+        data: {
+          descricao: "Entrada deletada",
+          complemento: req.userLogadoNome,
+          usuario: { 
+            connect: { id: req.userLogadoId}}
+        }
       })
     ])
 
