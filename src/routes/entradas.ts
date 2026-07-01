@@ -185,6 +185,10 @@ router.delete("/:id", VerificaToken, VerificaHorario, async (req, res) => {
     return
   }
 
+  if (!req.userLogadoNome || !req.userLogadoId) {
+  return res.status(400).json({ error: "Usuário não autenticado corretamente." });
+}
+
   try {
     const entrada = await prisma.entrada.findUnique({
       where: { id: entradaId }

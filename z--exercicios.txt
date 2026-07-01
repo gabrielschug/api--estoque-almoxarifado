@@ -1,0 +1,34 @@
+# Implementar rotina para recuperação de senha para usuários que esqueceram a senha.
+
+O recurso deve ser desenvolvido a partir de 2 rotas/rotinas.
+
+1️⃣ A primeira é para o usuário solicitar a recuperação de senha:
+  - Neste processo validar o e-mail e gerar um código com 4 caracteres
+  //✅ Criar campo na tabela usuários para salvar o código
+  //✅ Enviar codigo para o e-mail do usuário - login/recuperacao
+  //✅ Criar rota login/recuperacao
+  //✅ Validar se email existe no banco
+  //✅ Se existe então gerar o código
+  //✅ Salvar código no banco de dados
+  //✅ Gerar email enviando a senha de 4 digitos
+
+2️⃣ A segunda, deve /login/alterasenha:
+  //✅ Crie a rota /redefinir-senha
+  //✅ Receber e-mail + código + nova senha
+  //✅ Zod novamente para criar um schema e garantir que os três campos foram preenchidos corretamente
+  //✅ FindUnique e-mail e código de recuperação. Se não achar → erro 400 - código inválido
+  //✅ Se o usuário encontrado → criptografar novaSenha criptografe com bcrypt.hashSync()
+  //Update o registro do usuário - Salve a nova senha criptografada + código de recuperação = null
+
+
+## Realizar as seguintes ações
+
+1️⃣ ✅ Criar a model Log (tabela: logs) com os atributos:
+    ✅ id, descricao, complemento, createdAt e usuarioId (relacionamento com Usuario).
+    ✅ Rodar a migration.
+2️⃣ ✅ Acrescentar Registros
+✅ registros de log quando o usuário realizar login,
+✅ tentativa de login inválida (senha inválida) e
+✅ alguma outra ação suspeita no sistema (por exemplo, exclusão de depósito feito por Dinheiro) - exclusão de entrada.
+3️⃣ ✅ Criar um rota para listagem dos logs do sistema, com a exibição de nome do usuário.
+4️⃣ ✅ Criar um rota para pesquisa dos logs do sistema, com filtro a partir do id do usuário
