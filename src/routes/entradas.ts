@@ -2,6 +2,7 @@ import { prisma } from "../../lib/prisma"
 import { Router } from 'express'
 import { z } from 'zod'
 import { VerificaToken } from "../middlewares/verificaToken"
+import { VerificaHorario } from "../middlewares/verificaHorario"
 
 const router = Router()
 
@@ -18,7 +19,7 @@ const entradaSchema = z.object({
   observacoes: z.string().optional()
 })
 
-router.get("/", async (req, res) => {
+router.get("/", VerificaToken, async (req, res) => {
   try {
     const entradas = await prisma.entrada.findMany({
       include:{fornecedor: true, produto: true },
@@ -30,7 +31,7 @@ router.get("/", async (req, res) => {
   }
 })
 
-router.post("/", async (req, res) => {
+router.post("/", VerificaToken, VerificaHorario, async (req, res) => {
 
   const valida = entradaSchema.safeParse(req.body)
   if (!valida.success) {
@@ -77,7 +78,7 @@ router.post("/", async (req, res) => {
   }
 })
 
-router.put("/:id", async (req, res) => {
+router.put("/:id", VerificaToken, VerificaHorario, async (req, res) => {
   // VALIDAÇÃO DE FORMATO (zod)
   const { id } = req.params
   const valida = entradaSchema.safeParse(req.body)
@@ -174,7 +175,7 @@ router.put("/:id", async (req, res) => {
   }
 })
 
-router.delete("/:id", VerificaToken, async (req, res) => {
+router.delete("/:id", VerificaToken, VerificaHorario, async (req, res) => {
   const { id } = req.params
 
   const entradaId = Number(id)
@@ -223,7 +224,7 @@ router.delete("/:id", VerificaToken, async (req, res) => {
   }
 })
 
-router.get("/:id", async (req, res) => {
+router.get("/:id", VerificaToken, async (req, res) => {
   const { id } = req.params
 
   const entradaId = Number(id)
