@@ -978,7 +978,7 @@ export type UsuarioScalarFieldEnum = (typeof UsuarioScalarFieldEnum)[keyof typeo
 
 export const LogScalarFieldEnum = {
   id: 'id',
-  descrição: 'descrição',
+  descricao: 'descricao',
   complemento: 'complemento',
   createdAt: 'createdAt',
   usuarioId: 'usuarioId'
@@ -1050,7 +1050,7 @@ export type UsuarioOrderByRelevanceFieldEnum = (typeof UsuarioOrderByRelevanceFi
 
 
 export const LogOrderByRelevanceFieldEnum = {
-  descrição: 'descrição',
+  descricao: 'descricao',
   complemento: 'complemento'
 } as const
 

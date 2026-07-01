@@ -38,7 +38,7 @@ export type LogSumAggregateOutputType = {
 
 export type LogMinAggregateOutputType = {
   id: number | null
-  descrição: string | null
+  descricao: string | null
   complemento: string | null
   createdAt: Date | null
   usuarioId: number | null
@@ -46,7 +46,7 @@ export type LogMinAggregateOutputType = {
 
 export type LogMaxAggregateOutputType = {
   id: number | null
-  descrição: string | null
+  descricao: string | null
   complemento: string | null
   createdAt: Date | null
   usuarioId: number | null
@@ -54,7 +54,7 @@ export type LogMaxAggregateOutputType = {
 
 export type LogCountAggregateOutputType = {
   id: number
-  descrição: number
+  descricao: number
   complemento: number
   createdAt: number
   usuarioId: number
@@ -74,7 +74,7 @@ export type LogSumAggregateInputType = {
 
 export type LogMinAggregateInputType = {
   id?: true
-  descrição?: true
+  descricao?: true
   complemento?: true
   createdAt?: true
   usuarioId?: true
@@ -82,7 +82,7 @@ export type LogMinAggregateInputType = {
 
 export type LogMaxAggregateInputType = {
   id?: true
-  descrição?: true
+  descricao?: true
   complemento?: true
   createdAt?: true
   usuarioId?: true
@@ -90,7 +90,7 @@ export type LogMaxAggregateInputType = {
 
 export type LogCountAggregateInputType = {
   id?: true
-  descrição?: true
+  descricao?: true
   complemento?: true
   createdAt?: true
   usuarioId?: true
@@ -185,7 +185,7 @@ export type LogGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
 
 export type LogGroupByOutputType = {
   id: number
-  descrição: string
+  descricao: string
   complemento: string
   createdAt: Date
   usuarioId: number
@@ -216,7 +216,7 @@ export type LogWhereInput = {
   OR?: Prisma.LogWhereInput[]
   NOT?: Prisma.LogWhereInput | Prisma.LogWhereInput[]
   id?: Prisma.IntFilter<"Log"> | number
-  descrição?: Prisma.StringFilter<"Log"> | string
+  descricao?: Prisma.StringFilter<"Log"> | string
   complemento?: Prisma.StringFilter<"Log"> | string
   createdAt?: Prisma.DateTimeFilter<"Log"> | Date | string
   usuarioId?: Prisma.IntFilter<"Log"> | number
@@ -225,7 +225,7 @@ export type LogWhereInput = {
 
 export type LogOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  descrição?: Prisma.SortOrder
+  descricao?: Prisma.SortOrder
   complemento?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   usuarioId?: Prisma.SortOrder
@@ -238,7 +238,7 @@ export type LogWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.LogWhereInput | Prisma.LogWhereInput[]
   OR?: Prisma.LogWhereInput[]
   NOT?: Prisma.LogWhereInput | Prisma.LogWhereInput[]
-  descrição?: Prisma.StringFilter<"Log"> | string
+  descricao?: Prisma.StringFilter<"Log"> | string
   complemento?: Prisma.StringFilter<"Log"> | string
   createdAt?: Prisma.DateTimeFilter<"Log"> | Date | string
   usuarioId?: Prisma.IntFilter<"Log"> | number
@@ -247,7 +247,7 @@ export type LogWhereUniqueInput = Prisma.AtLeast<{
 
 export type LogOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  descrição?: Prisma.SortOrder
+  descricao?: Prisma.SortOrder
   complemento?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   usuarioId?: Prisma.SortOrder
@@ -263,14 +263,14 @@ export type LogScalarWhereWithAggregatesInput = {
   OR?: Prisma.LogScalarWhereWithAggregatesInput[]
   NOT?: Prisma.LogScalarWhereWithAggregatesInput | Prisma.LogScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"Log"> | number
-  descrição?: Prisma.StringWithAggregatesFilter<"Log"> | string
+  descricao?: Prisma.StringWithAggregatesFilter<"Log"> | string
   complemento?: Prisma.StringWithAggregatesFilter<"Log"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Log"> | Date | string
   usuarioId?: Prisma.IntWithAggregatesFilter<"Log"> | number
 }
 
 export type LogCreateInput = {
-  descrição: string
+  descricao: string
   complemento: string
   createdAt?: Date | string
   usuario: Prisma.UsuarioCreateNestedOneWithoutLogInput
@@ -278,14 +278,14 @@ export type LogCreateInput = {
 
 export type LogUncheckedCreateInput = {
   id?: number
-  descrição: string
+  descricao: string
   complemento: string
   createdAt?: Date | string
   usuarioId: number
 }
 
 export type LogUpdateInput = {
-  descrição?: Prisma.StringFieldUpdateOperationsInput | string
+  descricao?: Prisma.StringFieldUpdateOperationsInput | string
   complemento?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   usuario?: Prisma.UsuarioUpdateOneRequiredWithoutLogNestedInput
@@ -293,7 +293,7 @@ export type LogUpdateInput = {
 
 export type LogUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  descrição?: Prisma.StringFieldUpdateOperationsInput | string
+  descricao?: Prisma.StringFieldUpdateOperationsInput | string
   complemento?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   usuarioId?: Prisma.IntFieldUpdateOperationsInput | number
@@ -301,21 +301,21 @@ export type LogUncheckedUpdateInput = {
 
 export type LogCreateManyInput = {
   id?: number
-  descrição: string
+  descricao: string
   complemento: string
   createdAt?: Date | string
   usuarioId: number
 }
 
 export type LogUpdateManyMutationInput = {
-  descrição?: Prisma.StringFieldUpdateOperationsInput | string
+  descricao?: Prisma.StringFieldUpdateOperationsInput | string
   complemento?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type LogUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  descrição?: Prisma.StringFieldUpdateOperationsInput | string
+  descricao?: Prisma.StringFieldUpdateOperationsInput | string
   complemento?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   usuarioId?: Prisma.IntFieldUpdateOperationsInput | number
@@ -339,7 +339,7 @@ export type LogOrderByRelevanceInput = {
 
 export type LogCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  descrição?: Prisma.SortOrder
+  descricao?: Prisma.SortOrder
   complemento?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   usuarioId?: Prisma.SortOrder
@@ -352,7 +352,7 @@ export type LogAvgOrderByAggregateInput = {
 
 export type LogMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  descrição?: Prisma.SortOrder
+  descricao?: Prisma.SortOrder
   complemento?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   usuarioId?: Prisma.SortOrder
@@ -360,7 +360,7 @@ export type LogMaxOrderByAggregateInput = {
 
 export type LogMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  descrição?: Prisma.SortOrder
+  descricao?: Prisma.SortOrder
   complemento?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   usuarioId?: Prisma.SortOrder
@@ -414,14 +414,14 @@ export type LogUncheckedUpdateManyWithoutUsuarioNestedInput = {
 }
 
 export type LogCreateWithoutUsuarioInput = {
-  descrição: string
+  descricao: string
   complemento: string
   createdAt?: Date | string
 }
 
 export type LogUncheckedCreateWithoutUsuarioInput = {
   id?: number
-  descrição: string
+  descricao: string
   complemento: string
   createdAt?: Date | string
 }
@@ -457,7 +457,7 @@ export type LogScalarWhereInput = {
   OR?: Prisma.LogScalarWhereInput[]
   NOT?: Prisma.LogScalarWhereInput | Prisma.LogScalarWhereInput[]
   id?: Prisma.IntFilter<"Log"> | number
-  descrição?: Prisma.StringFilter<"Log"> | string
+  descricao?: Prisma.StringFilter<"Log"> | string
   complemento?: Prisma.StringFilter<"Log"> | string
   createdAt?: Prisma.DateTimeFilter<"Log"> | Date | string
   usuarioId?: Prisma.IntFilter<"Log"> | number
@@ -465,27 +465,27 @@ export type LogScalarWhereInput = {
 
 export type LogCreateManyUsuarioInput = {
   id?: number
-  descrição: string
+  descricao: string
   complemento: string
   createdAt?: Date | string
 }
 
 export type LogUpdateWithoutUsuarioInput = {
-  descrição?: Prisma.StringFieldUpdateOperationsInput | string
+  descricao?: Prisma.StringFieldUpdateOperationsInput | string
   complemento?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type LogUncheckedUpdateWithoutUsuarioInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  descrição?: Prisma.StringFieldUpdateOperationsInput | string
+  descricao?: Prisma.StringFieldUpdateOperationsInput | string
   complemento?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type LogUncheckedUpdateManyWithoutUsuarioInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  descrição?: Prisma.StringFieldUpdateOperationsInput | string
+  descricao?: Prisma.StringFieldUpdateOperationsInput | string
   complemento?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -494,7 +494,7 @@ export type LogUncheckedUpdateManyWithoutUsuarioInput = {
 
 export type LogSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  descrição?: boolean
+  descricao?: boolean
   complemento?: boolean
   createdAt?: boolean
   usuarioId?: boolean
@@ -505,13 +505,13 @@ export type LogSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = ru
 
 export type LogSelectScalar = {
   id?: boolean
-  descrição?: boolean
+  descricao?: boolean
   complemento?: boolean
   createdAt?: boolean
   usuarioId?: boolean
 }
 
-export type LogOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "descrição" | "complemento" | "createdAt" | "usuarioId", ExtArgs["result"]["log"]>
+export type LogOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "descricao" | "complemento" | "createdAt" | "usuarioId", ExtArgs["result"]["log"]>
 export type LogInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   usuario?: boolean | Prisma.UsuarioDefaultArgs<ExtArgs>
 }
@@ -523,7 +523,7 @@ export type $LogPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
-    descrição: string
+    descricao: string
     complemento: string
     createdAt: Date
     usuarioId: number
@@ -898,7 +898,7 @@ export interface Prisma__LogClient<T, Null = never, ExtArgs extends runtime.Type
  */
 export interface LogFieldRefs {
   readonly id: Prisma.FieldRef<"Log", 'Int'>
-  readonly descrição: Prisma.FieldRef<"Log", 'String'>
+  readonly descricao: Prisma.FieldRef<"Log", 'String'>
   readonly complemento: Prisma.FieldRef<"Log", 'String'>
   readonly createdAt: Prisma.FieldRef<"Log", 'DateTime'>
   readonly usuarioId: Prisma.FieldRef<"Log", 'Int'>
