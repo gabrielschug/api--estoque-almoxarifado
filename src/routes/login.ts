@@ -7,6 +7,7 @@ import { geraCodigo } from "./utils/geraCodigo"
 import { enviaEmail__CodigoRecuperacao } from "./relatorios"
 import { validaSenha } from "./utils/validaSenha"
 import { geraSenha } from "./utils/geraSenha"
+import { connect } from "node:http2"
 
 const router = Router()
 
@@ -50,6 +51,16 @@ router.post("/", async (req, res) => {
       const options = {expiresIn: '15m'} as object
       const token = jwt.sign(payload, secret, options)
 
+      // Gera Log
+      const log = await prisma.log.create({
+        data: {
+          descricao: "Login com sucesso",
+          complemento: usuario.nome,
+          usuario:{ 
+            connect: { id: usuario.id}}
+        }
+        })
+
       // 5. Acesso Liberado
       res.status(200).json({
         id: usuario.id,
@@ -59,6 +70,15 @@ router.post("/", async (req, res) => {
       })
     } else {
       // 5. Acesso Negado
+      // Gera Log
+      const log = await prisma.log.create({
+        data: {
+          descricao: "Senha incorreta",
+          complemento: email,
+          usuario: { 
+            connect: { id: usuario.id}}
+        }
+      })
       res.status(400).json({ erro: mensagemErroLogin})
     }
   } catch (error) {
