@@ -2,6 +2,7 @@ import { prisma } from "../../lib/prisma"
 import { Router } from 'express'
 import { NOMEM } from "node:dns"
 import { z } from 'zod'
+import { VerificaHorario } from "../middlewares/verificaHorario"
 
 const router = Router()
 
@@ -20,7 +21,7 @@ router.get("/", async (req, res) => {
     }
 })
 
-router.post("/", async (req, res) => {
+router.post("/", VerificaHorario, async (req, res) => {
     const valida = secretariaSchema.safeParse(req.body)
     if (!valida.success) {
         res.status(400).json({ erro: valida.error })
@@ -40,7 +41,7 @@ router.post("/", async (req, res) => {
     }
 })
 
-router.put("/:id", async (req, res) => {
+router.put("/:id", VerificaHorario, async (req, res) => {
     // recebe o id passado como parâmetro
     const { id } = req.params
 
@@ -64,7 +65,7 @@ router.put("/:id", async (req, res) => {
     }
 })
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", VerificaHorario, async (req, res) => {
     // recebe o id passado como parâmetro
     const { id } = req.params
 

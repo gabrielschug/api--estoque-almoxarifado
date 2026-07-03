@@ -2,6 +2,7 @@ import { prisma } from "../../lib/prisma"
 import { Router } from 'express'
 import { error } from "node:console"
 import { z } from 'zod'
+import { VerificaHorario } from "../middlewares/verificaHorario"
 
 const router = Router()
 
@@ -31,7 +32,7 @@ router.get("/", async (req, res) => {
   }
 })
 
-router.post("/", async (req, res) => {
+router.post("/", VerificaHorario, async (req, res) => {
 
   const valida = saidaSchema.safeParse(req.body)
   if (!valida.success) {
@@ -83,7 +84,7 @@ router.post("/", async (req, res) => {
   }
 })
 
-router.put("/:id", async (req, res) => {
+router.put("/:id", VerificaHorario, async (req, res) => {
   // VALIDAÇÃO DE FORMATO (zod)
   const { id } = req.params
   const valida = saidaSchema.safeParse(req.body)
@@ -177,7 +178,7 @@ router.put("/:id", async (req, res) => {
   }
 })
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", VerificaHorario, async (req, res) => {
   const {id} =req.params
   
   const saidaExcluida = await prisma.saida.findUnique({

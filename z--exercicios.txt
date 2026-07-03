@@ -32,3 +32,16 @@ O recurso deve ser desenvolvido a partir de 2 rotas/rotinas.
 ✅ alguma outra ação suspeita no sistema (por exemplo, exclusão de depósito feito por Dinheiro) - exclusão de entrada.
 3️⃣ ✅ Criar um rota para listagem dos logs do sistema, com a exibição de nome do usuário.
 4️⃣ ✅ Criar um rota para pesquisa dos logs do sistema, com filtro a partir do id do usuário
+
+## Implementações
+1️⃣✅ Middleware de Horário
+  - Obter hora
+  - Verificar validação de horário no middleware, liberando ou bloqueando 
+2️⃣✅ Último Login
+  - Add campo de data no banco
+  - Guardar valor anterior numa variavel
+  - Atualizar banco com nova data
+  - Exibir data antiga na resposta (res)
+3️⃣✅ Níveis de Acesso
+  - Add numero na model Usuario
+  - Add if no inicio da rota "deletar entrada" verificando o nivel do usuario com o requisito da rota

@@ -3,6 +3,7 @@ import { Router } from 'express'
 import { z } from 'zod'
 import nodemailer from "nodemailer"
 import { VerificaToken } from "../middlewares/verificaToken"
+import { VerificaHorario } from "../middlewares/verificaHorario"
 
 const router = Router()
 
@@ -28,7 +29,7 @@ router.get("/", VerificaToken, async (req, res) => {
   }
 })
 
-router.post("/", async (req, res) => {
+router.post("/", VerificaHorario, async (req, res) => {
     const valida = produtoSchema.safeParse(req.body)
     if (!valida.success) {
         res.status(400).json({ erro: valida.error })
@@ -48,7 +49,7 @@ router.post("/", async (req, res) => {
     }
 })
 
-router.put("/:id", async (req, res) => {
+router.put("/:id", VerificaHorario, async (req, res) => {
     // recebe o id passado como parâmetro
     const { id } = req.params
 
@@ -77,7 +78,7 @@ router.put("/:id", async (req, res) => {
     }
 })
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", VerificaHorario, async (req, res) => {
     // recebe o id passado como parâmetro
     const { id } = req.params
 
