@@ -67,6 +67,7 @@ model Usuario {
   codRecuperacao String?   @db.VarChar(4)
   ultimoLogin  DateTime?   
   log          Log[]
+  nivel        Int         @default(1)
   @@map("usuarios")
 }
 

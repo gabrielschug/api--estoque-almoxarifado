@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE `usuarios` ADD COLUMN `nivel` INTEGER NOT NULL DEFAULT 1;
