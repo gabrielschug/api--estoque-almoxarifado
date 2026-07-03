@@ -64,7 +64,8 @@ model Usuario {
   senha        String      @db.VarChar(60)    // 60 = hash gerado bcrypt
   createdAt    DateTime    @default(now())
   updatedAt    DateTime    @updatedAt()
-  codRecuperacao String?    @db.VarChar(4)
+  codRecuperacao String?   @db.VarChar(4)
+  ultimoLogin  DateTime?   
   log          Log[]
   @@map("usuarios")
 }
