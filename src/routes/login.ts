@@ -51,6 +51,17 @@ router.post("/", async (req, res) => {
       const options = {expiresIn: '15m'} as object
       const token = jwt.sign(payload, secret, options)
 
+      // Processo UltimoLogin
+      const dataUltimoAcesso = usuario.ultimoLogin
+      await prisma.usuario.update({
+        where: {id: usuario.id},
+        data: {ultimoLogin: new Date()}
+      })
+      let mensagemBoasVindas = "Bem-vindo. Este é o seu primeiro acesso ao sistema."
+      if (dataUltimoAcesso) {
+        mensagemBoasVindas = `Bem-vindo. Seu último acesso foi em ${dataUltimoAcesso.toLocaleString('pt-BR')}`
+      }
+      
       // Gera Log
       const log = await prisma.log.create({
         data: {
@@ -63,6 +74,7 @@ router.post("/", async (req, res) => {
 
       // 5. Acesso Liberado
       res.status(200).json({
+        mensagemBoasVindas,
         id: usuario.id,
         nome: usuario.nome,
         email: usuario.email,
