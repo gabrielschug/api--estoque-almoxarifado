@@ -16,7 +16,11 @@ const usuarioSchema = z.object({
 router.get("/", VerificaToken, async (req, res) =>{
 
   try {
-    const usuarios = await prisma.usuario.findMany()
+    const usuarios = await prisma.usuario.findMany({
+      omit: {
+        senha: true
+      }
+    })
 
     res.status(200).json(usuarios)
   } catch (error) {
@@ -28,7 +32,7 @@ router.post("/", async (req, res) => {
 
   const valida = usuarioSchema.safeParse(req.body)
   if(!valida.success) {
-    res.status(400).json({ erro: valida.error })
+    res.status(400).json({ erro: z.flattenError(valida.error) })
     return
   }
 
