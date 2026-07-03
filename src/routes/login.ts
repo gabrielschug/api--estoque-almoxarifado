@@ -101,7 +101,7 @@ router.post("/", async (req, res) => {
 router.post("/recuperacao", async (req, res) => {
   const valida = emailSchema.safeParse(req.body)
   if(!valida.success) {
-    res.status(400).json({ erro: valida.error })
+    res.status(400).json({ erro: z.flattenError(valida.error) })
     return
   }
 
@@ -138,7 +138,7 @@ router.post("/redefinir-senha", async(req, res) => {
 
 const valida = redefinirSchema.safeParse(req.body)
   if(!valida.success) {
-    res.status(400).json({ erro: valida.error })
+    res.status(400).json({ erro: z.flattenError(valida.error) })
     return
   }
 

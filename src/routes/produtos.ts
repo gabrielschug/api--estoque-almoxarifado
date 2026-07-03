@@ -32,7 +32,7 @@ router.get("/", VerificaToken, VerificaToken, async (req, res) => {
 router.post("/", VerificaToken, VerificaHorario, async (req, res) => {
     const valida = produtoSchema.safeParse(req.body)
     if (!valida.success) {
-        res.status(400).json({ erro: valida.error })
+        res.status(400).json({ erro: z.flattenError(valida.error) })
         return
     }
 
@@ -55,7 +55,7 @@ router.put("/:id", VerificaToken, VerificaHorario, async (req, res) => {
 
     const valida = produtoSchema.safeParse(req.body)
     if (!valida.success) {
-        res.status(400).json({ erro: valida.error })
+        res.status(400).json({ erro: z.flattenError(valida.error) })
         return
     }
 

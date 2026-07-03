@@ -24,7 +24,7 @@ router.get("/", VerificaToken, async (req, res) => {
 router.post("/", VerificaToken, VerificaHorario, async (req, res) => {
     const valida = fornecedorSchema.safeParse(req.body)
     if (!valida.success) {
-        res.status(400).json({ erro: valida.error })
+        res.status(400).json({ erro: z.flattenError(valida.error) })
         return
     }
 
@@ -47,7 +47,7 @@ router.put("/:id", VerificaToken, VerificaHorario, async (req, res) => {
 
     const valida = fornecedorSchema.safeParse(req.body)
     if (!valida.success) {
-        res.status(400).json({ erro: valida.error })
+        res.status(400).json({ erro: z.flattenError(valida.error) })
         return
     }
 
@@ -92,7 +92,7 @@ router.get("/:id", VerificaToken, async (req, res) => {
         })
 
         if (!fornecedor) {
-        res.status(404).json({ erro: "Fornecedor não encontrada" })
+        res.status(404).json({ erro: "Fornecedor não encontrado" })
         return
         }
 
