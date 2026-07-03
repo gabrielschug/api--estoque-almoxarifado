@@ -18,7 +18,7 @@ const produtoSchema = z.object({
                     { message: "A categoria deve possuir, no máximo, 40 caracteres." }),
 })
 
-router.get("/", VerificaToken, async (req, res) => {
+router.get("/", VerificaToken, VerificaToken, async (req, res) => {
   try {
     const produtos = await prisma.produto.findMany({
         orderBy: {id: 'asc'}
@@ -29,7 +29,7 @@ router.get("/", VerificaToken, async (req, res) => {
   }
 })
 
-router.post("/", VerificaHorario, async (req, res) => {
+router.post("/", VerificaToken, VerificaHorario, async (req, res) => {
     const valida = produtoSchema.safeParse(req.body)
     if (!valida.success) {
         res.status(400).json({ erro: valida.error })
@@ -49,7 +49,7 @@ router.post("/", VerificaHorario, async (req, res) => {
     }
 })
 
-router.put("/:id", VerificaHorario, async (req, res) => {
+router.put("/:id", VerificaToken, VerificaHorario, async (req, res) => {
     // recebe o id passado como parâmetro
     const { id } = req.params
 
@@ -78,7 +78,7 @@ router.put("/:id", VerificaHorario, async (req, res) => {
     }
 })
 
-router.delete("/:id", VerificaHorario, async (req, res) => {
+router.delete("/:id", VerificaToken, VerificaHorario, async (req, res) => {
     // recebe o id passado como parâmetro
     const { id } = req.params
 
@@ -93,7 +93,7 @@ router.delete("/:id", VerificaHorario, async (req, res) => {
     }
 })
 
-router.get("/:id", async (req, res) => {
+router.get("/:id", VerificaToken, async (req, res) => {
     // recebe o id passado como parâmetro
     const { id } = req.params
 

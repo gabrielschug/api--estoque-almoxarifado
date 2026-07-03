@@ -1,6 +1,8 @@
 import { prisma } from "../../lib/prisma"
 import { Router } from 'express'
 import nodemailer from "nodemailer"
+import { VerificaToken } from "../middlewares/verificaToken"
+VerificaToken
 
 const router = Router()
 
@@ -92,7 +94,7 @@ async function enviaEmail(dados: any) {
     console.log("Mensagem Enviada: ", info.messageId)
 }
 
-router.get("/saldo", async (req,res) => {
+router.get("/saldo", VerificaToken, async (req,res) => {
     try {
         const produtos = await prisma.produto.findMany()
         enviaEmail(produtos)
@@ -180,7 +182,7 @@ async function enviaEmail__Entradas(dados: any) {
     console.log("Mensagem Enviada: ", info.messageId)
 }
 
-router.get("/entradas", async (req,res) => {
+router.get("/entradas", VerificaToken, async (req,res) => {
   try {
     const entradas = await prisma.entrada.findMany({
       include: {
@@ -274,7 +276,7 @@ async function enviaEmail__Saidas(dados: any) {
     console.log("Mensagem Enviada: ", info.messageId)
 }
 
-router.get("/saidas", async (req,res) => {
+router.get("/saidas", VerificaToken, async (req,res) => {
   try {
     const saidas = await prisma.saida.findMany({
       include: {

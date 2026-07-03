@@ -3,6 +3,7 @@ import { Router } from "express";
 import { z } from 'zod'
 import { validaSenha } from "./utils/validaSenha";
 import { geraSenha } from "./utils/geraSenha";
+import { VerificaToken } from "../middlewares/verificaToken";
 
 const router = Router()
 
@@ -12,7 +13,7 @@ const usuarioSchema = z.object({
   senha: z.string()
 })
 
-router.get("/", async (req, res) =>{
+router.get("/", VerificaToken, async (req, res) =>{
 
   try {
     const usuarios = await prisma.usuario.findMany()
@@ -52,7 +53,7 @@ router.post("/", async (req, res) => {
   }
 })
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", VerificaToken, async (req, res) => {
   const { id } = req.params
 
   try {

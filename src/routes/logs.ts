@@ -1,11 +1,12 @@
 import { log } from "node:console"
 import { prisma } from "../../lib/prisma"
 import { Router } from 'express'
+import { VerificaToken } from "../middlewares/verificaToken"
 
 const router = Router()
 
 
-router.get("/", async (req, res) => {
+router.get("/", VerificaToken, async (req, res) => {
     try {
         const logs = await prisma.log.findMany({
           include: {
@@ -23,7 +24,7 @@ router.get("/", async (req, res) => {
     }
 })
 
-router.get("/:id", async (req, res) => {
+router.get("/:id", VerificaToken, async (req, res) => {
     // recebe o id passado como parâmetro
     const { id } = req.params
 

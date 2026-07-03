@@ -3,6 +3,8 @@ import { Router } from 'express'
 import { error } from "node:console"
 import { z } from 'zod'
 import { VerificaHorario } from "../middlewares/verificaHorario"
+import { VerificaToken } from "../middlewares/verificaToken"
+VerificaToken
 
 const router = Router()
 
@@ -18,7 +20,7 @@ const saidaSchema = z.object({
   observacoes: z.string().optional()
 })
 
-router.get("/", async (req, res) => {
+router.get("/", VerificaToken, async (req, res) => {
   try {
     const saidas = await prisma.saida.findMany({
       include:{
@@ -32,7 +34,7 @@ router.get("/", async (req, res) => {
   }
 })
 
-router.post("/", VerificaHorario, async (req, res) => {
+router.post("/", VerificaToken, VerificaHorario, async (req, res) => {
 
   const valida = saidaSchema.safeParse(req.body)
   if (!valida.success) {
@@ -84,7 +86,7 @@ router.post("/", VerificaHorario, async (req, res) => {
   }
 })
 
-router.put("/:id", VerificaHorario, async (req, res) => {
+router.put("/:id", VerificaToken, VerificaHorario, async (req, res) => {
   // VALIDAÇÃO DE FORMATO (zod)
   const { id } = req.params
   const valida = saidaSchema.safeParse(req.body)
@@ -178,7 +180,7 @@ router.put("/:id", VerificaHorario, async (req, res) => {
   }
 })
 
-router.delete("/:id", VerificaHorario, async (req, res) => {
+router.delete("/:id", VerificaToken, VerificaHorario, async (req, res) => {
   const {id} =req.params
   
   const saidaExcluida = await prisma.saida.findUnique({
@@ -207,7 +209,7 @@ router.delete("/:id", VerificaHorario, async (req, res) => {
   }
 })
 
-router.get("/:id", async (req, res) => {
+router.get("/:id", VerificaToken, async (req, res) => {
   const { id } = req.params
 
   const saidaId = Number(id)
