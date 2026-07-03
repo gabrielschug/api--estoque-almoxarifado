@@ -180,6 +180,12 @@ router.delete("/:id", VerificaToken, VerificaHorario, async (req, res) => {
 
   const entradaId = Number(id)
 
+  const usuarioDB = await prisma.usuario.findUnique({ where: {id: req.userLogadoId }})
+  if (usuarioDB?.nivel !== 3) {
+    res.status(403).json({erro: "Acesso negado. Apenas usuários de nível 3 podem realizar exclusões"})
+  return
+  }
+
   if (isNaN(entradaId)) {
     res.status(400).json({ erro: "ID da entrada deve ser um número válido" })
     return
