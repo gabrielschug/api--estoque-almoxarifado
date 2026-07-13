@@ -11,6 +11,8 @@ model Fornecedor {
   id           Int         @id @default(autoincrement())
   razao_social String      @db.VarChar(40)
   entradas     Entrada[]
+  deleted      Boolean     @default(false)
+  deletedAt    DateTime?
   @@map("fornecedores")
 }
 
@@ -18,6 +20,8 @@ model Secretaria {
   id           Int         @id @default(autoincrement())
   nome         String      @db.VarChar(40)
   saidas       Saida[]     
+  deleted      Boolean     @default(false)
+  deletedAt    DateTime?
   @@map("secretarias")
 }
 
@@ -29,6 +33,8 @@ model Produto {
   categoria    String     @db.VarChar(40)
   saidas       Saida[]
   entradas     Entrada[]
+  deleted      Boolean     @default(false)
+  deletedAt    DateTime?
   @@map("produtos")
 }
 
@@ -42,6 +48,8 @@ model Entrada {
   produtoId  Int
   quant      Int
   observacoes String?   @db.VarChar(60)
+  deleted      Boolean     @default(false)
+  deletedAt    DateTime?
   @@map("entradas")
 }
 
@@ -54,6 +62,8 @@ model Saida {
   produtoId  Int
   quant      Int
   observacoes String?   @db.VarChar(60)
+  deleted      Boolean     @default(false)
+  deletedAt    DateTime?
   @@map("saidas")
 }
 
@@ -68,6 +78,8 @@ model Usuario {
   ultimoLogin  DateTime?   
   log          Log[]
   nivel        Int         @default(1)
+  deleted      Boolean     @default(false)
+  deletedAt    DateTime?
   @@map("usuarios")
 }
 
@@ -80,5 +92,3 @@ model Log {
   usuarioId   Int
   @@map("logs")
 }
-
-
