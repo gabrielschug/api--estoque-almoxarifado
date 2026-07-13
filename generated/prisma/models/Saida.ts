@@ -249,7 +249,6 @@ export type SaidaOrderByWithRelationInput = {
   observacoes?: Prisma.SortOrderInput | Prisma.SortOrder
   secretaria?: Prisma.SecretariaOrderByWithRelationInput
   produto?: Prisma.ProdutoOrderByWithRelationInput
-  _relevance?: Prisma.SaidaOrderByRelevanceInput
 }
 
 export type SaidaWhereUniqueInput = Prisma.AtLeast<{
@@ -358,12 +357,6 @@ export type SaidaListRelationFilter = {
 
 export type SaidaOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
-}
-
-export type SaidaOrderByRelevanceInput = {
-  fields: Prisma.SaidaOrderByRelevanceFieldEnum | Prisma.SaidaOrderByRelevanceFieldEnum[]
-  sort: Prisma.SortOrder
-  search: string
 }
 
 export type SaidaCountOrderByAggregateInput = {
@@ -660,7 +653,27 @@ export type SaidaSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   produto?: boolean | Prisma.ProdutoDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["saida"]>
 
+export type SaidaSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  data?: boolean
+  secretariaId?: boolean
+  produtoId?: boolean
+  quant?: boolean
+  observacoes?: boolean
+  secretaria?: boolean | Prisma.SecretariaDefaultArgs<ExtArgs>
+  produto?: boolean | Prisma.ProdutoDefaultArgs<ExtArgs>
+}, ExtArgs["result"]["saida"]>
 
+export type SaidaSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  data?: boolean
+  secretariaId?: boolean
+  produtoId?: boolean
+  quant?: boolean
+  observacoes?: boolean
+  secretaria?: boolean | Prisma.SecretariaDefaultArgs<ExtArgs>
+  produto?: boolean | Prisma.ProdutoDefaultArgs<ExtArgs>
+}, ExtArgs["result"]["saida"]>
 
 export type SaidaSelectScalar = {
   id?: boolean
@@ -673,6 +686,14 @@ export type SaidaSelectScalar = {
 
 export type SaidaOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "data" | "secretariaId" | "produtoId" | "quant" | "observacoes", ExtArgs["result"]["saida"]>
 export type SaidaInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  secretaria?: boolean | Prisma.SecretariaDefaultArgs<ExtArgs>
+  produto?: boolean | Prisma.ProdutoDefaultArgs<ExtArgs>
+}
+export type SaidaIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  secretaria?: boolean | Prisma.SecretariaDefaultArgs<ExtArgs>
+  produto?: boolean | Prisma.ProdutoDefaultArgs<ExtArgs>
+}
+export type SaidaIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   secretaria?: boolean | Prisma.SecretariaDefaultArgs<ExtArgs>
   produto?: boolean | Prisma.ProdutoDefaultArgs<ExtArgs>
 }
@@ -808,6 +829,30 @@ export interface SaidaDelegate<ExtArgs extends runtime.Types.Extensions.Internal
   createMany<T extends SaidaCreateManyArgs>(args?: Prisma.SelectSubset<T, SaidaCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
 
   /**
+   * Create many Saidas and returns the data saved in the database.
+   * @param {SaidaCreateManyAndReturnArgs} args - Arguments to create many Saidas.
+   * @example
+   * // Create many Saidas
+   * const saida = await prisma.saida.createManyAndReturn({
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Create many Saidas and only return the `id`
+   * const saidaWithIdOnly = await prisma.saida.createManyAndReturn({
+   *   select: { id: true },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  createManyAndReturn<T extends SaidaCreateManyAndReturnArgs>(args?: Prisma.SelectSubset<T, SaidaCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SaidaPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+  /**
    * Delete a Saida.
    * @param {SaidaDeleteArgs} args - Arguments to delete one Saida.
    * @example
@@ -870,6 +915,36 @@ export interface SaidaDelegate<ExtArgs extends runtime.Types.Extensions.Internal
    * 
    */
   updateMany<T extends SaidaUpdateManyArgs>(args: Prisma.SelectSubset<T, SaidaUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
+
+  /**
+   * Update zero or more Saidas and returns the data updated in the database.
+   * @param {SaidaUpdateManyAndReturnArgs} args - Arguments to update many Saidas.
+   * @example
+   * // Update many Saidas
+   * const saida = await prisma.saida.updateManyAndReturn({
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Update zero or more Saidas and only return the `id`
+   * const saidaWithIdOnly = await prisma.saida.updateManyAndReturn({
+   *   select: { id: true },
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  updateManyAndReturn<T extends SaidaUpdateManyAndReturnArgs>(args: Prisma.SelectSubset<T, SaidaUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SaidaPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
   /**
    * Create or update one Saida.
@@ -1305,6 +1380,29 @@ export type SaidaCreateManyArgs<ExtArgs extends runtime.Types.Extensions.Interna
 }
 
 /**
+ * Saida createManyAndReturn
+ */
+export type SaidaCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Saida
+   */
+  select?: Prisma.SaidaSelectCreateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the Saida
+   */
+  omit?: Prisma.SaidaOmit<ExtArgs> | null
+  /**
+   * The data used to create many Saidas.
+   */
+  data: Prisma.SaidaCreateManyInput | Prisma.SaidaCreateManyInput[]
+  skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SaidaIncludeCreateManyAndReturn<ExtArgs> | null
+}
+
+/**
  * Saida update
  */
 export type SaidaUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1346,6 +1444,36 @@ export type SaidaUpdateManyArgs<ExtArgs extends runtime.Types.Extensions.Interna
    * Limit how many Saidas to update.
    */
   limit?: number
+}
+
+/**
+ * Saida updateManyAndReturn
+ */
+export type SaidaUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Saida
+   */
+  select?: Prisma.SaidaSelectUpdateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the Saida
+   */
+  omit?: Prisma.SaidaOmit<ExtArgs> | null
+  /**
+   * The data used to update Saidas.
+   */
+  data: Prisma.XOR<Prisma.SaidaUpdateManyMutationInput, Prisma.SaidaUncheckedUpdateManyInput>
+  /**
+   * Filter which Saidas to update
+   */
+  where?: Prisma.SaidaWhereInput
+  /**
+   * Limit how many Saidas to update.
+   */
+  limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SaidaIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**

@@ -199,7 +199,6 @@ export type FornecedorOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   razao_social?: Prisma.SortOrder
   entradas?: Prisma.EntradaOrderByRelationAggregateInput
-  _relevance?: Prisma.FornecedorOrderByRelevanceInput
 }
 
 export type FornecedorWhereUniqueInput = Prisma.AtLeast<{
@@ -263,12 +262,6 @@ export type FornecedorUpdateManyMutationInput = {
 export type FornecedorUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   razao_social?: Prisma.StringFieldUpdateOperationsInput | string
-}
-
-export type FornecedorOrderByRelevanceInput = {
-  fields: Prisma.FornecedorOrderByRelevanceFieldEnum | Prisma.FornecedorOrderByRelevanceFieldEnum[]
-  sort: Prisma.SortOrder
-  search: string
 }
 
 export type FornecedorCountOrderByAggregateInput = {
@@ -397,7 +390,15 @@ export type FornecedorSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   _count?: boolean | Prisma.FornecedorCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["fornecedor"]>
 
+export type FornecedorSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  razao_social?: boolean
+}, ExtArgs["result"]["fornecedor"]>
 
+export type FornecedorSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  razao_social?: boolean
+}, ExtArgs["result"]["fornecedor"]>
 
 export type FornecedorSelectScalar = {
   id?: boolean
@@ -409,6 +410,8 @@ export type FornecedorInclude<ExtArgs extends runtime.Types.Extensions.InternalA
   entradas?: boolean | Prisma.Fornecedor$entradasArgs<ExtArgs>
   _count?: boolean | Prisma.FornecedorCountOutputTypeDefaultArgs<ExtArgs>
 }
+export type FornecedorIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type FornecedorIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
 
 export type $FornecedorPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Fornecedor"
@@ -536,6 +539,30 @@ export interface FornecedorDelegate<ExtArgs extends runtime.Types.Extensions.Int
   createMany<T extends FornecedorCreateManyArgs>(args?: Prisma.SelectSubset<T, FornecedorCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
 
   /**
+   * Create many Fornecedors and returns the data saved in the database.
+   * @param {FornecedorCreateManyAndReturnArgs} args - Arguments to create many Fornecedors.
+   * @example
+   * // Create many Fornecedors
+   * const fornecedor = await prisma.fornecedor.createManyAndReturn({
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Create many Fornecedors and only return the `id`
+   * const fornecedorWithIdOnly = await prisma.fornecedor.createManyAndReturn({
+   *   select: { id: true },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  createManyAndReturn<T extends FornecedorCreateManyAndReturnArgs>(args?: Prisma.SelectSubset<T, FornecedorCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FornecedorPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+  /**
    * Delete a Fornecedor.
    * @param {FornecedorDeleteArgs} args - Arguments to delete one Fornecedor.
    * @example
@@ -598,6 +625,36 @@ export interface FornecedorDelegate<ExtArgs extends runtime.Types.Extensions.Int
    * 
    */
   updateMany<T extends FornecedorUpdateManyArgs>(args: Prisma.SelectSubset<T, FornecedorUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
+
+  /**
+   * Update zero or more Fornecedors and returns the data updated in the database.
+   * @param {FornecedorUpdateManyAndReturnArgs} args - Arguments to update many Fornecedors.
+   * @example
+   * // Update many Fornecedors
+   * const fornecedor = await prisma.fornecedor.updateManyAndReturn({
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Update zero or more Fornecedors and only return the `id`
+   * const fornecedorWithIdOnly = await prisma.fornecedor.updateManyAndReturn({
+   *   select: { id: true },
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  updateManyAndReturn<T extends FornecedorUpdateManyAndReturnArgs>(args: Prisma.SelectSubset<T, FornecedorUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FornecedorPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
   /**
    * Create or update one Fornecedor.
@@ -1028,6 +1085,25 @@ export type FornecedorCreateManyArgs<ExtArgs extends runtime.Types.Extensions.In
 }
 
 /**
+ * Fornecedor createManyAndReturn
+ */
+export type FornecedorCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Fornecedor
+   */
+  select?: Prisma.FornecedorSelectCreateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the Fornecedor
+   */
+  omit?: Prisma.FornecedorOmit<ExtArgs> | null
+  /**
+   * The data used to create many Fornecedors.
+   */
+  data: Prisma.FornecedorCreateManyInput | Prisma.FornecedorCreateManyInput[]
+  skipDuplicates?: boolean
+}
+
+/**
  * Fornecedor update
  */
 export type FornecedorUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1057,6 +1133,32 @@ export type FornecedorUpdateArgs<ExtArgs extends runtime.Types.Extensions.Intern
  * Fornecedor updateMany
  */
 export type FornecedorUpdateManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * The data used to update Fornecedors.
+   */
+  data: Prisma.XOR<Prisma.FornecedorUpdateManyMutationInput, Prisma.FornecedorUncheckedUpdateManyInput>
+  /**
+   * Filter which Fornecedors to update
+   */
+  where?: Prisma.FornecedorWhereInput
+  /**
+   * Limit how many Fornecedors to update.
+   */
+  limit?: number
+}
+
+/**
+ * Fornecedor updateManyAndReturn
+ */
+export type FornecedorUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Fornecedor
+   */
+  select?: Prisma.FornecedorSelectUpdateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the Fornecedor
+   */
+  omit?: Prisma.FornecedorOmit<ExtArgs> | null
   /**
    * The data used to update Fornecedors.
    */

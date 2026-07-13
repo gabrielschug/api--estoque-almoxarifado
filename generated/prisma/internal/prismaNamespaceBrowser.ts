@@ -162,26 +162,12 @@ export const SortOrder = {
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
-export const FornecedorOrderByRelevanceFieldEnum = {
-  razao_social: 'razao_social'
+export const QueryMode = {
+  default: 'default',
+  insensitive: 'insensitive'
 } as const
 
-export type FornecedorOrderByRelevanceFieldEnum = (typeof FornecedorOrderByRelevanceFieldEnum)[keyof typeof FornecedorOrderByRelevanceFieldEnum]
-
-
-export const SecretariaOrderByRelevanceFieldEnum = {
-  nome: 'nome'
-} as const
-
-export type SecretariaOrderByRelevanceFieldEnum = (typeof SecretariaOrderByRelevanceFieldEnum)[keyof typeof SecretariaOrderByRelevanceFieldEnum]
-
-
-export const ProdutoOrderByRelevanceFieldEnum = {
-  nome: 'nome',
-  categoria: 'categoria'
-} as const
-
-export type ProdutoOrderByRelevanceFieldEnum = (typeof ProdutoOrderByRelevanceFieldEnum)[keyof typeof ProdutoOrderByRelevanceFieldEnum]
+export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
 
 
 export const NullsOrder = {
@@ -190,36 +176,4 @@ export const NullsOrder = {
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
-
-
-export const EntradaOrderByRelevanceFieldEnum = {
-  observacoes: 'observacoes'
-} as const
-
-export type EntradaOrderByRelevanceFieldEnum = (typeof EntradaOrderByRelevanceFieldEnum)[keyof typeof EntradaOrderByRelevanceFieldEnum]
-
-
-export const SaidaOrderByRelevanceFieldEnum = {
-  observacoes: 'observacoes'
-} as const
-
-export type SaidaOrderByRelevanceFieldEnum = (typeof SaidaOrderByRelevanceFieldEnum)[keyof typeof SaidaOrderByRelevanceFieldEnum]
-
-
-export const UsuarioOrderByRelevanceFieldEnum = {
-  nome: 'nome',
-  email: 'email',
-  senha: 'senha',
-  codRecuperacao: 'codRecuperacao'
-} as const
-
-export type UsuarioOrderByRelevanceFieldEnum = (typeof UsuarioOrderByRelevanceFieldEnum)[keyof typeof UsuarioOrderByRelevanceFieldEnum]
-
-
-export const LogOrderByRelevanceFieldEnum = {
-  descricao: 'descricao',
-  complemento: 'complemento'
-} as const
-
-export type LogOrderByRelevanceFieldEnum = (typeof LogOrderByRelevanceFieldEnum)[keyof typeof LogOrderByRelevanceFieldEnum]
 

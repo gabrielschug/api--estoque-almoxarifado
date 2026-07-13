@@ -266,7 +266,6 @@ export type UsuarioOrderByWithRelationInput = {
   ultimoLogin?: Prisma.SortOrderInput | Prisma.SortOrder
   nivel?: Prisma.SortOrder
   log?: Prisma.LogOrderByRelationAggregateInput
-  _relevance?: Prisma.UsuarioOrderByRelevanceInput
 }
 
 export type UsuarioWhereUniqueInput = Prisma.AtLeast<{
@@ -400,12 +399,6 @@ export type UsuarioUncheckedUpdateManyInput = {
   codRecuperacao?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ultimoLogin?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   nivel?: Prisma.IntFieldUpdateOperationsInput | number
-}
-
-export type UsuarioOrderByRelevanceInput = {
-  fields: Prisma.UsuarioOrderByRelevanceFieldEnum | Prisma.UsuarioOrderByRelevanceFieldEnum[]
-  sort: Prisma.SortOrder
-  search: string
 }
 
 export type UsuarioCountOrderByAggregateInput = {
@@ -584,7 +577,29 @@ export type UsuarioSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   _count?: boolean | Prisma.UsuarioCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["usuario"]>
 
+export type UsuarioSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  nome?: boolean
+  email?: boolean
+  senha?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
+  codRecuperacao?: boolean
+  ultimoLogin?: boolean
+  nivel?: boolean
+}, ExtArgs["result"]["usuario"]>
 
+export type UsuarioSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  nome?: boolean
+  email?: boolean
+  senha?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
+  codRecuperacao?: boolean
+  ultimoLogin?: boolean
+  nivel?: boolean
+}, ExtArgs["result"]["usuario"]>
 
 export type UsuarioSelectScalar = {
   id?: boolean
@@ -603,6 +618,8 @@ export type UsuarioInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs
   log?: boolean | Prisma.Usuario$logArgs<ExtArgs>
   _count?: boolean | Prisma.UsuarioCountOutputTypeDefaultArgs<ExtArgs>
 }
+export type UsuarioIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type UsuarioIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
 
 export type $UsuarioPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Usuario"
@@ -737,6 +754,30 @@ export interface UsuarioDelegate<ExtArgs extends runtime.Types.Extensions.Intern
   createMany<T extends UsuarioCreateManyArgs>(args?: Prisma.SelectSubset<T, UsuarioCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
 
   /**
+   * Create many Usuarios and returns the data saved in the database.
+   * @param {UsuarioCreateManyAndReturnArgs} args - Arguments to create many Usuarios.
+   * @example
+   * // Create many Usuarios
+   * const usuario = await prisma.usuario.createManyAndReturn({
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Create many Usuarios and only return the `id`
+   * const usuarioWithIdOnly = await prisma.usuario.createManyAndReturn({
+   *   select: { id: true },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  createManyAndReturn<T extends UsuarioCreateManyAndReturnArgs>(args?: Prisma.SelectSubset<T, UsuarioCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+  /**
    * Delete a Usuario.
    * @param {UsuarioDeleteArgs} args - Arguments to delete one Usuario.
    * @example
@@ -799,6 +840,36 @@ export interface UsuarioDelegate<ExtArgs extends runtime.Types.Extensions.Intern
    * 
    */
   updateMany<T extends UsuarioUpdateManyArgs>(args: Prisma.SelectSubset<T, UsuarioUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
+
+  /**
+   * Update zero or more Usuarios and returns the data updated in the database.
+   * @param {UsuarioUpdateManyAndReturnArgs} args - Arguments to update many Usuarios.
+   * @example
+   * // Update many Usuarios
+   * const usuario = await prisma.usuario.updateManyAndReturn({
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Update zero or more Usuarios and only return the `id`
+   * const usuarioWithIdOnly = await prisma.usuario.updateManyAndReturn({
+   *   select: { id: true },
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  updateManyAndReturn<T extends UsuarioUpdateManyAndReturnArgs>(args: Prisma.SelectSubset<T, UsuarioUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
   /**
    * Create or update one Usuario.
@@ -1236,6 +1307,25 @@ export type UsuarioCreateManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
 }
 
 /**
+ * Usuario createManyAndReturn
+ */
+export type UsuarioCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Usuario
+   */
+  select?: Prisma.UsuarioSelectCreateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the Usuario
+   */
+  omit?: Prisma.UsuarioOmit<ExtArgs> | null
+  /**
+   * The data used to create many Usuarios.
+   */
+  data: Prisma.UsuarioCreateManyInput | Prisma.UsuarioCreateManyInput[]
+  skipDuplicates?: boolean
+}
+
+/**
  * Usuario update
  */
 export type UsuarioUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1265,6 +1355,32 @@ export type UsuarioUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalA
  * Usuario updateMany
  */
 export type UsuarioUpdateManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * The data used to update Usuarios.
+   */
+  data: Prisma.XOR<Prisma.UsuarioUpdateManyMutationInput, Prisma.UsuarioUncheckedUpdateManyInput>
+  /**
+   * Filter which Usuarios to update
+   */
+  where?: Prisma.UsuarioWhereInput
+  /**
+   * Limit how many Usuarios to update.
+   */
+  limit?: number
+}
+
+/**
+ * Usuario updateManyAndReturn
+ */
+export type UsuarioUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Usuario
+   */
+  select?: Prisma.UsuarioSelectUpdateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the Usuario
+   */
+  omit?: Prisma.UsuarioOmit<ExtArgs> | null
   /**
    * The data used to update Usuarios.
    */

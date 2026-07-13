@@ -262,7 +262,6 @@ export type EntradaOrderByWithRelationInput = {
   observacoes?: Prisma.SortOrderInput | Prisma.SortOrder
   fornecedor?: Prisma.FornecedorOrderByWithRelationInput
   produto?: Prisma.ProdutoOrderByWithRelationInput
-  _relevance?: Prisma.EntradaOrderByRelevanceInput
 }
 
 export type EntradaWhereUniqueInput = Prisma.AtLeast<{
@@ -381,12 +380,6 @@ export type EntradaListRelationFilter = {
 
 export type EntradaOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
-}
-
-export type EntradaOrderByRelevanceInput = {
-  fields: Prisma.EntradaOrderByRelevanceFieldEnum | Prisma.EntradaOrderByRelevanceFieldEnum[]
-  sort: Prisma.SortOrder
-  search: string
 }
 
 export type EntradaCountOrderByAggregateInput = {
@@ -718,7 +711,29 @@ export type EntradaSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   produto?: boolean | Prisma.ProdutoDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["entrada"]>
 
+export type EntradaSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  data?: boolean
+  numDocumento?: boolean
+  fornecedorId?: boolean
+  produtoId?: boolean
+  quant?: boolean
+  observacoes?: boolean
+  fornecedor?: boolean | Prisma.FornecedorDefaultArgs<ExtArgs>
+  produto?: boolean | Prisma.ProdutoDefaultArgs<ExtArgs>
+}, ExtArgs["result"]["entrada"]>
 
+export type EntradaSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  data?: boolean
+  numDocumento?: boolean
+  fornecedorId?: boolean
+  produtoId?: boolean
+  quant?: boolean
+  observacoes?: boolean
+  fornecedor?: boolean | Prisma.FornecedorDefaultArgs<ExtArgs>
+  produto?: boolean | Prisma.ProdutoDefaultArgs<ExtArgs>
+}, ExtArgs["result"]["entrada"]>
 
 export type EntradaSelectScalar = {
   id?: boolean
@@ -732,6 +747,14 @@ export type EntradaSelectScalar = {
 
 export type EntradaOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "data" | "numDocumento" | "fornecedorId" | "produtoId" | "quant" | "observacoes", ExtArgs["result"]["entrada"]>
 export type EntradaInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  fornecedor?: boolean | Prisma.FornecedorDefaultArgs<ExtArgs>
+  produto?: boolean | Prisma.ProdutoDefaultArgs<ExtArgs>
+}
+export type EntradaIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  fornecedor?: boolean | Prisma.FornecedorDefaultArgs<ExtArgs>
+  produto?: boolean | Prisma.ProdutoDefaultArgs<ExtArgs>
+}
+export type EntradaIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   fornecedor?: boolean | Prisma.FornecedorDefaultArgs<ExtArgs>
   produto?: boolean | Prisma.ProdutoDefaultArgs<ExtArgs>
 }
@@ -868,6 +891,30 @@ export interface EntradaDelegate<ExtArgs extends runtime.Types.Extensions.Intern
   createMany<T extends EntradaCreateManyArgs>(args?: Prisma.SelectSubset<T, EntradaCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
 
   /**
+   * Create many Entradas and returns the data saved in the database.
+   * @param {EntradaCreateManyAndReturnArgs} args - Arguments to create many Entradas.
+   * @example
+   * // Create many Entradas
+   * const entrada = await prisma.entrada.createManyAndReturn({
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Create many Entradas and only return the `id`
+   * const entradaWithIdOnly = await prisma.entrada.createManyAndReturn({
+   *   select: { id: true },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  createManyAndReturn<T extends EntradaCreateManyAndReturnArgs>(args?: Prisma.SelectSubset<T, EntradaCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$EntradaPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+  /**
    * Delete a Entrada.
    * @param {EntradaDeleteArgs} args - Arguments to delete one Entrada.
    * @example
@@ -930,6 +977,36 @@ export interface EntradaDelegate<ExtArgs extends runtime.Types.Extensions.Intern
    * 
    */
   updateMany<T extends EntradaUpdateManyArgs>(args: Prisma.SelectSubset<T, EntradaUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
+
+  /**
+   * Update zero or more Entradas and returns the data updated in the database.
+   * @param {EntradaUpdateManyAndReturnArgs} args - Arguments to update many Entradas.
+   * @example
+   * // Update many Entradas
+   * const entrada = await prisma.entrada.updateManyAndReturn({
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Update zero or more Entradas and only return the `id`
+   * const entradaWithIdOnly = await prisma.entrada.updateManyAndReturn({
+   *   select: { id: true },
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  updateManyAndReturn<T extends EntradaUpdateManyAndReturnArgs>(args: Prisma.SelectSubset<T, EntradaUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$EntradaPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
   /**
    * Create or update one Entrada.
@@ -1366,6 +1443,29 @@ export type EntradaCreateManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
 }
 
 /**
+ * Entrada createManyAndReturn
+ */
+export type EntradaCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Entrada
+   */
+  select?: Prisma.EntradaSelectCreateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the Entrada
+   */
+  omit?: Prisma.EntradaOmit<ExtArgs> | null
+  /**
+   * The data used to create many Entradas.
+   */
+  data: Prisma.EntradaCreateManyInput | Prisma.EntradaCreateManyInput[]
+  skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.EntradaIncludeCreateManyAndReturn<ExtArgs> | null
+}
+
+/**
  * Entrada update
  */
 export type EntradaUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1407,6 +1507,36 @@ export type EntradaUpdateManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * Limit how many Entradas to update.
    */
   limit?: number
+}
+
+/**
+ * Entrada updateManyAndReturn
+ */
+export type EntradaUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Entrada
+   */
+  select?: Prisma.EntradaSelectUpdateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the Entrada
+   */
+  omit?: Prisma.EntradaOmit<ExtArgs> | null
+  /**
+   * The data used to update Entradas.
+   */
+  data: Prisma.XOR<Prisma.EntradaUpdateManyMutationInput, Prisma.EntradaUncheckedUpdateManyInput>
+  /**
+   * Filter which Entradas to update
+   */
+  where?: Prisma.EntradaWhereInput
+  /**
+   * Limit how many Entradas to update.
+   */
+  limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.EntradaIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**

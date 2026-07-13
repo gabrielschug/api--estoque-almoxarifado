@@ -230,7 +230,6 @@ export type LogOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   usuarioId?: Prisma.SortOrder
   usuario?: Prisma.UsuarioOrderByWithRelationInput
-  _relevance?: Prisma.LogOrderByRelevanceInput
 }
 
 export type LogWhereUniqueInput = Prisma.AtLeast<{
@@ -329,12 +328,6 @@ export type LogListRelationFilter = {
 
 export type LogOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
-}
-
-export type LogOrderByRelevanceInput = {
-  fields: Prisma.LogOrderByRelevanceFieldEnum | Prisma.LogOrderByRelevanceFieldEnum[]
-  sort: Prisma.SortOrder
-  search: string
 }
 
 export type LogCountOrderByAggregateInput = {
@@ -501,7 +494,23 @@ export type LogSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = ru
   usuario?: boolean | Prisma.UsuarioDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["log"]>
 
+export type LogSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  descricao?: boolean
+  complemento?: boolean
+  createdAt?: boolean
+  usuarioId?: boolean
+  usuario?: boolean | Prisma.UsuarioDefaultArgs<ExtArgs>
+}, ExtArgs["result"]["log"]>
 
+export type LogSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  descricao?: boolean
+  complemento?: boolean
+  createdAt?: boolean
+  usuarioId?: boolean
+  usuario?: boolean | Prisma.UsuarioDefaultArgs<ExtArgs>
+}, ExtArgs["result"]["log"]>
 
 export type LogSelectScalar = {
   id?: boolean
@@ -513,6 +522,12 @@ export type LogSelectScalar = {
 
 export type LogOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "descricao" | "complemento" | "createdAt" | "usuarioId", ExtArgs["result"]["log"]>
 export type LogInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  usuario?: boolean | Prisma.UsuarioDefaultArgs<ExtArgs>
+}
+export type LogIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  usuario?: boolean | Prisma.UsuarioDefaultArgs<ExtArgs>
+}
+export type LogIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   usuario?: boolean | Prisma.UsuarioDefaultArgs<ExtArgs>
 }
 
@@ -645,6 +660,30 @@ export interface LogDelegate<ExtArgs extends runtime.Types.Extensions.InternalAr
   createMany<T extends LogCreateManyArgs>(args?: Prisma.SelectSubset<T, LogCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
 
   /**
+   * Create many Logs and returns the data saved in the database.
+   * @param {LogCreateManyAndReturnArgs} args - Arguments to create many Logs.
+   * @example
+   * // Create many Logs
+   * const log = await prisma.log.createManyAndReturn({
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Create many Logs and only return the `id`
+   * const logWithIdOnly = await prisma.log.createManyAndReturn({
+   *   select: { id: true },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  createManyAndReturn<T extends LogCreateManyAndReturnArgs>(args?: Prisma.SelectSubset<T, LogCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LogPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+  /**
    * Delete a Log.
    * @param {LogDeleteArgs} args - Arguments to delete one Log.
    * @example
@@ -707,6 +746,36 @@ export interface LogDelegate<ExtArgs extends runtime.Types.Extensions.InternalAr
    * 
    */
   updateMany<T extends LogUpdateManyArgs>(args: Prisma.SelectSubset<T, LogUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
+
+  /**
+   * Update zero or more Logs and returns the data updated in the database.
+   * @param {LogUpdateManyAndReturnArgs} args - Arguments to update many Logs.
+   * @example
+   * // Update many Logs
+   * const log = await prisma.log.updateManyAndReturn({
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Update zero or more Logs and only return the `id`
+   * const logWithIdOnly = await prisma.log.updateManyAndReturn({
+   *   select: { id: true },
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  updateManyAndReturn<T extends LogUpdateManyAndReturnArgs>(args: Prisma.SelectSubset<T, LogUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LogPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
   /**
    * Create or update one Log.
@@ -1140,6 +1209,29 @@ export type LogCreateManyArgs<ExtArgs extends runtime.Types.Extensions.InternalA
 }
 
 /**
+ * Log createManyAndReturn
+ */
+export type LogCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Log
+   */
+  select?: Prisma.LogSelectCreateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the Log
+   */
+  omit?: Prisma.LogOmit<ExtArgs> | null
+  /**
+   * The data used to create many Logs.
+   */
+  data: Prisma.LogCreateManyInput | Prisma.LogCreateManyInput[]
+  skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LogIncludeCreateManyAndReturn<ExtArgs> | null
+}
+
+/**
  * Log update
  */
 export type LogUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1181,6 +1273,36 @@ export type LogUpdateManyArgs<ExtArgs extends runtime.Types.Extensions.InternalA
    * Limit how many Logs to update.
    */
   limit?: number
+}
+
+/**
+ * Log updateManyAndReturn
+ */
+export type LogUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Log
+   */
+  select?: Prisma.LogSelectUpdateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the Log
+   */
+  omit?: Prisma.LogOmit<ExtArgs> | null
+  /**
+   * The data used to update Logs.
+   */
+  data: Prisma.XOR<Prisma.LogUpdateManyMutationInput, Prisma.LogUncheckedUpdateManyInput>
+  /**
+   * Filter which Logs to update
+   */
+  where?: Prisma.LogWhereInput
+  /**
+   * Limit how many Logs to update.
+   */
+  limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LogIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**

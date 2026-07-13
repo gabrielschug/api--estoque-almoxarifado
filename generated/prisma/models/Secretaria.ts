@@ -199,7 +199,6 @@ export type SecretariaOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   nome?: Prisma.SortOrder
   saidas?: Prisma.SaidaOrderByRelationAggregateInput
-  _relevance?: Prisma.SecretariaOrderByRelevanceInput
 }
 
 export type SecretariaWhereUniqueInput = Prisma.AtLeast<{
@@ -263,12 +262,6 @@ export type SecretariaUpdateManyMutationInput = {
 export type SecretariaUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   nome?: Prisma.StringFieldUpdateOperationsInput | string
-}
-
-export type SecretariaOrderByRelevanceInput = {
-  fields: Prisma.SecretariaOrderByRelevanceFieldEnum | Prisma.SecretariaOrderByRelevanceFieldEnum[]
-  sort: Prisma.SortOrder
-  search: string
 }
 
 export type SecretariaCountOrderByAggregateInput = {
@@ -385,7 +378,15 @@ export type SecretariaSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   _count?: boolean | Prisma.SecretariaCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["secretaria"]>
 
+export type SecretariaSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  nome?: boolean
+}, ExtArgs["result"]["secretaria"]>
 
+export type SecretariaSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  nome?: boolean
+}, ExtArgs["result"]["secretaria"]>
 
 export type SecretariaSelectScalar = {
   id?: boolean
@@ -397,6 +398,8 @@ export type SecretariaInclude<ExtArgs extends runtime.Types.Extensions.InternalA
   saidas?: boolean | Prisma.Secretaria$saidasArgs<ExtArgs>
   _count?: boolean | Prisma.SecretariaCountOutputTypeDefaultArgs<ExtArgs>
 }
+export type SecretariaIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type SecretariaIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
 
 export type $SecretariaPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Secretaria"
@@ -524,6 +527,30 @@ export interface SecretariaDelegate<ExtArgs extends runtime.Types.Extensions.Int
   createMany<T extends SecretariaCreateManyArgs>(args?: Prisma.SelectSubset<T, SecretariaCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
 
   /**
+   * Create many Secretarias and returns the data saved in the database.
+   * @param {SecretariaCreateManyAndReturnArgs} args - Arguments to create many Secretarias.
+   * @example
+   * // Create many Secretarias
+   * const secretaria = await prisma.secretaria.createManyAndReturn({
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Create many Secretarias and only return the `id`
+   * const secretariaWithIdOnly = await prisma.secretaria.createManyAndReturn({
+   *   select: { id: true },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  createManyAndReturn<T extends SecretariaCreateManyAndReturnArgs>(args?: Prisma.SelectSubset<T, SecretariaCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SecretariaPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+  /**
    * Delete a Secretaria.
    * @param {SecretariaDeleteArgs} args - Arguments to delete one Secretaria.
    * @example
@@ -586,6 +613,36 @@ export interface SecretariaDelegate<ExtArgs extends runtime.Types.Extensions.Int
    * 
    */
   updateMany<T extends SecretariaUpdateManyArgs>(args: Prisma.SelectSubset<T, SecretariaUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
+
+  /**
+   * Update zero or more Secretarias and returns the data updated in the database.
+   * @param {SecretariaUpdateManyAndReturnArgs} args - Arguments to update many Secretarias.
+   * @example
+   * // Update many Secretarias
+   * const secretaria = await prisma.secretaria.updateManyAndReturn({
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Update zero or more Secretarias and only return the `id`
+   * const secretariaWithIdOnly = await prisma.secretaria.updateManyAndReturn({
+   *   select: { id: true },
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  updateManyAndReturn<T extends SecretariaUpdateManyAndReturnArgs>(args: Prisma.SelectSubset<T, SecretariaUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SecretariaPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
   /**
    * Create or update one Secretaria.
@@ -1016,6 +1073,25 @@ export type SecretariaCreateManyArgs<ExtArgs extends runtime.Types.Extensions.In
 }
 
 /**
+ * Secretaria createManyAndReturn
+ */
+export type SecretariaCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Secretaria
+   */
+  select?: Prisma.SecretariaSelectCreateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the Secretaria
+   */
+  omit?: Prisma.SecretariaOmit<ExtArgs> | null
+  /**
+   * The data used to create many Secretarias.
+   */
+  data: Prisma.SecretariaCreateManyInput | Prisma.SecretariaCreateManyInput[]
+  skipDuplicates?: boolean
+}
+
+/**
  * Secretaria update
  */
 export type SecretariaUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1045,6 +1121,32 @@ export type SecretariaUpdateArgs<ExtArgs extends runtime.Types.Extensions.Intern
  * Secretaria updateMany
  */
 export type SecretariaUpdateManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * The data used to update Secretarias.
+   */
+  data: Prisma.XOR<Prisma.SecretariaUpdateManyMutationInput, Prisma.SecretariaUncheckedUpdateManyInput>
+  /**
+   * Filter which Secretarias to update
+   */
+  where?: Prisma.SecretariaWhereInput
+  /**
+   * Limit how many Secretarias to update.
+   */
+  limit?: number
+}
+
+/**
+ * Secretaria updateManyAndReturn
+ */
+export type SecretariaUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Secretaria
+   */
+  select?: Prisma.SecretariaSelectUpdateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the Secretaria
+   */
+  omit?: Prisma.SecretariaOmit<ExtArgs> | null
   /**
    * The data used to update Secretarias.
    */
