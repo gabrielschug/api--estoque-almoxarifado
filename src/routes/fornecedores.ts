@@ -71,8 +71,9 @@ router.delete("/:id", VerificaToken, VerificaHorario, async (req, res) => {
 
     // realiza a exclusão da seleção
     try {
-        const fornecedor = await prisma.fornecedor.delete({
-            where: { id: Number(id) }
+        const fornecedor = await prisma.fornecedor.update({
+            where: { id: Number(id)},
+            data: { deleted: true, deletedAt: new Date() }
         })
         res.status(200).json(fornecedor)
     } catch (error) {

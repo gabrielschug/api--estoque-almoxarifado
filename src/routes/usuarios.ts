@@ -91,8 +91,9 @@ router.delete("/:id", VerificaToken, async (req, res) => {
   const { id } = req.params
 
   try {
-    const usuario = await prisma.usuario.delete({
-      where: {id: Number(id)}
+    const usuario = await prisma.usuario.update({
+      where: {id: Number(id)},
+      data: {deleted: true, deletedAt: new Date()}
     })
 
     res.status(200).json(usuario)

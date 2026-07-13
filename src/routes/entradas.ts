@@ -206,8 +206,9 @@ router.delete("/:id", VerificaToken, VerificaHorario, async (req, res) => {
     }
 
     const [entradaDeletada, produtoAtualizado, logCriado] = await prisma.$transaction([
-      prisma.entrada.delete({
-        where: { id: entradaId }
+      prisma.entrada.update({
+        where: { id: entradaId },
+        data: {deleted: true, deletedAt: new Date()}
       }),
       prisma.produto.update({
         where: { id: entrada.produtoId },
