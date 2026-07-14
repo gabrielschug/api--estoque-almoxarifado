@@ -46,6 +46,8 @@ export type UsuarioMinAggregateOutputType = {
   codRecuperacao: string | null
   ultimoLogin: Date | null
   nivel: number | null
+  deleted: boolean | null
+  deletedAt: Date | null
 }
 
 export type UsuarioMaxAggregateOutputType = {
@@ -58,6 +60,8 @@ export type UsuarioMaxAggregateOutputType = {
   codRecuperacao: string | null
   ultimoLogin: Date | null
   nivel: number | null
+  deleted: boolean | null
+  deletedAt: Date | null
 }
 
 export type UsuarioCountAggregateOutputType = {
@@ -70,6 +74,8 @@ export type UsuarioCountAggregateOutputType = {
   codRecuperacao: number
   ultimoLogin: number
   nivel: number
+  deleted: number
+  deletedAt: number
   _all: number
 }
 
@@ -94,6 +100,8 @@ export type UsuarioMinAggregateInputType = {
   codRecuperacao?: true
   ultimoLogin?: true
   nivel?: true
+  deleted?: true
+  deletedAt?: true
 }
 
 export type UsuarioMaxAggregateInputType = {
@@ -106,6 +114,8 @@ export type UsuarioMaxAggregateInputType = {
   codRecuperacao?: true
   ultimoLogin?: true
   nivel?: true
+  deleted?: true
+  deletedAt?: true
 }
 
 export type UsuarioCountAggregateInputType = {
@@ -118,6 +128,8 @@ export type UsuarioCountAggregateInputType = {
   codRecuperacao?: true
   ultimoLogin?: true
   nivel?: true
+  deleted?: true
+  deletedAt?: true
   _all?: true
 }
 
@@ -217,6 +229,8 @@ export type UsuarioGroupByOutputType = {
   codRecuperacao: string | null
   ultimoLogin: Date | null
   nivel: number
+  deleted: boolean
+  deletedAt: Date | null
   _count: UsuarioCountAggregateOutputType | null
   _avg: UsuarioAvgAggregateOutputType | null
   _sum: UsuarioSumAggregateOutputType | null
@@ -252,6 +266,8 @@ export type UsuarioWhereInput = {
   codRecuperacao?: Prisma.StringNullableFilter<"Usuario"> | string | null
   ultimoLogin?: Prisma.DateTimeNullableFilter<"Usuario"> | Date | string | null
   nivel?: Prisma.IntFilter<"Usuario"> | number
+  deleted?: Prisma.BoolFilter<"Usuario"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"Usuario"> | Date | string | null
   log?: Prisma.LogListRelationFilter
 }
 
@@ -265,6 +281,8 @@ export type UsuarioOrderByWithRelationInput = {
   codRecuperacao?: Prisma.SortOrderInput | Prisma.SortOrder
   ultimoLogin?: Prisma.SortOrderInput | Prisma.SortOrder
   nivel?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   log?: Prisma.LogOrderByRelationAggregateInput
 }
 
@@ -281,6 +299,8 @@ export type UsuarioWhereUniqueInput = Prisma.AtLeast<{
   codRecuperacao?: Prisma.StringNullableFilter<"Usuario"> | string | null
   ultimoLogin?: Prisma.DateTimeNullableFilter<"Usuario"> | Date | string | null
   nivel?: Prisma.IntFilter<"Usuario"> | number
+  deleted?: Prisma.BoolFilter<"Usuario"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"Usuario"> | Date | string | null
   log?: Prisma.LogListRelationFilter
 }, "id" | "email">
 
@@ -294,6 +314,8 @@ export type UsuarioOrderByWithAggregationInput = {
   codRecuperacao?: Prisma.SortOrderInput | Prisma.SortOrder
   ultimoLogin?: Prisma.SortOrderInput | Prisma.SortOrder
   nivel?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.UsuarioCountOrderByAggregateInput
   _avg?: Prisma.UsuarioAvgOrderByAggregateInput
   _max?: Prisma.UsuarioMaxOrderByAggregateInput
@@ -314,6 +336,8 @@ export type UsuarioScalarWhereWithAggregatesInput = {
   codRecuperacao?: Prisma.StringNullableWithAggregatesFilter<"Usuario"> | string | null
   ultimoLogin?: Prisma.DateTimeNullableWithAggregatesFilter<"Usuario"> | Date | string | null
   nivel?: Prisma.IntWithAggregatesFilter<"Usuario"> | number
+  deleted?: Prisma.BoolWithAggregatesFilter<"Usuario"> | boolean
+  deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Usuario"> | Date | string | null
 }
 
 export type UsuarioCreateInput = {
@@ -325,6 +349,8 @@ export type UsuarioCreateInput = {
   codRecuperacao?: string | null
   ultimoLogin?: Date | string | null
   nivel?: number
+  deleted?: boolean
+  deletedAt?: Date | string | null
   log?: Prisma.LogCreateNestedManyWithoutUsuarioInput
 }
 
@@ -338,6 +364,8 @@ export type UsuarioUncheckedCreateInput = {
   codRecuperacao?: string | null
   ultimoLogin?: Date | string | null
   nivel?: number
+  deleted?: boolean
+  deletedAt?: Date | string | null
   log?: Prisma.LogUncheckedCreateNestedManyWithoutUsuarioInput
 }
 
@@ -350,6 +378,8 @@ export type UsuarioUpdateInput = {
   codRecuperacao?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ultimoLogin?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   nivel?: Prisma.IntFieldUpdateOperationsInput | number
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   log?: Prisma.LogUpdateManyWithoutUsuarioNestedInput
 }
 
@@ -363,6 +393,8 @@ export type UsuarioUncheckedUpdateInput = {
   codRecuperacao?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ultimoLogin?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   nivel?: Prisma.IntFieldUpdateOperationsInput | number
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   log?: Prisma.LogUncheckedUpdateManyWithoutUsuarioNestedInput
 }
 
@@ -376,6 +408,8 @@ export type UsuarioCreateManyInput = {
   codRecuperacao?: string | null
   ultimoLogin?: Date | string | null
   nivel?: number
+  deleted?: boolean
+  deletedAt?: Date | string | null
 }
 
 export type UsuarioUpdateManyMutationInput = {
@@ -387,6 +421,8 @@ export type UsuarioUpdateManyMutationInput = {
   codRecuperacao?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ultimoLogin?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   nivel?: Prisma.IntFieldUpdateOperationsInput | number
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type UsuarioUncheckedUpdateManyInput = {
@@ -399,6 +435,8 @@ export type UsuarioUncheckedUpdateManyInput = {
   codRecuperacao?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ultimoLogin?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   nivel?: Prisma.IntFieldUpdateOperationsInput | number
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type UsuarioCountOrderByAggregateInput = {
@@ -411,6 +449,8 @@ export type UsuarioCountOrderByAggregateInput = {
   codRecuperacao?: Prisma.SortOrder
   ultimoLogin?: Prisma.SortOrder
   nivel?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
 }
 
 export type UsuarioAvgOrderByAggregateInput = {
@@ -428,6 +468,8 @@ export type UsuarioMaxOrderByAggregateInput = {
   codRecuperacao?: Prisma.SortOrder
   ultimoLogin?: Prisma.SortOrder
   nivel?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
 }
 
 export type UsuarioMinOrderByAggregateInput = {
@@ -440,6 +482,8 @@ export type UsuarioMinOrderByAggregateInput = {
   codRecuperacao?: Prisma.SortOrder
   ultimoLogin?: Prisma.SortOrder
   nivel?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
 }
 
 export type UsuarioSumOrderByAggregateInput = {
@@ -450,10 +494,6 @@ export type UsuarioSumOrderByAggregateInput = {
 export type UsuarioScalarRelationFilter = {
   is?: Prisma.UsuarioWhereInput
   isNot?: Prisma.UsuarioWhereInput
-}
-
-export type NullableDateTimeFieldUpdateOperationsInput = {
-  set?: Date | string | null
 }
 
 export type UsuarioCreateNestedOneWithoutLogInput = {
@@ -479,6 +519,8 @@ export type UsuarioCreateWithoutLogInput = {
   codRecuperacao?: string | null
   ultimoLogin?: Date | string | null
   nivel?: number
+  deleted?: boolean
+  deletedAt?: Date | string | null
 }
 
 export type UsuarioUncheckedCreateWithoutLogInput = {
@@ -491,6 +533,8 @@ export type UsuarioUncheckedCreateWithoutLogInput = {
   codRecuperacao?: string | null
   ultimoLogin?: Date | string | null
   nivel?: number
+  deleted?: boolean
+  deletedAt?: Date | string | null
 }
 
 export type UsuarioCreateOrConnectWithoutLogInput = {
@@ -518,6 +562,8 @@ export type UsuarioUpdateWithoutLogInput = {
   codRecuperacao?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ultimoLogin?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   nivel?: Prisma.IntFieldUpdateOperationsInput | number
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type UsuarioUncheckedUpdateWithoutLogInput = {
@@ -530,6 +576,8 @@ export type UsuarioUncheckedUpdateWithoutLogInput = {
   codRecuperacao?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ultimoLogin?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   nivel?: Prisma.IntFieldUpdateOperationsInput | number
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 
@@ -573,6 +621,8 @@ export type UsuarioSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   codRecuperacao?: boolean
   ultimoLogin?: boolean
   nivel?: boolean
+  deleted?: boolean
+  deletedAt?: boolean
   log?: boolean | Prisma.Usuario$logArgs<ExtArgs>
   _count?: boolean | Prisma.UsuarioCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["usuario"]>
@@ -587,6 +637,8 @@ export type UsuarioSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   codRecuperacao?: boolean
   ultimoLogin?: boolean
   nivel?: boolean
+  deleted?: boolean
+  deletedAt?: boolean
 }, ExtArgs["result"]["usuario"]>
 
 export type UsuarioSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -599,6 +651,8 @@ export type UsuarioSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   codRecuperacao?: boolean
   ultimoLogin?: boolean
   nivel?: boolean
+  deleted?: boolean
+  deletedAt?: boolean
 }, ExtArgs["result"]["usuario"]>
 
 export type UsuarioSelectScalar = {
@@ -611,9 +665,11 @@ export type UsuarioSelectScalar = {
   codRecuperacao?: boolean
   ultimoLogin?: boolean
   nivel?: boolean
+  deleted?: boolean
+  deletedAt?: boolean
 }
 
-export type UsuarioOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "nome" | "email" | "senha" | "createdAt" | "updatedAt" | "codRecuperacao" | "ultimoLogin" | "nivel", ExtArgs["result"]["usuario"]>
+export type UsuarioOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "nome" | "email" | "senha" | "createdAt" | "updatedAt" | "codRecuperacao" | "ultimoLogin" | "nivel" | "deleted" | "deletedAt", ExtArgs["result"]["usuario"]>
 export type UsuarioInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   log?: boolean | Prisma.Usuario$logArgs<ExtArgs>
   _count?: boolean | Prisma.UsuarioCountOutputTypeDefaultArgs<ExtArgs>
@@ -636,6 +692,8 @@ export type $UsuarioPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     codRecuperacao: string | null
     ultimoLogin: Date | null
     nivel: number
+    deleted: boolean
+    deletedAt: Date | null
   }, ExtArgs["result"]["usuario"]>
   composites: {}
 }
@@ -1069,6 +1127,8 @@ export interface UsuarioFieldRefs {
   readonly codRecuperacao: Prisma.FieldRef<"Usuario", 'String'>
   readonly ultimoLogin: Prisma.FieldRef<"Usuario", 'DateTime'>
   readonly nivel: Prisma.FieldRef<"Usuario", 'Int'>
+  readonly deleted: Prisma.FieldRef<"Usuario", 'Boolean'>
+  readonly deletedAt: Prisma.FieldRef<"Usuario", 'DateTime'>
 }
     
 

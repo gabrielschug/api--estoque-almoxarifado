@@ -18,9 +18,8 @@ router.get("/", VerificaToken, async (req, res) =>{
 
   try {
     const usuarios = await prisma.usuario.findMany({
-      omit: {
-        senha: true
-      }
+      where: { deleted: false },
+      omit: {deleted: true, deletedAt: true, senha: true}
     })
 
     res.status(200).json(usuarios)
@@ -78,7 +77,7 @@ router.put("/:id", VerificaToken, async (req, res) => {
 
     try {
         const usuario = await prisma.usuario.update({
-            where: { id: Number(id) },
+            where: { id: Number(id), deleted: false },
             data: { nome, email, senha: senhaCriptografada, nivel}
         })
         res.status(200).json(usuario)
@@ -91,8 +90,9 @@ router.delete("/:id", VerificaToken, async (req, res) => {
   const { id } = req.params
 
   try {
-    const usuario = await prisma.usuario.delete({
-      where: {id: Number(id)}
+    const usuario = await prisma.usuario.update({
+      where: {id: Number(id)},
+      data: {deleted: true, deletedAt: new Date()}
     })
 
     res.status(200).json(usuario)
@@ -109,7 +109,8 @@ router.get("/:id", VerificaToken, async (req, res) => {
 
     try {
         const usuario = await prisma.usuario.findUnique({
-            where: { id: usuarioId}
+            where: { id: usuarioId, deleted: false},
+            omit: {deleted: true, deletedAt: true, senha: true}
         })
 
         if (!usuario) {

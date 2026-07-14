@@ -78,7 +78,9 @@ export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof
 
 export const FornecedorScalarFieldEnum = {
   id: 'id',
-  razao_social: 'razao_social'
+  razao_social: 'razao_social',
+  deleted: 'deleted',
+  deletedAt: 'deletedAt'
 } as const
 
 export type FornecedorScalarFieldEnum = (typeof FornecedorScalarFieldEnum)[keyof typeof FornecedorScalarFieldEnum]
@@ -86,7 +88,9 @@ export type FornecedorScalarFieldEnum = (typeof FornecedorScalarFieldEnum)[keyof
 
 export const SecretariaScalarFieldEnum = {
   id: 'id',
-  nome: 'nome'
+  nome: 'nome',
+  deleted: 'deleted',
+  deletedAt: 'deletedAt'
 } as const
 
 export type SecretariaScalarFieldEnum = (typeof SecretariaScalarFieldEnum)[keyof typeof SecretariaScalarFieldEnum]
@@ -97,7 +101,9 @@ export const ProdutoScalarFieldEnum = {
   nome: 'nome',
   quant: 'quant',
   preco: 'preco',
-  categoria: 'categoria'
+  categoria: 'categoria',
+  deleted: 'deleted',
+  deletedAt: 'deletedAt'
 } as const
 
 export type ProdutoScalarFieldEnum = (typeof ProdutoScalarFieldEnum)[keyof typeof ProdutoScalarFieldEnum]
@@ -110,7 +116,9 @@ export const EntradaScalarFieldEnum = {
   fornecedorId: 'fornecedorId',
   produtoId: 'produtoId',
   quant: 'quant',
-  observacoes: 'observacoes'
+  observacoes: 'observacoes',
+  deleted: 'deleted',
+  deletedAt: 'deletedAt'
 } as const
 
 export type EntradaScalarFieldEnum = (typeof EntradaScalarFieldEnum)[keyof typeof EntradaScalarFieldEnum]
@@ -122,7 +130,9 @@ export const SaidaScalarFieldEnum = {
   secretariaId: 'secretariaId',
   produtoId: 'produtoId',
   quant: 'quant',
-  observacoes: 'observacoes'
+  observacoes: 'observacoes',
+  deleted: 'deleted',
+  deletedAt: 'deletedAt'
 } as const
 
 export type SaidaScalarFieldEnum = (typeof SaidaScalarFieldEnum)[keyof typeof SaidaScalarFieldEnum]
@@ -137,7 +147,9 @@ export const UsuarioScalarFieldEnum = {
   updatedAt: 'updatedAt',
   codRecuperacao: 'codRecuperacao',
   ultimoLogin: 'ultimoLogin',
-  nivel: 'nivel'
+  nivel: 'nivel',
+  deleted: 'deleted',
+  deletedAt: 'deletedAt'
 } as const
 
 export type UsuarioScalarFieldEnum = (typeof UsuarioScalarFieldEnum)[keyof typeof UsuarioScalarFieldEnum]

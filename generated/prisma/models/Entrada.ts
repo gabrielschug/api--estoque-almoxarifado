@@ -50,6 +50,8 @@ export type EntradaMinAggregateOutputType = {
   produtoId: number | null
   quant: number | null
   observacoes: string | null
+  deleted: boolean | null
+  deletedAt: Date | null
 }
 
 export type EntradaMaxAggregateOutputType = {
@@ -60,6 +62,8 @@ export type EntradaMaxAggregateOutputType = {
   produtoId: number | null
   quant: number | null
   observacoes: string | null
+  deleted: boolean | null
+  deletedAt: Date | null
 }
 
 export type EntradaCountAggregateOutputType = {
@@ -70,6 +74,8 @@ export type EntradaCountAggregateOutputType = {
   produtoId: number
   quant: number
   observacoes: number
+  deleted: number
+  deletedAt: number
   _all: number
 }
 
@@ -98,6 +104,8 @@ export type EntradaMinAggregateInputType = {
   produtoId?: true
   quant?: true
   observacoes?: true
+  deleted?: true
+  deletedAt?: true
 }
 
 export type EntradaMaxAggregateInputType = {
@@ -108,6 +116,8 @@ export type EntradaMaxAggregateInputType = {
   produtoId?: true
   quant?: true
   observacoes?: true
+  deleted?: true
+  deletedAt?: true
 }
 
 export type EntradaCountAggregateInputType = {
@@ -118,6 +128,8 @@ export type EntradaCountAggregateInputType = {
   produtoId?: true
   quant?: true
   observacoes?: true
+  deleted?: true
+  deletedAt?: true
   _all?: true
 }
 
@@ -215,6 +227,8 @@ export type EntradaGroupByOutputType = {
   produtoId: number
   quant: number
   observacoes: string | null
+  deleted: boolean
+  deletedAt: Date | null
   _count: EntradaCountAggregateOutputType | null
   _avg: EntradaAvgAggregateOutputType | null
   _sum: EntradaSumAggregateOutputType | null
@@ -248,6 +262,8 @@ export type EntradaWhereInput = {
   produtoId?: Prisma.IntFilter<"Entrada"> | number
   quant?: Prisma.IntFilter<"Entrada"> | number
   observacoes?: Prisma.StringNullableFilter<"Entrada"> | string | null
+  deleted?: Prisma.BoolFilter<"Entrada"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"Entrada"> | Date | string | null
   fornecedor?: Prisma.XOR<Prisma.FornecedorScalarRelationFilter, Prisma.FornecedorWhereInput>
   produto?: Prisma.XOR<Prisma.ProdutoScalarRelationFilter, Prisma.ProdutoWhereInput>
 }
@@ -260,6 +276,8 @@ export type EntradaOrderByWithRelationInput = {
   produtoId?: Prisma.SortOrder
   quant?: Prisma.SortOrder
   observacoes?: Prisma.SortOrderInput | Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   fornecedor?: Prisma.FornecedorOrderByWithRelationInput
   produto?: Prisma.ProdutoOrderByWithRelationInput
 }
@@ -275,6 +293,8 @@ export type EntradaWhereUniqueInput = Prisma.AtLeast<{
   produtoId?: Prisma.IntFilter<"Entrada"> | number
   quant?: Prisma.IntFilter<"Entrada"> | number
   observacoes?: Prisma.StringNullableFilter<"Entrada"> | string | null
+  deleted?: Prisma.BoolFilter<"Entrada"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"Entrada"> | Date | string | null
   fornecedor?: Prisma.XOR<Prisma.FornecedorScalarRelationFilter, Prisma.FornecedorWhereInput>
   produto?: Prisma.XOR<Prisma.ProdutoScalarRelationFilter, Prisma.ProdutoWhereInput>
 }, "id">
@@ -287,6 +307,8 @@ export type EntradaOrderByWithAggregationInput = {
   produtoId?: Prisma.SortOrder
   quant?: Prisma.SortOrder
   observacoes?: Prisma.SortOrderInput | Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.EntradaCountOrderByAggregateInput
   _avg?: Prisma.EntradaAvgOrderByAggregateInput
   _max?: Prisma.EntradaMaxOrderByAggregateInput
@@ -305,6 +327,8 @@ export type EntradaScalarWhereWithAggregatesInput = {
   produtoId?: Prisma.IntWithAggregatesFilter<"Entrada"> | number
   quant?: Prisma.IntWithAggregatesFilter<"Entrada"> | number
   observacoes?: Prisma.StringNullableWithAggregatesFilter<"Entrada"> | string | null
+  deleted?: Prisma.BoolWithAggregatesFilter<"Entrada"> | boolean
+  deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Entrada"> | Date | string | null
 }
 
 export type EntradaCreateInput = {
@@ -312,6 +336,8 @@ export type EntradaCreateInput = {
   numDocumento?: number | null
   quant: number
   observacoes?: string | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
   fornecedor: Prisma.FornecedorCreateNestedOneWithoutEntradasInput
   produto: Prisma.ProdutoCreateNestedOneWithoutEntradasInput
 }
@@ -324,6 +350,8 @@ export type EntradaUncheckedCreateInput = {
   produtoId: number
   quant: number
   observacoes?: string | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
 }
 
 export type EntradaUpdateInput = {
@@ -331,6 +359,8 @@ export type EntradaUpdateInput = {
   numDocumento?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   quant?: Prisma.IntFieldUpdateOperationsInput | number
   observacoes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   fornecedor?: Prisma.FornecedorUpdateOneRequiredWithoutEntradasNestedInput
   produto?: Prisma.ProdutoUpdateOneRequiredWithoutEntradasNestedInput
 }
@@ -343,6 +373,8 @@ export type EntradaUncheckedUpdateInput = {
   produtoId?: Prisma.IntFieldUpdateOperationsInput | number
   quant?: Prisma.IntFieldUpdateOperationsInput | number
   observacoes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type EntradaCreateManyInput = {
@@ -353,6 +385,8 @@ export type EntradaCreateManyInput = {
   produtoId: number
   quant: number
   observacoes?: string | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
 }
 
 export type EntradaUpdateManyMutationInput = {
@@ -360,6 +394,8 @@ export type EntradaUpdateManyMutationInput = {
   numDocumento?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   quant?: Prisma.IntFieldUpdateOperationsInput | number
   observacoes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type EntradaUncheckedUpdateManyInput = {
@@ -370,6 +406,8 @@ export type EntradaUncheckedUpdateManyInput = {
   produtoId?: Prisma.IntFieldUpdateOperationsInput | number
   quant?: Prisma.IntFieldUpdateOperationsInput | number
   observacoes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type EntradaListRelationFilter = {
@@ -390,6 +428,8 @@ export type EntradaCountOrderByAggregateInput = {
   produtoId?: Prisma.SortOrder
   quant?: Prisma.SortOrder
   observacoes?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
 }
 
 export type EntradaAvgOrderByAggregateInput = {
@@ -408,6 +448,8 @@ export type EntradaMaxOrderByAggregateInput = {
   produtoId?: Prisma.SortOrder
   quant?: Prisma.SortOrder
   observacoes?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
 }
 
 export type EntradaMinOrderByAggregateInput = {
@@ -418,6 +460,8 @@ export type EntradaMinOrderByAggregateInput = {
   produtoId?: Prisma.SortOrder
   quant?: Prisma.SortOrder
   observacoes?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
 }
 
 export type EntradaSumOrderByAggregateInput = {
@@ -533,6 +577,8 @@ export type EntradaCreateWithoutFornecedorInput = {
   numDocumento?: number | null
   quant: number
   observacoes?: string | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
   produto: Prisma.ProdutoCreateNestedOneWithoutEntradasInput
 }
 
@@ -543,6 +589,8 @@ export type EntradaUncheckedCreateWithoutFornecedorInput = {
   produtoId: number
   quant: number
   observacoes?: string | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
 }
 
 export type EntradaCreateOrConnectWithoutFornecedorInput = {
@@ -582,6 +630,8 @@ export type EntradaScalarWhereInput = {
   produtoId?: Prisma.IntFilter<"Entrada"> | number
   quant?: Prisma.IntFilter<"Entrada"> | number
   observacoes?: Prisma.StringNullableFilter<"Entrada"> | string | null
+  deleted?: Prisma.BoolFilter<"Entrada"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"Entrada"> | Date | string | null
 }
 
 export type EntradaCreateWithoutProdutoInput = {
@@ -589,6 +639,8 @@ export type EntradaCreateWithoutProdutoInput = {
   numDocumento?: number | null
   quant: number
   observacoes?: string | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
   fornecedor: Prisma.FornecedorCreateNestedOneWithoutEntradasInput
 }
 
@@ -599,6 +651,8 @@ export type EntradaUncheckedCreateWithoutProdutoInput = {
   fornecedorId: number
   quant: number
   observacoes?: string | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
 }
 
 export type EntradaCreateOrConnectWithoutProdutoInput = {
@@ -634,6 +688,8 @@ export type EntradaCreateManyFornecedorInput = {
   produtoId: number
   quant: number
   observacoes?: string | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
 }
 
 export type EntradaUpdateWithoutFornecedorInput = {
@@ -641,6 +697,8 @@ export type EntradaUpdateWithoutFornecedorInput = {
   numDocumento?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   quant?: Prisma.IntFieldUpdateOperationsInput | number
   observacoes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   produto?: Prisma.ProdutoUpdateOneRequiredWithoutEntradasNestedInput
 }
 
@@ -651,6 +709,8 @@ export type EntradaUncheckedUpdateWithoutFornecedorInput = {
   produtoId?: Prisma.IntFieldUpdateOperationsInput | number
   quant?: Prisma.IntFieldUpdateOperationsInput | number
   observacoes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type EntradaUncheckedUpdateManyWithoutFornecedorInput = {
@@ -660,6 +720,8 @@ export type EntradaUncheckedUpdateManyWithoutFornecedorInput = {
   produtoId?: Prisma.IntFieldUpdateOperationsInput | number
   quant?: Prisma.IntFieldUpdateOperationsInput | number
   observacoes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type EntradaCreateManyProdutoInput = {
@@ -669,6 +731,8 @@ export type EntradaCreateManyProdutoInput = {
   fornecedorId: number
   quant: number
   observacoes?: string | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
 }
 
 export type EntradaUpdateWithoutProdutoInput = {
@@ -676,6 +740,8 @@ export type EntradaUpdateWithoutProdutoInput = {
   numDocumento?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   quant?: Prisma.IntFieldUpdateOperationsInput | number
   observacoes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   fornecedor?: Prisma.FornecedorUpdateOneRequiredWithoutEntradasNestedInput
 }
 
@@ -686,6 +752,8 @@ export type EntradaUncheckedUpdateWithoutProdutoInput = {
   fornecedorId?: Prisma.IntFieldUpdateOperationsInput | number
   quant?: Prisma.IntFieldUpdateOperationsInput | number
   observacoes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type EntradaUncheckedUpdateManyWithoutProdutoInput = {
@@ -695,6 +763,8 @@ export type EntradaUncheckedUpdateManyWithoutProdutoInput = {
   fornecedorId?: Prisma.IntFieldUpdateOperationsInput | number
   quant?: Prisma.IntFieldUpdateOperationsInput | number
   observacoes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 
@@ -707,6 +777,8 @@ export type EntradaSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   produtoId?: boolean
   quant?: boolean
   observacoes?: boolean
+  deleted?: boolean
+  deletedAt?: boolean
   fornecedor?: boolean | Prisma.FornecedorDefaultArgs<ExtArgs>
   produto?: boolean | Prisma.ProdutoDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["entrada"]>
@@ -719,6 +791,8 @@ export type EntradaSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   produtoId?: boolean
   quant?: boolean
   observacoes?: boolean
+  deleted?: boolean
+  deletedAt?: boolean
   fornecedor?: boolean | Prisma.FornecedorDefaultArgs<ExtArgs>
   produto?: boolean | Prisma.ProdutoDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["entrada"]>
@@ -731,6 +805,8 @@ export type EntradaSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   produtoId?: boolean
   quant?: boolean
   observacoes?: boolean
+  deleted?: boolean
+  deletedAt?: boolean
   fornecedor?: boolean | Prisma.FornecedorDefaultArgs<ExtArgs>
   produto?: boolean | Prisma.ProdutoDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["entrada"]>
@@ -743,9 +819,11 @@ export type EntradaSelectScalar = {
   produtoId?: boolean
   quant?: boolean
   observacoes?: boolean
+  deleted?: boolean
+  deletedAt?: boolean
 }
 
-export type EntradaOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "data" | "numDocumento" | "fornecedorId" | "produtoId" | "quant" | "observacoes", ExtArgs["result"]["entrada"]>
+export type EntradaOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "data" | "numDocumento" | "fornecedorId" | "produtoId" | "quant" | "observacoes" | "deleted" | "deletedAt", ExtArgs["result"]["entrada"]>
 export type EntradaInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   fornecedor?: boolean | Prisma.FornecedorDefaultArgs<ExtArgs>
   produto?: boolean | Prisma.ProdutoDefaultArgs<ExtArgs>
@@ -773,6 +851,8 @@ export type $EntradaPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     produtoId: number
     quant: number
     observacoes: string | null
+    deleted: boolean
+    deletedAt: Date | null
   }, ExtArgs["result"]["entrada"]>
   composites: {}
 }
@@ -1205,6 +1285,8 @@ export interface EntradaFieldRefs {
   readonly produtoId: Prisma.FieldRef<"Entrada", 'Int'>
   readonly quant: Prisma.FieldRef<"Entrada", 'Int'>
   readonly observacoes: Prisma.FieldRef<"Entrada", 'String'>
+  readonly deleted: Prisma.FieldRef<"Entrada", 'Boolean'>
+  readonly deletedAt: Prisma.FieldRef<"Entrada", 'DateTime'>
 }
     
 

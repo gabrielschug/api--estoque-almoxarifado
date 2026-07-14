@@ -37,16 +37,22 @@ export type FornecedorSumAggregateOutputType = {
 export type FornecedorMinAggregateOutputType = {
   id: number | null
   razao_social: string | null
+  deleted: boolean | null
+  deletedAt: Date | null
 }
 
 export type FornecedorMaxAggregateOutputType = {
   id: number | null
   razao_social: string | null
+  deleted: boolean | null
+  deletedAt: Date | null
 }
 
 export type FornecedorCountAggregateOutputType = {
   id: number
   razao_social: number
+  deleted: number
+  deletedAt: number
   _all: number
 }
 
@@ -62,16 +68,22 @@ export type FornecedorSumAggregateInputType = {
 export type FornecedorMinAggregateInputType = {
   id?: true
   razao_social?: true
+  deleted?: true
+  deletedAt?: true
 }
 
 export type FornecedorMaxAggregateInputType = {
   id?: true
   razao_social?: true
+  deleted?: true
+  deletedAt?: true
 }
 
 export type FornecedorCountAggregateInputType = {
   id?: true
   razao_social?: true
+  deleted?: true
+  deletedAt?: true
   _all?: true
 }
 
@@ -164,6 +176,8 @@ export type FornecedorGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inter
 export type FornecedorGroupByOutputType = {
   id: number
   razao_social: string
+  deleted: boolean
+  deletedAt: Date | null
   _count: FornecedorCountAggregateOutputType | null
   _avg: FornecedorAvgAggregateOutputType | null
   _sum: FornecedorSumAggregateOutputType | null
@@ -192,12 +206,16 @@ export type FornecedorWhereInput = {
   NOT?: Prisma.FornecedorWhereInput | Prisma.FornecedorWhereInput[]
   id?: Prisma.IntFilter<"Fornecedor"> | number
   razao_social?: Prisma.StringFilter<"Fornecedor"> | string
+  deleted?: Prisma.BoolFilter<"Fornecedor"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"Fornecedor"> | Date | string | null
   entradas?: Prisma.EntradaListRelationFilter
 }
 
 export type FornecedorOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   razao_social?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   entradas?: Prisma.EntradaOrderByRelationAggregateInput
 }
 
@@ -207,12 +225,16 @@ export type FornecedorWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.FornecedorWhereInput[]
   NOT?: Prisma.FornecedorWhereInput | Prisma.FornecedorWhereInput[]
   razao_social?: Prisma.StringFilter<"Fornecedor"> | string
+  deleted?: Prisma.BoolFilter<"Fornecedor"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"Fornecedor"> | Date | string | null
   entradas?: Prisma.EntradaListRelationFilter
 }, "id">
 
 export type FornecedorOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   razao_social?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.FornecedorCountOrderByAggregateInput
   _avg?: Prisma.FornecedorAvgOrderByAggregateInput
   _max?: Prisma.FornecedorMaxOrderByAggregateInput
@@ -226,47 +248,65 @@ export type FornecedorScalarWhereWithAggregatesInput = {
   NOT?: Prisma.FornecedorScalarWhereWithAggregatesInput | Prisma.FornecedorScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"Fornecedor"> | number
   razao_social?: Prisma.StringWithAggregatesFilter<"Fornecedor"> | string
+  deleted?: Prisma.BoolWithAggregatesFilter<"Fornecedor"> | boolean
+  deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Fornecedor"> | Date | string | null
 }
 
 export type FornecedorCreateInput = {
   razao_social: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
   entradas?: Prisma.EntradaCreateNestedManyWithoutFornecedorInput
 }
 
 export type FornecedorUncheckedCreateInput = {
   id?: number
   razao_social: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
   entradas?: Prisma.EntradaUncheckedCreateNestedManyWithoutFornecedorInput
 }
 
 export type FornecedorUpdateInput = {
   razao_social?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   entradas?: Prisma.EntradaUpdateManyWithoutFornecedorNestedInput
 }
 
 export type FornecedorUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   razao_social?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   entradas?: Prisma.EntradaUncheckedUpdateManyWithoutFornecedorNestedInput
 }
 
 export type FornecedorCreateManyInput = {
   id?: number
   razao_social: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
 }
 
 export type FornecedorUpdateManyMutationInput = {
   razao_social?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type FornecedorUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   razao_social?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type FornecedorCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   razao_social?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
 }
 
 export type FornecedorAvgOrderByAggregateInput = {
@@ -276,11 +316,15 @@ export type FornecedorAvgOrderByAggregateInput = {
 export type FornecedorMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   razao_social?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
 }
 
 export type FornecedorMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   razao_social?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
 }
 
 export type FornecedorSumOrderByAggregateInput = {
@@ -294,6 +338,14 @@ export type FornecedorScalarRelationFilter = {
 
 export type StringFieldUpdateOperationsInput = {
   set?: string
+}
+
+export type BoolFieldUpdateOperationsInput = {
+  set?: boolean
+}
+
+export type NullableDateTimeFieldUpdateOperationsInput = {
+  set?: Date | string | null
 }
 
 export type IntFieldUpdateOperationsInput = {
@@ -320,11 +372,15 @@ export type FornecedorUpdateOneRequiredWithoutEntradasNestedInput = {
 
 export type FornecedorCreateWithoutEntradasInput = {
   razao_social: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
 }
 
 export type FornecedorUncheckedCreateWithoutEntradasInput = {
   id?: number
   razao_social: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
 }
 
 export type FornecedorCreateOrConnectWithoutEntradasInput = {
@@ -345,11 +401,15 @@ export type FornecedorUpdateToOneWithWhereWithoutEntradasInput = {
 
 export type FornecedorUpdateWithoutEntradasInput = {
   razao_social?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type FornecedorUncheckedUpdateWithoutEntradasInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   razao_social?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 
@@ -386,6 +446,8 @@ export type FornecedorCountOutputTypeCountEntradasArgs<ExtArgs extends runtime.T
 export type FornecedorSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   razao_social?: boolean
+  deleted?: boolean
+  deletedAt?: boolean
   entradas?: boolean | Prisma.Fornecedor$entradasArgs<ExtArgs>
   _count?: boolean | Prisma.FornecedorCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["fornecedor"]>
@@ -393,19 +455,25 @@ export type FornecedorSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
 export type FornecedorSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   razao_social?: boolean
+  deleted?: boolean
+  deletedAt?: boolean
 }, ExtArgs["result"]["fornecedor"]>
 
 export type FornecedorSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   razao_social?: boolean
+  deleted?: boolean
+  deletedAt?: boolean
 }, ExtArgs["result"]["fornecedor"]>
 
 export type FornecedorSelectScalar = {
   id?: boolean
   razao_social?: boolean
+  deleted?: boolean
+  deletedAt?: boolean
 }
 
-export type FornecedorOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "razao_social", ExtArgs["result"]["fornecedor"]>
+export type FornecedorOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "razao_social" | "deleted" | "deletedAt", ExtArgs["result"]["fornecedor"]>
 export type FornecedorInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   entradas?: boolean | Prisma.Fornecedor$entradasArgs<ExtArgs>
   _count?: boolean | Prisma.FornecedorCountOutputTypeDefaultArgs<ExtArgs>
@@ -421,6 +489,8 @@ export type $FornecedorPayload<ExtArgs extends runtime.Types.Extensions.Internal
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     razao_social: string
+    deleted: boolean
+    deletedAt: Date | null
   }, ExtArgs["result"]["fornecedor"]>
   composites: {}
 }
@@ -847,6 +917,8 @@ export interface Prisma__FornecedorClient<T, Null = never, ExtArgs extends runti
 export interface FornecedorFieldRefs {
   readonly id: Prisma.FieldRef<"Fornecedor", 'Int'>
   readonly razao_social: Prisma.FieldRef<"Fornecedor", 'String'>
+  readonly deleted: Prisma.FieldRef<"Fornecedor", 'Boolean'>
+  readonly deletedAt: Prisma.FieldRef<"Fornecedor", 'DateTime'>
 }
     
 

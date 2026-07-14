@@ -37,16 +37,22 @@ export type SecretariaSumAggregateOutputType = {
 export type SecretariaMinAggregateOutputType = {
   id: number | null
   nome: string | null
+  deleted: boolean | null
+  deletedAt: Date | null
 }
 
 export type SecretariaMaxAggregateOutputType = {
   id: number | null
   nome: string | null
+  deleted: boolean | null
+  deletedAt: Date | null
 }
 
 export type SecretariaCountAggregateOutputType = {
   id: number
   nome: number
+  deleted: number
+  deletedAt: number
   _all: number
 }
 
@@ -62,16 +68,22 @@ export type SecretariaSumAggregateInputType = {
 export type SecretariaMinAggregateInputType = {
   id?: true
   nome?: true
+  deleted?: true
+  deletedAt?: true
 }
 
 export type SecretariaMaxAggregateInputType = {
   id?: true
   nome?: true
+  deleted?: true
+  deletedAt?: true
 }
 
 export type SecretariaCountAggregateInputType = {
   id?: true
   nome?: true
+  deleted?: true
+  deletedAt?: true
   _all?: true
 }
 
@@ -164,6 +176,8 @@ export type SecretariaGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inter
 export type SecretariaGroupByOutputType = {
   id: number
   nome: string
+  deleted: boolean
+  deletedAt: Date | null
   _count: SecretariaCountAggregateOutputType | null
   _avg: SecretariaAvgAggregateOutputType | null
   _sum: SecretariaSumAggregateOutputType | null
@@ -192,12 +206,16 @@ export type SecretariaWhereInput = {
   NOT?: Prisma.SecretariaWhereInput | Prisma.SecretariaWhereInput[]
   id?: Prisma.IntFilter<"Secretaria"> | number
   nome?: Prisma.StringFilter<"Secretaria"> | string
+  deleted?: Prisma.BoolFilter<"Secretaria"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"Secretaria"> | Date | string | null
   saidas?: Prisma.SaidaListRelationFilter
 }
 
 export type SecretariaOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   nome?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   saidas?: Prisma.SaidaOrderByRelationAggregateInput
 }
 
@@ -207,12 +225,16 @@ export type SecretariaWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.SecretariaWhereInput[]
   NOT?: Prisma.SecretariaWhereInput | Prisma.SecretariaWhereInput[]
   nome?: Prisma.StringFilter<"Secretaria"> | string
+  deleted?: Prisma.BoolFilter<"Secretaria"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"Secretaria"> | Date | string | null
   saidas?: Prisma.SaidaListRelationFilter
 }, "id">
 
 export type SecretariaOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   nome?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.SecretariaCountOrderByAggregateInput
   _avg?: Prisma.SecretariaAvgOrderByAggregateInput
   _max?: Prisma.SecretariaMaxOrderByAggregateInput
@@ -226,47 +248,65 @@ export type SecretariaScalarWhereWithAggregatesInput = {
   NOT?: Prisma.SecretariaScalarWhereWithAggregatesInput | Prisma.SecretariaScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"Secretaria"> | number
   nome?: Prisma.StringWithAggregatesFilter<"Secretaria"> | string
+  deleted?: Prisma.BoolWithAggregatesFilter<"Secretaria"> | boolean
+  deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Secretaria"> | Date | string | null
 }
 
 export type SecretariaCreateInput = {
   nome: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
   saidas?: Prisma.SaidaCreateNestedManyWithoutSecretariaInput
 }
 
 export type SecretariaUncheckedCreateInput = {
   id?: number
   nome: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
   saidas?: Prisma.SaidaUncheckedCreateNestedManyWithoutSecretariaInput
 }
 
 export type SecretariaUpdateInput = {
   nome?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   saidas?: Prisma.SaidaUpdateManyWithoutSecretariaNestedInput
 }
 
 export type SecretariaUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   nome?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   saidas?: Prisma.SaidaUncheckedUpdateManyWithoutSecretariaNestedInput
 }
 
 export type SecretariaCreateManyInput = {
   id?: number
   nome: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
 }
 
 export type SecretariaUpdateManyMutationInput = {
   nome?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type SecretariaUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   nome?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type SecretariaCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   nome?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
 }
 
 export type SecretariaAvgOrderByAggregateInput = {
@@ -276,11 +316,15 @@ export type SecretariaAvgOrderByAggregateInput = {
 export type SecretariaMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   nome?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
 }
 
 export type SecretariaMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   nome?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
 }
 
 export type SecretariaSumOrderByAggregateInput = {
@@ -308,11 +352,15 @@ export type SecretariaUpdateOneRequiredWithoutSaidasNestedInput = {
 
 export type SecretariaCreateWithoutSaidasInput = {
   nome: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
 }
 
 export type SecretariaUncheckedCreateWithoutSaidasInput = {
   id?: number
   nome: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
 }
 
 export type SecretariaCreateOrConnectWithoutSaidasInput = {
@@ -333,11 +381,15 @@ export type SecretariaUpdateToOneWithWhereWithoutSaidasInput = {
 
 export type SecretariaUpdateWithoutSaidasInput = {
   nome?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type SecretariaUncheckedUpdateWithoutSaidasInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   nome?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 
@@ -374,6 +426,8 @@ export type SecretariaCountOutputTypeCountSaidasArgs<ExtArgs extends runtime.Typ
 export type SecretariaSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   nome?: boolean
+  deleted?: boolean
+  deletedAt?: boolean
   saidas?: boolean | Prisma.Secretaria$saidasArgs<ExtArgs>
   _count?: boolean | Prisma.SecretariaCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["secretaria"]>
@@ -381,19 +435,25 @@ export type SecretariaSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
 export type SecretariaSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   nome?: boolean
+  deleted?: boolean
+  deletedAt?: boolean
 }, ExtArgs["result"]["secretaria"]>
 
 export type SecretariaSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   nome?: boolean
+  deleted?: boolean
+  deletedAt?: boolean
 }, ExtArgs["result"]["secretaria"]>
 
 export type SecretariaSelectScalar = {
   id?: boolean
   nome?: boolean
+  deleted?: boolean
+  deletedAt?: boolean
 }
 
-export type SecretariaOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "nome", ExtArgs["result"]["secretaria"]>
+export type SecretariaOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "nome" | "deleted" | "deletedAt", ExtArgs["result"]["secretaria"]>
 export type SecretariaInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   saidas?: boolean | Prisma.Secretaria$saidasArgs<ExtArgs>
   _count?: boolean | Prisma.SecretariaCountOutputTypeDefaultArgs<ExtArgs>
@@ -409,6 +469,8 @@ export type $SecretariaPayload<ExtArgs extends runtime.Types.Extensions.Internal
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     nome: string
+    deleted: boolean
+    deletedAt: Date | null
   }, ExtArgs["result"]["secretaria"]>
   composites: {}
 }
@@ -835,6 +897,8 @@ export interface Prisma__SecretariaClient<T, Null = never, ExtArgs extends runti
 export interface SecretariaFieldRefs {
   readonly id: Prisma.FieldRef<"Secretaria", 'Int'>
   readonly nome: Prisma.FieldRef<"Secretaria", 'String'>
+  readonly deleted: Prisma.FieldRef<"Secretaria", 'Boolean'>
+  readonly deletedAt: Prisma.FieldRef<"Secretaria", 'DateTime'>
 }
     
 

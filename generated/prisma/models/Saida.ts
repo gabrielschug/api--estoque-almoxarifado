@@ -47,6 +47,8 @@ export type SaidaMinAggregateOutputType = {
   produtoId: number | null
   quant: number | null
   observacoes: string | null
+  deleted: boolean | null
+  deletedAt: Date | null
 }
 
 export type SaidaMaxAggregateOutputType = {
@@ -56,6 +58,8 @@ export type SaidaMaxAggregateOutputType = {
   produtoId: number | null
   quant: number | null
   observacoes: string | null
+  deleted: boolean | null
+  deletedAt: Date | null
 }
 
 export type SaidaCountAggregateOutputType = {
@@ -65,6 +69,8 @@ export type SaidaCountAggregateOutputType = {
   produtoId: number
   quant: number
   observacoes: number
+  deleted: number
+  deletedAt: number
   _all: number
 }
 
@@ -90,6 +96,8 @@ export type SaidaMinAggregateInputType = {
   produtoId?: true
   quant?: true
   observacoes?: true
+  deleted?: true
+  deletedAt?: true
 }
 
 export type SaidaMaxAggregateInputType = {
@@ -99,6 +107,8 @@ export type SaidaMaxAggregateInputType = {
   produtoId?: true
   quant?: true
   observacoes?: true
+  deleted?: true
+  deletedAt?: true
 }
 
 export type SaidaCountAggregateInputType = {
@@ -108,6 +118,8 @@ export type SaidaCountAggregateInputType = {
   produtoId?: true
   quant?: true
   observacoes?: true
+  deleted?: true
+  deletedAt?: true
   _all?: true
 }
 
@@ -204,6 +216,8 @@ export type SaidaGroupByOutputType = {
   produtoId: number
   quant: number
   observacoes: string | null
+  deleted: boolean
+  deletedAt: Date | null
   _count: SaidaCountAggregateOutputType | null
   _avg: SaidaAvgAggregateOutputType | null
   _sum: SaidaSumAggregateOutputType | null
@@ -236,6 +250,8 @@ export type SaidaWhereInput = {
   produtoId?: Prisma.IntFilter<"Saida"> | number
   quant?: Prisma.IntFilter<"Saida"> | number
   observacoes?: Prisma.StringNullableFilter<"Saida"> | string | null
+  deleted?: Prisma.BoolFilter<"Saida"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"Saida"> | Date | string | null
   secretaria?: Prisma.XOR<Prisma.SecretariaScalarRelationFilter, Prisma.SecretariaWhereInput>
   produto?: Prisma.XOR<Prisma.ProdutoScalarRelationFilter, Prisma.ProdutoWhereInput>
 }
@@ -247,6 +263,8 @@ export type SaidaOrderByWithRelationInput = {
   produtoId?: Prisma.SortOrder
   quant?: Prisma.SortOrder
   observacoes?: Prisma.SortOrderInput | Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   secretaria?: Prisma.SecretariaOrderByWithRelationInput
   produto?: Prisma.ProdutoOrderByWithRelationInput
 }
@@ -261,6 +279,8 @@ export type SaidaWhereUniqueInput = Prisma.AtLeast<{
   produtoId?: Prisma.IntFilter<"Saida"> | number
   quant?: Prisma.IntFilter<"Saida"> | number
   observacoes?: Prisma.StringNullableFilter<"Saida"> | string | null
+  deleted?: Prisma.BoolFilter<"Saida"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"Saida"> | Date | string | null
   secretaria?: Prisma.XOR<Prisma.SecretariaScalarRelationFilter, Prisma.SecretariaWhereInput>
   produto?: Prisma.XOR<Prisma.ProdutoScalarRelationFilter, Prisma.ProdutoWhereInput>
 }, "id">
@@ -272,6 +292,8 @@ export type SaidaOrderByWithAggregationInput = {
   produtoId?: Prisma.SortOrder
   quant?: Prisma.SortOrder
   observacoes?: Prisma.SortOrderInput | Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.SaidaCountOrderByAggregateInput
   _avg?: Prisma.SaidaAvgOrderByAggregateInput
   _max?: Prisma.SaidaMaxOrderByAggregateInput
@@ -289,12 +311,16 @@ export type SaidaScalarWhereWithAggregatesInput = {
   produtoId?: Prisma.IntWithAggregatesFilter<"Saida"> | number
   quant?: Prisma.IntWithAggregatesFilter<"Saida"> | number
   observacoes?: Prisma.StringNullableWithAggregatesFilter<"Saida"> | string | null
+  deleted?: Prisma.BoolWithAggregatesFilter<"Saida"> | boolean
+  deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Saida"> | Date | string | null
 }
 
 export type SaidaCreateInput = {
   data?: Date | string
   quant: number
   observacoes?: string | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
   secretaria: Prisma.SecretariaCreateNestedOneWithoutSaidasInput
   produto: Prisma.ProdutoCreateNestedOneWithoutSaidasInput
 }
@@ -306,12 +332,16 @@ export type SaidaUncheckedCreateInput = {
   produtoId: number
   quant: number
   observacoes?: string | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
 }
 
 export type SaidaUpdateInput = {
   data?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   quant?: Prisma.IntFieldUpdateOperationsInput | number
   observacoes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   secretaria?: Prisma.SecretariaUpdateOneRequiredWithoutSaidasNestedInput
   produto?: Prisma.ProdutoUpdateOneRequiredWithoutSaidasNestedInput
 }
@@ -323,6 +353,8 @@ export type SaidaUncheckedUpdateInput = {
   produtoId?: Prisma.IntFieldUpdateOperationsInput | number
   quant?: Prisma.IntFieldUpdateOperationsInput | number
   observacoes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type SaidaCreateManyInput = {
@@ -332,12 +364,16 @@ export type SaidaCreateManyInput = {
   produtoId: number
   quant: number
   observacoes?: string | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
 }
 
 export type SaidaUpdateManyMutationInput = {
   data?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   quant?: Prisma.IntFieldUpdateOperationsInput | number
   observacoes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type SaidaUncheckedUpdateManyInput = {
@@ -347,6 +383,8 @@ export type SaidaUncheckedUpdateManyInput = {
   produtoId?: Prisma.IntFieldUpdateOperationsInput | number
   quant?: Prisma.IntFieldUpdateOperationsInput | number
   observacoes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type SaidaListRelationFilter = {
@@ -366,6 +404,8 @@ export type SaidaCountOrderByAggregateInput = {
   produtoId?: Prisma.SortOrder
   quant?: Prisma.SortOrder
   observacoes?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
 }
 
 export type SaidaAvgOrderByAggregateInput = {
@@ -382,6 +422,8 @@ export type SaidaMaxOrderByAggregateInput = {
   produtoId?: Prisma.SortOrder
   quant?: Prisma.SortOrder
   observacoes?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
 }
 
 export type SaidaMinOrderByAggregateInput = {
@@ -391,6 +433,8 @@ export type SaidaMinOrderByAggregateInput = {
   produtoId?: Prisma.SortOrder
   quant?: Prisma.SortOrder
   observacoes?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
 }
 
 export type SaidaSumOrderByAggregateInput = {
@@ -488,6 +532,8 @@ export type SaidaCreateWithoutSecretariaInput = {
   data?: Date | string
   quant: number
   observacoes?: string | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
   produto: Prisma.ProdutoCreateNestedOneWithoutSaidasInput
 }
 
@@ -497,6 +543,8 @@ export type SaidaUncheckedCreateWithoutSecretariaInput = {
   produtoId: number
   quant: number
   observacoes?: string | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
 }
 
 export type SaidaCreateOrConnectWithoutSecretariaInput = {
@@ -535,12 +583,16 @@ export type SaidaScalarWhereInput = {
   produtoId?: Prisma.IntFilter<"Saida"> | number
   quant?: Prisma.IntFilter<"Saida"> | number
   observacoes?: Prisma.StringNullableFilter<"Saida"> | string | null
+  deleted?: Prisma.BoolFilter<"Saida"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"Saida"> | Date | string | null
 }
 
 export type SaidaCreateWithoutProdutoInput = {
   data?: Date | string
   quant: number
   observacoes?: string | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
   secretaria: Prisma.SecretariaCreateNestedOneWithoutSaidasInput
 }
 
@@ -550,6 +602,8 @@ export type SaidaUncheckedCreateWithoutProdutoInput = {
   secretariaId: number
   quant: number
   observacoes?: string | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
 }
 
 export type SaidaCreateOrConnectWithoutProdutoInput = {
@@ -584,12 +638,16 @@ export type SaidaCreateManySecretariaInput = {
   produtoId: number
   quant: number
   observacoes?: string | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
 }
 
 export type SaidaUpdateWithoutSecretariaInput = {
   data?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   quant?: Prisma.IntFieldUpdateOperationsInput | number
   observacoes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   produto?: Prisma.ProdutoUpdateOneRequiredWithoutSaidasNestedInput
 }
 
@@ -599,6 +657,8 @@ export type SaidaUncheckedUpdateWithoutSecretariaInput = {
   produtoId?: Prisma.IntFieldUpdateOperationsInput | number
   quant?: Prisma.IntFieldUpdateOperationsInput | number
   observacoes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type SaidaUncheckedUpdateManyWithoutSecretariaInput = {
@@ -607,6 +667,8 @@ export type SaidaUncheckedUpdateManyWithoutSecretariaInput = {
   produtoId?: Prisma.IntFieldUpdateOperationsInput | number
   quant?: Prisma.IntFieldUpdateOperationsInput | number
   observacoes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type SaidaCreateManyProdutoInput = {
@@ -615,12 +677,16 @@ export type SaidaCreateManyProdutoInput = {
   secretariaId: number
   quant: number
   observacoes?: string | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
 }
 
 export type SaidaUpdateWithoutProdutoInput = {
   data?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   quant?: Prisma.IntFieldUpdateOperationsInput | number
   observacoes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   secretaria?: Prisma.SecretariaUpdateOneRequiredWithoutSaidasNestedInput
 }
 
@@ -630,6 +696,8 @@ export type SaidaUncheckedUpdateWithoutProdutoInput = {
   secretariaId?: Prisma.IntFieldUpdateOperationsInput | number
   quant?: Prisma.IntFieldUpdateOperationsInput | number
   observacoes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type SaidaUncheckedUpdateManyWithoutProdutoInput = {
@@ -638,6 +706,8 @@ export type SaidaUncheckedUpdateManyWithoutProdutoInput = {
   secretariaId?: Prisma.IntFieldUpdateOperationsInput | number
   quant?: Prisma.IntFieldUpdateOperationsInput | number
   observacoes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 
@@ -649,6 +719,8 @@ export type SaidaSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   produtoId?: boolean
   quant?: boolean
   observacoes?: boolean
+  deleted?: boolean
+  deletedAt?: boolean
   secretaria?: boolean | Prisma.SecretariaDefaultArgs<ExtArgs>
   produto?: boolean | Prisma.ProdutoDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["saida"]>
@@ -660,6 +732,8 @@ export type SaidaSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   produtoId?: boolean
   quant?: boolean
   observacoes?: boolean
+  deleted?: boolean
+  deletedAt?: boolean
   secretaria?: boolean | Prisma.SecretariaDefaultArgs<ExtArgs>
   produto?: boolean | Prisma.ProdutoDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["saida"]>
@@ -671,6 +745,8 @@ export type SaidaSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   produtoId?: boolean
   quant?: boolean
   observacoes?: boolean
+  deleted?: boolean
+  deletedAt?: boolean
   secretaria?: boolean | Prisma.SecretariaDefaultArgs<ExtArgs>
   produto?: boolean | Prisma.ProdutoDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["saida"]>
@@ -682,9 +758,11 @@ export type SaidaSelectScalar = {
   produtoId?: boolean
   quant?: boolean
   observacoes?: boolean
+  deleted?: boolean
+  deletedAt?: boolean
 }
 
-export type SaidaOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "data" | "secretariaId" | "produtoId" | "quant" | "observacoes", ExtArgs["result"]["saida"]>
+export type SaidaOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "data" | "secretariaId" | "produtoId" | "quant" | "observacoes" | "deleted" | "deletedAt", ExtArgs["result"]["saida"]>
 export type SaidaInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   secretaria?: boolean | Prisma.SecretariaDefaultArgs<ExtArgs>
   produto?: boolean | Prisma.ProdutoDefaultArgs<ExtArgs>
@@ -711,6 +789,8 @@ export type $SaidaPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     produtoId: number
     quant: number
     observacoes: string | null
+    deleted: boolean
+    deletedAt: Date | null
   }, ExtArgs["result"]["saida"]>
   composites: {}
 }
@@ -1142,6 +1222,8 @@ export interface SaidaFieldRefs {
   readonly produtoId: Prisma.FieldRef<"Saida", 'Int'>
   readonly quant: Prisma.FieldRef<"Saida", 'Int'>
   readonly observacoes: Prisma.FieldRef<"Saida", 'String'>
+  readonly deleted: Prisma.FieldRef<"Saida", 'Boolean'>
+  readonly deletedAt: Prisma.FieldRef<"Saida", 'DateTime'>
 }
     
 
