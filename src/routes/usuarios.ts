@@ -18,9 +18,8 @@ router.get("/", VerificaToken, async (req, res) =>{
 
   try {
     const usuarios = await prisma.usuario.findMany({
-      omit: {
-        senha: true
-      }
+      where: { deleted: false },
+      omit: {deleted: true, deletedAt: true, senha: true}
     })
 
     res.status(200).json(usuarios)
@@ -110,7 +109,8 @@ router.get("/:id", VerificaToken, async (req, res) => {
 
     try {
         const usuario = await prisma.usuario.findUnique({
-            where: { id: usuarioId}
+            where: { id: usuarioId, deleted: false},
+            omit: {deleted: true, deletedAt: true, senha: true}
         })
 
         if (!usuario) {

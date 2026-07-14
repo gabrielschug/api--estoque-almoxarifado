@@ -3,6 +3,7 @@ import { Router } from 'express'
 import { z } from 'zod'
 import { VerificaHorario } from "../middlewares/verificaHorario"
 import { VerificaToken } from "../middlewares/verificaToken"
+import { omit } from "zod/mini"
 
 const router = Router()
 
@@ -14,7 +15,10 @@ const fornecedorSchema = z.object({
 
 router.get("/", VerificaToken, async (req, res) => {
     try {
-        const fornecedores = await prisma.fornecedor.findMany()
+        const fornecedores = await prisma.fornecedor.findMany(
+            {where: { deleted: false },
+            omit: {deleted:true, deletedAt: true}}
+        )
         res.status(200).json(fornecedores)
     } catch (error) {
         res.status(500).json({ erro: "Erro no servidor" })
@@ -89,7 +93,8 @@ router.get("/:id", VerificaToken, async (req, res) => {
 
     try {
         const fornecedor = await prisma.fornecedor.findUnique({
-            where: { id: fornecedorId}
+            where: { id: fornecedorId, deleted: false},
+            omit: {deleted:true, deletedAt: true}
         })
 
         if (!fornecedor) {

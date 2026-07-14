@@ -26,7 +26,9 @@ router.get("/", VerificaToken, async (req, res) => {
       include:{
         secretaria: true,
         produto: true
-      }
+      },
+      where: { deleted: false },
+      omit: {deleted: true, deletedAt: true}
     })
     res.status(200).json(saidas)
   } catch (error) {
@@ -217,11 +219,12 @@ router.get("/:id", VerificaToken, async (req, res) => {
 
   try {
     const saida = await prisma.saida.findUnique({
-      where: { id: saidaId },
+      where: { id: saidaId, deleted:false },
       include:{
         secretaria: true,
         produto: true
-      }
+      },
+      omit: {deleted: true, deletedAt: true}
     })
 
     if (!saida) {

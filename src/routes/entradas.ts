@@ -22,8 +22,10 @@ const entradaSchema = z.object({
 router.get("/", VerificaToken, async (req, res) => {
   try {
     const entradas = await prisma.entrada.findMany({
+      where: { deleted: false },
       include:{fornecedor: true, produto: true },
-      orderBy: {id: 'desc'}
+      orderBy: {id: 'desc'},
+      omit: {deleted: true, deletedAt: true}
     })
     res.status(200).json(entradas)
   } catch (error) {
@@ -242,11 +244,12 @@ router.get("/:id", VerificaToken, async (req, res) => {
 
   try {
     const entrada = await prisma.entrada.findUnique({
-      where: { id: entradaId },
+      where: { id: entradaId, deleted: false },
       include:{
         fornecedor: true,
         produto: true
-      }
+      },
+      omit:{deleted: true, deletedAt: true}
     })
 
     if (!entrada) {
