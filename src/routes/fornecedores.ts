@@ -60,7 +60,7 @@ router.put("/:id", VerificaToken, VerificaHorario, async (req, res) => {
 
     try {
         const fornecedor = await prisma.fornecedor.update({
-            where: { id: Number(id) },
+            where: { id: Number(id), deleted: false },
             data: razao_social
         })
         res.status(200).json(fornecedor)

@@ -66,7 +66,7 @@ router.put("/:id", VerificaToken, VerificaHorario, async (req, res) => {
 
     // pesquisa para validar o produto (recebe-se apenas id)
   const dadoProduto = await prisma.produto.findUnique({
-    where: { id: Number(id) }
+    where: { id: Number(id), deleted: false }
   })
 
     try {

@@ -101,14 +101,14 @@ router.put("/:id", VerificaToken, VerificaHorario, async (req, res) => {
 
   // VALIDAÇÃO DE RELACIONAMENTOS
   const dadoSecretaria = await prisma.secretaria.findUnique({
-    where: { id: secretariaId }
+    where: { id: secretariaId, deleted: false}
   })
   if (!dadoSecretaria) {
     res.status(400).json({ erro: "Erro... codigo da Secretaria inválido" })
     return
   }
   const dadoProduto = await prisma.produto.findUnique({
-    where: { id: produtoId }
+    where: { id: produtoId, deleted: false }
   })
   if (!dadoProduto) {
     res.status(400).json({ erro: "Erro... Código do produto inválido" })
@@ -116,7 +116,7 @@ router.put("/:id", VerificaToken, VerificaHorario, async (req, res) => {
   }
 
   const saidaOriginal = await prisma.saida.findUnique({
-    where: {id: Number(id)}
+    where: {id: Number(id), deleted: false}
   }) 
   if (!saidaOriginal) {
     res.status(400).json({ erro: "Saída não encontrada no sistema"})

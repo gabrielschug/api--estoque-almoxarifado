@@ -93,14 +93,14 @@ router.put("/:id", VerificaToken, VerificaHorario, async (req, res) => {
   
   // VALIDAÇÃO DE RELACIONAMENTOS
   const dadoFornecedor = await prisma.fornecedor.findUnique({
-    where: { id: fornecedorId }
+    where: { id: fornecedorId, deleted: false }
   })
   if (!dadoFornecedor) {
     res.status(400).json({ erro: "Erro... codigo do fornecedor inválido" })
     return
   }
   const dadoProduto = await prisma.produto.findUnique({
-    where: { id: produtoId }
+    where: { id: produtoId, deleted: false }
   })
   if (!dadoProduto) {
     res.status(400).json({ erro: "Erro... Código do produto inválido" })
@@ -108,7 +108,7 @@ router.put("/:id", VerificaToken, VerificaHorario, async (req, res) => {
   }
 
   const entradaOriginal = await prisma.entrada.findUnique({
-    where: {id: Number(id)}
+    where: {id: Number(id), deleted: false}
   }) 
   if (!entradaOriginal) {
     res.status(400).json({ erro: "Entrada não encontrada no sistema"})

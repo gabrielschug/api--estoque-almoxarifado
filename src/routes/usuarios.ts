@@ -77,7 +77,7 @@ router.put("/:id", VerificaToken, async (req, res) => {
 
     try {
         const usuario = await prisma.usuario.update({
-            where: { id: Number(id) },
+            where: { id: Number(id), deleted: false },
             data: { nome, email, senha: senhaCriptografada, nivel}
         })
         res.status(200).json(usuario)
