@@ -42,6 +42,10 @@ router.post("/", async (req, res) => {
       res.status(400).json({ erro: mensagemErroLogin})
       return
     }
+    if (usuario.bloqueado) {
+      res.status(400).json({ erro: "Usuário bloqueado. Contate o administrador do sistema."})
+      return
+    }
     // 3. Comparação de Senhas (Bcrypt)
     if (bcrypt.compareSync(senha, usuario.senha)) {
       
@@ -72,6 +76,12 @@ router.post("/", async (req, res) => {
         }
         })
 
+      // Zera Tentativas de Login
+      await prisma.usuario.update({
+        where:{id: usuario.id},
+        data: {bloqueado: false, tentativasFalhas: 0}
+      })
+
       // 5. Acesso Liberado
       res.status(200).json({
         mensagemBoasVindas,
@@ -91,9 +101,24 @@ router.post("/", async (req, res) => {
             connect: { id: usuario.id}}
         }
       })
+      // Incrementa Tentativas de Login
+      if (usuario.tentativasFalhas <2) {
+      const tentativasLogin = await prisma.usuario.update({
+        where:{id: usuario.id},
+        data: {tentativasFalhas: {increment: 1} }
+      })
       res.status(400).json({ erro: mensagemErroLogin})
+
+      } else {
+      const bloqueioUsuario = await prisma.usuario.update({
+        where:{id: usuario.id},
+        data: {bloqueado: true, tentativasFalhas: 0}
+      })
+      res.status(400).json({ erro: "Usuário bloqueado. Contate o administrador do sistema."})
+      }
     }
   } catch (error) {
+    console.log(error)
     res.status(400).json({erro: error})
   }
 })

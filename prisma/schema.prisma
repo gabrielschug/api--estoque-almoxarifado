@@ -80,6 +80,8 @@ model Usuario {
   nivel        Int         @default(1)
   deleted      Boolean     @default(false)
   deletedAt    DateTime?
+  tentativasFalhas  Int    @default(0)
+  bloqueado    Boolean     @default(false)      
   @@map("usuarios")
 }
 
