@@ -4,6 +4,7 @@ import { z } from 'zod'
 import { validaSenha } from "./utils/validaSenha";
 import { geraSenha } from "./utils/geraSenha";
 import { VerificaToken } from "../middlewares/verificaToken";
+import { validaEmail } from "./utils/validaEmail";
 
 const router = Router()
 
@@ -38,6 +39,10 @@ router.post("/", async (req, res) => {
 
   const { nome, email, senha, nivel } = valida.data
 
+  if ( await validaEmail(email)) {
+    res.status(400).json({ erro: "Email de usuário já utilizado." })
+    return
+  }
   const mensagemErros = validaSenha(senha)
 
   if(mensagemErros.length > 0) {
