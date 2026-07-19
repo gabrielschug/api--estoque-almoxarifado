@@ -5,6 +5,8 @@ import { validaSenha } from "./utils/validaSenha";
 import { geraSenha } from "./utils/geraSenha";
 import { VerificaToken } from "../middlewares/verificaToken";
 import { validaEmail } from "./utils/validaEmail";
+import { calculaDiferencaSenha } from "./utils/calculaDiferencaSenha"; 
+import bcrypt from 'bcrypt'
 
 const router = Router()
 
@@ -59,6 +61,54 @@ router.post("/", async (req, res) => {
     res.status(201).json(usuario)
   } catch (error) {
     res.status(400).json({error})
+  }
+})
+
+router.put("/alterar-senha", VerificaToken, async (req, res) => {
+
+  const {senhaAntiga, novaSenha} = req.body
+  if (!senhaAntiga || !novaSenha) {
+    res.status(400).json({erro: "Informe a senha atual e a nova senha."})
+    return
+  }
+
+  const mensagemErros = validaSenha(novaSenha)
+  
+  if(mensagemErros.length > 0) {
+  res.status(400).json({erro:mensagemErros})
+  return
+  }
+
+  try {
+    const usuario = await prisma.usuario.findUnique({
+      where: {id: req.userLogadoId }
+    })
+    
+    if (!usuario) {
+      res.status(404).json({erro:"Usuário não encontrado."})
+    }
+
+    if(!bcrypt.compareSync(senhaAntiga, usuario!.senha)) {
+      res.status(400).json({erro: "Senha atual incorreta."})
+      return
+    }
+
+    if (calculaDiferencaSenha(senhaAntiga, novaSenha) < 2) {
+      res.status(400).json({erro: "A nova senha deve ter no mínimo 2 caracteres diferentes da antiga."})
+      return
+    }
+
+    const hash = geraSenha(novaSenha)
+
+    await prisma.usuario.update({
+      where: {id: req.userLogadoId},
+      data: { senha: hash}
+    })
+
+    res.status(200).json({mensagem: "Senha alterada com sucesso!"})
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({erro: "Erro interno no servidor"})
   }
 })
 
