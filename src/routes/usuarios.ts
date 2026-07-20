@@ -4,6 +4,9 @@ import { z } from 'zod'
 import { validaSenha } from "./utils/validaSenha";
 import { geraSenha } from "./utils/geraSenha";
 import { VerificaToken } from "../middlewares/verificaToken";
+import { validaEmail } from "./utils/validaEmail";
+import { calculaDiferencaSenha } from "./utils/calculaDiferencaSenha"; 
+import bcrypt from 'bcrypt'
 
 const router = Router()
 
@@ -18,9 +21,8 @@ router.get("/", VerificaToken, async (req, res) =>{
 
   try {
     const usuarios = await prisma.usuario.findMany({
-      omit: {
-        senha: true
-      }
+      where: { deleted: false },
+      omit: {deleted: true, deletedAt: true, senha: true}
     })
 
     res.status(200).json(usuarios)
@@ -39,6 +41,10 @@ router.post("/", async (req, res) => {
 
   const { nome, email, senha, nivel } = valida.data
 
+  if ( await validaEmail(email)) {
+    res.status(400).json({ erro: "Email de usuário já utilizado." })
+    return
+  }
   const mensagemErros = validaSenha(senha)
 
   if(mensagemErros.length > 0) {
@@ -55,6 +61,54 @@ router.post("/", async (req, res) => {
     res.status(201).json(usuario)
   } catch (error) {
     res.status(400).json({error})
+  }
+})
+
+router.put("/alterar-senha", VerificaToken, async (req, res) => {
+
+  const {senhaAntiga, novaSenha} = req.body
+  if (!senhaAntiga || !novaSenha) {
+    res.status(400).json({erro: "Informe a senha atual e a nova senha."})
+    return
+  }
+
+  const mensagemErros = validaSenha(novaSenha)
+  
+  if(mensagemErros.length > 0) {
+  res.status(400).json({erro:mensagemErros})
+  return
+  }
+
+  try {
+    const usuario = await prisma.usuario.findUnique({
+      where: {id: req.userLogadoId }
+    })
+    
+    if (!usuario) {
+      res.status(404).json({erro:"Usuário não encontrado."})
+    }
+
+    if(!bcrypt.compareSync(senhaAntiga, usuario!.senha)) {
+      res.status(400).json({erro: "Senha atual incorreta."})
+      return
+    }
+
+    if (calculaDiferencaSenha(senhaAntiga, novaSenha) < 2) {
+      res.status(400).json({erro: "A nova senha deve ter no mínimo 2 caracteres diferentes da antiga."})
+      return
+    }
+
+    const hash = geraSenha(novaSenha)
+
+    await prisma.usuario.update({
+      where: {id: req.userLogadoId},
+      data: { senha: hash}
+    })
+
+    res.status(200).json({mensagem: "Senha alterada com sucesso!"})
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({erro: "Erro interno no servidor"})
   }
 })
 
@@ -78,7 +132,7 @@ router.put("/:id", VerificaToken, async (req, res) => {
 
     try {
         const usuario = await prisma.usuario.update({
-            where: { id: Number(id) },
+            where: { id: Number(id), deleted: false },
             data: { nome, email, senha: senhaCriptografada, nivel}
         })
         res.status(200).json(usuario)
@@ -91,8 +145,9 @@ router.delete("/:id", VerificaToken, async (req, res) => {
   const { id } = req.params
 
   try {
-    const usuario = await prisma.usuario.delete({
-      where: {id: Number(id)}
+    const usuario = await prisma.usuario.update({
+      where: {id: Number(id)},
+      data: {deleted: true, deletedAt: new Date()}
     })
 
     res.status(200).json(usuario)
@@ -109,7 +164,8 @@ router.get("/:id", VerificaToken, async (req, res) => {
 
     try {
         const usuario = await prisma.usuario.findUnique({
-            where: { id: usuarioId}
+            where: { id: usuarioId, deleted: false},
+            omit: {deleted: true, deletedAt: true, senha: true}
         })
 
         if (!usuario) {

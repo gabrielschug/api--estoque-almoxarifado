@@ -21,7 +21,9 @@ const produtoSchema = z.object({
 router.get("/", VerificaToken, VerificaToken, async (req, res) => {
   try {
     const produtos = await prisma.produto.findMany({
-        orderBy: {id: 'asc'}
+        orderBy: {id: 'asc'},
+        where: { deleted: false },
+        omit: {deleted: true, deletedAt: true}
     })
     res.status(200).json(produtos)
   } catch (error) {
@@ -64,7 +66,7 @@ router.put("/:id", VerificaToken, VerificaHorario, async (req, res) => {
 
     // pesquisa para validar o produto (recebe-se apenas id)
   const dadoProduto = await prisma.produto.findUnique({
-    where: { id: Number(id) }
+    where: { id: Number(id), deleted: false }
   })
 
     try {
@@ -84,8 +86,9 @@ router.delete("/:id", VerificaToken, VerificaHorario, async (req, res) => {
 
     // realiza a exclusão da seleção
     try {
-        const produto = await prisma.produto.delete({
-            where: { id: Number(id) }
+        const produto = await prisma.produto.update({
+            where: { id: Number(id) },
+            data: {deleted: true, deletedAt: new Date()}
         })
         res.status(200).json(produto)
     } catch (error) {
@@ -101,7 +104,8 @@ router.get("/:id", VerificaToken, async (req, res) => {
 
     try {
         const produto = await prisma.produto.findUnique({
-            where: { id: produtoId}
+            where: { id: produtoId, deleted: true},
+            omit:{deleted:true, deletedAt:true}
         })
 
         if (!produto) {
