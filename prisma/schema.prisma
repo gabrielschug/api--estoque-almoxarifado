@@ -94,3 +94,11 @@ model Log {
   usuarioId   Int
   @@map("logs")
 }
+
+model TokenListaBloqueio {
+  id          Int         @id @default(autoincrement())
+  token       String      @db.VarChar(500)
+  usuarioId   Int
+  expiresAt   DateTime?   @default(now())
+  @@map("tokens")
+}
