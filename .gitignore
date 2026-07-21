@@ -12,8 +12,4 @@ build/
 .DS_Store
 Thumbs.db
 
-# Prisma
-generated/
-
-
 z--exercicios.md

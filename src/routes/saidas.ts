@@ -26,9 +26,7 @@ router.get("/", VerificaToken, async (req, res) => {
       include:{
         secretaria: true,
         produto: true
-      },
-      where: { deleted: false },
-      omit: {deleted: true, deletedAt: true}
+      }
     })
     res.status(200).json(saidas)
   } catch (error) {
@@ -101,14 +99,14 @@ router.put("/:id", VerificaToken, VerificaHorario, async (req, res) => {
 
   // VALIDAÇÃO DE RELACIONAMENTOS
   const dadoSecretaria = await prisma.secretaria.findUnique({
-    where: { id: secretariaId, deleted: false}
+    where: { id: secretariaId }
   })
   if (!dadoSecretaria) {
     res.status(400).json({ erro: "Erro... codigo da Secretaria inválido" })
     return
   }
   const dadoProduto = await prisma.produto.findUnique({
-    where: { id: produtoId, deleted: false }
+    where: { id: produtoId }
   })
   if (!dadoProduto) {
     res.status(400).json({ erro: "Erro... Código do produto inválido" })
@@ -116,7 +114,7 @@ router.put("/:id", VerificaToken, VerificaHorario, async (req, res) => {
   }
 
   const saidaOriginal = await prisma.saida.findUnique({
-    where: {id: Number(id), deleted: false}
+    where: {id: Number(id)}
   }) 
   if (!saidaOriginal) {
     res.status(400).json({ erro: "Saída não encontrada no sistema"})
@@ -196,9 +194,8 @@ router.delete("/:id", VerificaToken, VerificaHorario, async (req, res) => {
 
   try {
     const [saida, produto] = await prisma.$transaction([
-      prisma.saida.update({
-        where: {id: Number(id)},
-        data: {deleted: true, deletedAt: new Date()}
+      prisma.saida.delete({
+        where: {id: Number(id)}
       }),
       prisma.produto.update({
         where:{id: saidaExcluida.produtoId},
@@ -219,12 +216,11 @@ router.get("/:id", VerificaToken, async (req, res) => {
 
   try {
     const saida = await prisma.saida.findUnique({
-      where: { id: saidaId, deleted:false },
+      where: { id: saidaId },
       include:{
         secretaria: true,
         produto: true
-      },
-      omit: {deleted: true, deletedAt: true}
+      }
     })
 
     if (!saida) {

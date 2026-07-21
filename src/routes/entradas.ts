@@ -22,10 +22,8 @@ const entradaSchema = z.object({
 router.get("/", VerificaToken, async (req, res) => {
   try {
     const entradas = await prisma.entrada.findMany({
-      where: { deleted: false },
       include:{fornecedor: true, produto: true },
-      orderBy: {id: 'desc'},
-      omit: {deleted: true, deletedAt: true}
+      orderBy: {id: 'desc'}
     })
     res.status(200).json(entradas)
   } catch (error) {
@@ -93,14 +91,14 @@ router.put("/:id", VerificaToken, VerificaHorario, async (req, res) => {
   
   // VALIDAÇÃO DE RELACIONAMENTOS
   const dadoFornecedor = await prisma.fornecedor.findUnique({
-    where: { id: fornecedorId, deleted: false }
+    where: { id: fornecedorId }
   })
   if (!dadoFornecedor) {
     res.status(400).json({ erro: "Erro... codigo do fornecedor inválido" })
     return
   }
   const dadoProduto = await prisma.produto.findUnique({
-    where: { id: produtoId, deleted: false }
+    where: { id: produtoId }
   })
   if (!dadoProduto) {
     res.status(400).json({ erro: "Erro... Código do produto inválido" })
@@ -108,7 +106,7 @@ router.put("/:id", VerificaToken, VerificaHorario, async (req, res) => {
   }
 
   const entradaOriginal = await prisma.entrada.findUnique({
-    where: {id: Number(id), deleted: false}
+    where: {id: Number(id)}
   }) 
   if (!entradaOriginal) {
     res.status(400).json({ erro: "Entrada não encontrada no sistema"})
@@ -208,9 +206,8 @@ router.delete("/:id", VerificaToken, VerificaHorario, async (req, res) => {
     }
 
     const [entradaDeletada, produtoAtualizado, logCriado] = await prisma.$transaction([
-      prisma.entrada.update({
-        where: { id: entradaId },
-        data: {deleted: true, deletedAt: new Date()}
+      prisma.entrada.delete({
+        where: { id: entradaId }
       }),
       prisma.produto.update({
         where: { id: entrada.produtoId },
@@ -244,12 +241,11 @@ router.get("/:id", VerificaToken, async (req, res) => {
 
   try {
     const entrada = await prisma.entrada.findUnique({
-      where: { id: entradaId, deleted: false },
+      where: { id: entradaId },
       include:{
         fornecedor: true,
         produto: true
-      },
-      omit:{deleted: true, deletedAt: true}
+      }
     })
 
     if (!entrada) {
