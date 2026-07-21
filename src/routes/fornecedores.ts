@@ -3,7 +3,6 @@ import { Router } from 'express'
 import { z } from 'zod'
 import { VerificaHorario } from "../middlewares/verificaHorario"
 import { VerificaToken } from "../middlewares/verificaToken"
-import { omit } from "zod/mini"
 
 const router = Router()
 
@@ -15,10 +14,7 @@ const fornecedorSchema = z.object({
 
 router.get("/", VerificaToken, async (req, res) => {
     try {
-        const fornecedores = await prisma.fornecedor.findMany(
-            {where: { deleted: false },
-            omit: {deleted:true, deletedAt: true}}
-        )
+        const fornecedores = await prisma.fornecedor.findMany()
         res.status(200).json(fornecedores)
     } catch (error) {
         res.status(500).json({ erro: "Erro no servidor" })
@@ -60,7 +56,7 @@ router.put("/:id", VerificaToken, VerificaHorario, async (req, res) => {
 
     try {
         const fornecedor = await prisma.fornecedor.update({
-            where: { id: Number(id), deleted: false },
+            where: { id: Number(id) },
             data: razao_social
         })
         res.status(200).json(fornecedor)
@@ -75,9 +71,8 @@ router.delete("/:id", VerificaToken, VerificaHorario, async (req, res) => {
 
     // realiza a exclusão da seleção
     try {
-        const fornecedor = await prisma.fornecedor.update({
-            where: { id: Number(id)},
-            data: { deleted: true, deletedAt: new Date() }
+        const fornecedor = await prisma.fornecedor.delete({
+            where: { id: Number(id) }
         })
         res.status(200).json(fornecedor)
     } catch (error) {
@@ -93,8 +88,7 @@ router.get("/:id", VerificaToken, async (req, res) => {
 
     try {
         const fornecedor = await prisma.fornecedor.findUnique({
-            where: { id: fornecedorId, deleted: false},
-            omit: {deleted:true, deletedAt: true}
+            where: { id: fornecedorId}
         })
 
         if (!fornecedor) {
