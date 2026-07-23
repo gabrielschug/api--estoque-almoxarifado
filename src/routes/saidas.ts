@@ -19,6 +19,9 @@ const saidaSchema = z.object({
   quant: z.number().positive({ message: "Quantidade deve ser positiva" }),
   observacoes: z.string().optional()
 })
+const saidaIdSchema = z.object({
+  id: z.coerce.number()
+})
 
 router.get("/", VerificaToken, async (req, res) => {
   try {
@@ -183,19 +186,55 @@ router.put("/:id", VerificaToken, VerificaHorario, async (req, res) => {
 })
 
 router.delete("/:id", VerificaToken, VerificaHorario, async (req, res) => {
-  const {id} =req.params
+  const valida = saidaIdSchema.safeParse(req.params)
+  if(!valida.success) {
+    res.status(400).json({ erro: "Erro... ID da saída deve ser um número válido."})
+    return
+  }
   
-  const saidaExcluida = await prisma.saida.findUnique({
-    where: {id: Number(id)}
-  })
+  const {id} = valida.data
 
-  if (!saidaExcluida) {
-    res.status(404).json({erro: "Registro de Saída não encontrada"})
+  const usuarioDB = await prisma.usuario.findUnique({where:{id:req.userLogadoId}})
+  if(usuarioDB?.nivel!== 3) {
+    res.status(403).json({erro:"Acesso negado. Apenas usuários de nível 3 podem realizar exclusões."})
+    return
+  }
+
+  const agora = new Date();
+  const inicioHoje = new Date(
+    Date.UTC(
+      agora.getUTCFullYear(),agora.getUTCMonth(), agora.getUTCDate(), 
+      0,0,0,0))
+  const fimHoje = new Date(
+    Date.UTC(
+      agora.getUTCFullYear(),agora.getUTCMonth(), agora.getUTCDate(), 
+      23,59,59,999))
+  const contagemDeletadosHoje = await prisma.log.count({
+    where: {
+      usuarioId: req.userLogadoId, 
+      descricao: "Saída deletada", 
+      createdAt: {gte: inicioHoje, lte:fimHoje}}
+  })
+  if (contagemDeletadosHoje > 4) {
+    res.status(429).json({erro: "Transação Bloqueada. É proibido mais de 5 exclusões por dia." })
     return
   }
 
   try {
-    const [saida, produto] = await prisma.$transaction([
+  const saidaExcluida = await prisma.saida.findUnique({
+    where: {id: Number(id), deleted:false}
+  })
+
+  if (!saidaExcluida) {
+    res.status(404).json({erro: "Registro de saída não encontrado."})
+    return
+  }
+
+  if (!req.userLogadoNome || !req.userLogadoId) {
+  return res.status(400).json({ error: "Usuário não autenticado corretamente." });
+  }
+  
+    const [saida, produto, logCriado] = await prisma.$transaction([
       prisma.saida.update({
         where: {id: Number(id)},
         data: {deleted: true, deletedAt: new Date()}
@@ -203,12 +242,20 @@ router.delete("/:id", VerificaToken, VerificaHorario, async (req, res) => {
       prisma.produto.update({
         where:{id: saidaExcluida.produtoId},
         data:{quant:{increment: saidaExcluida.quant}}
+      }),
+      prisma.log.create({
+        data: {
+          descricao: "Saída deletada",
+          complemento: req.userLogadoNome,
+          usuario: { 
+            connect: { id: req.userLogadoId}}
+        }
       })
     ])
 
-    res.status(200).json({saida, produto})
+    res.status(200).json({mensagem: "Transação desfeita com sucesso",saida, produto})
   } catch (error) {
-    res.status(500).json({error})
+    res.status(500).json({erro: "Erro interno ao deletar a transação", detalhes: error })
   }
 })
 
