@@ -68,20 +68,22 @@ model Saida {
 }
 
 model Usuario {
-  id           Int         @id @default(autoincrement())
-  nome         String      @db.VarChar(50)
-  email        String      @db.VarChar(100) @unique()
-  senha        String      @db.VarChar(60)    // 60 = hash gerado bcrypt
-  createdAt    DateTime    @default(now())
-  updatedAt    DateTime    @updatedAt()
-  codRecuperacao String?   @db.VarChar(4)
-  ultimoLogin  DateTime?   
-  log          Log[]
-  nivel        Int         @default(1)
-  deleted      Boolean     @default(false)
-  deletedAt    DateTime?
-  tentativasFalhas  Int    @default(0)
-  bloqueado    Boolean     @default(false)      
+  id                Int         @id @default(autoincrement())
+  nome              String      @db.VarChar(50)
+  email             String      @db.VarChar(100) @unique()
+  senha             String      @db.VarChar(60)
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt()
+  codRecuperacao    String?     @db.VarChar(4)
+  ultimoLogin       DateTime?   
+  log               Log[]
+  nivel             Int         @default(1)
+  deleted           Boolean     @default(false)
+  deletedAt         DateTime?
+  tentativasFalhas  Int         @default(0)
+  bloqueado         Boolean     @default(false)
+  status            String      @default("INATIVO")
+  codAtivacao       String?     @db.Char(4)
   @@map("usuarios")
 }
 

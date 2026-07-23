@@ -7,6 +7,8 @@ import { VerificaToken } from "../middlewares/verificaToken";
 import { validaEmail } from "./utils/validaEmail";
 import { calculaDiferencaSenha } from "./utils/calculaDiferencaSenha"; 
 import bcrypt from 'bcrypt'
+import { geraCodigo } from "./utils/geraCodigo";
+import { enviaEmail__CodigoAtivacao} from "./relatorios"
 
 const router = Router()
 
@@ -14,7 +16,10 @@ const usuarioSchema = z.object({
   nome: z.string().min(10, {message: "Nome deve possuir, no mínimo 10 caracteres"}),
   email: z.email().min(10, {message: "E-mail, deve possuir, no mínimo, 10 caracteres"}),
   senha: z.string(),
-  nivel: z.number().min(1, {message: "Informe um nível de 1 à 3."}).max(3, {message: "Informe um nível de 1 à 3."})
+  nivel: z.number().optional()
+})
+const codigoSchema = z.object({
+  codigo: z.string().length(4, "O código deve ter 4 caracteres.")
 })
 
 router.get("/", VerificaToken, async (req, res) =>{
@@ -41,24 +46,33 @@ router.post("/", async (req, res) => {
 
   const { nome, email, senha, nivel } = valida.data
 
-  if ( await validaEmail(email)) {
-    res.status(400).json({ erro: "Email de usuário já utilizado." })
+  const emailJaUtilizado = await validaEmail(email)
+
+  if (emailJaUtilizado === true) {
+    res.status(400).json({ erro: "Erro... Email de usuário já utilizado." })
     return
   }
+
   const mensagemErros = validaSenha(senha)
 
   if(mensagemErros.length > 0) {
     res.status(400).json({erro:mensagemErros})
     return
   }
-  
+
+  const codAtivacao = geraCodigo()
   const hash = geraSenha(senha)
 
   try {
     const  usuario = await prisma.usuario.create({
-      data: { nome, email, senha: hash, nivel }
+      data: { nome, email, senha: hash, nivel, codAtivacao},
+      select: {nome: true, email: true, ultimoLogin: true, }
     })
-    res.status(201).json(usuario)
+
+    const enviaEmail = await enviaEmail__CodigoAtivacao(codAtivacao, email, nome)
+  
+  res.status(200).json({usuario, msg: "Acesse seu email e obtenha seu codigo de ativação."})
+
   } catch (error) {
     res.status(400).json({error})
   }
@@ -156,6 +170,36 @@ router.delete("/:id", VerificaToken, async (req, res) => {
   }
 })
 
+router.get(["/ativar", "/ativar/:codigo"], async(req, res) => {
+  const valida = codigoSchema.safeParse(req.params)
+
+  if(!valida.success) {
+    res.status(400).json({ erro: "Envie um código válido de 4 dígitos."}, )
+    return
+  }
+  
+  const {codigo} = valida.data
+
+  const dadosUsuario = await prisma.usuario.findFirst({
+    where: { codAtivacao: codigo }
+  })
+
+  if (!dadosUsuario) {
+    res.status(404).json({ erro: "Erro... Link inválido." })
+    return
+  }
+  
+  try {
+    const salvandoNovosDados = await prisma.usuario.update({
+    where: { id: dadosUsuario.id},
+    data: {status: "ATIVO", codAtivacao: null}
+  })
+  res.status(200).json({message: `Seja bem-vindo ${dadosUsuario.nome}! Sua conta foi ativada com sucesso!`})
+  } catch (error) {
+    res.status(400).json({error})
+  }
+})
+
 router.get("/:id", VerificaToken, async (req, res) => {
     // recebe o id passado como parâmetro
     const { id } = req.params
@@ -179,5 +223,6 @@ router.get("/:id", VerificaToken, async (req, res) => {
         res.status(500).json({ erro: "Erro Interno na busca dos dados deste usuário.", detalhes: error })
     }
 })
+
 
 export default router

@@ -2,6 +2,8 @@
 CREATE TABLE "fornecedores" (
     "id" SERIAL NOT NULL,
     "razao_social" VARCHAR(40) NOT NULL,
+    "deleted" BOOLEAN NOT NULL DEFAULT false,
+    "deletedAt" TIMESTAMP(3),
 
     CONSTRAINT "fornecedores_pkey" PRIMARY KEY ("id")
 );
@@ -10,6 +12,8 @@ CREATE TABLE "fornecedores" (
 CREATE TABLE "secretarias" (
     "id" SERIAL NOT NULL,
     "nome" VARCHAR(40) NOT NULL,
+    "deleted" BOOLEAN NOT NULL DEFAULT false,
+    "deletedAt" TIMESTAMP(3),
 
     CONSTRAINT "secretarias_pkey" PRIMARY KEY ("id")
 );
@@ -21,6 +25,8 @@ CREATE TABLE "produtos" (
     "quant" SMALLINT NOT NULL,
     "preco" DECIMAL(9,2) NOT NULL,
     "categoria" VARCHAR(40) NOT NULL,
+    "deleted" BOOLEAN NOT NULL DEFAULT false,
+    "deletedAt" TIMESTAMP(3),
 
     CONSTRAINT "produtos_pkey" PRIMARY KEY ("id")
 );
@@ -34,6 +40,8 @@ CREATE TABLE "entradas" (
     "produtoId" INTEGER NOT NULL,
     "quant" INTEGER NOT NULL,
     "observacoes" VARCHAR(60),
+    "deleted" BOOLEAN NOT NULL DEFAULT false,
+    "deletedAt" TIMESTAMP(3),
 
     CONSTRAINT "entradas_pkey" PRIMARY KEY ("id")
 );
@@ -46,6 +54,8 @@ CREATE TABLE "saidas" (
     "produtoId" INTEGER NOT NULL,
     "quant" INTEGER NOT NULL,
     "observacoes" VARCHAR(60),
+    "deleted" BOOLEAN NOT NULL DEFAULT false,
+    "deletedAt" TIMESTAMP(3),
 
     CONSTRAINT "saidas_pkey" PRIMARY KEY ("id")
 );
@@ -61,6 +71,12 @@ CREATE TABLE "usuarios" (
     "codRecuperacao" VARCHAR(4),
     "ultimoLogin" TIMESTAMP(3),
     "nivel" INTEGER NOT NULL DEFAULT 1,
+    "deleted" BOOLEAN NOT NULL DEFAULT false,
+    "deletedAt" TIMESTAMP(3),
+    "tentativasFalhas" INTEGER NOT NULL DEFAULT 0,
+    "bloqueado" BOOLEAN NOT NULL DEFAULT false,
+    "status" TEXT NOT NULL DEFAULT 'INATIVO',
+    "codAtivacao" CHAR(4),
 
     CONSTRAINT "usuarios_pkey" PRIMARY KEY ("id")
 );
@@ -74,6 +90,16 @@ CREATE TABLE "logs" (
     "usuarioId" INTEGER NOT NULL,
 
     CONSTRAINT "logs_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "tokens" (
+    "id" SERIAL NOT NULL,
+    "token" VARCHAR(500) NOT NULL,
+    "usuarioId" INTEGER NOT NULL,
+    "expiresAt" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "tokens_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
