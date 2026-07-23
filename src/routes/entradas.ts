@@ -18,6 +18,9 @@ const entradaSchema = z.object({
   quant: z.number().positive({ message: "Quantidade deve ser positiva" }),
   observacoes: z.string().optional()
 })
+const entradaIdSchema = z.object({
+  id: z.coerce.number()
+})
 
 router.get("/", VerificaToken, async (req, res) => {
   try {
@@ -178,38 +181,58 @@ router.put("/:id", VerificaToken, VerificaHorario, async (req, res) => {
 })
 
 router.delete("/:id", VerificaToken, VerificaHorario, async (req, res) => {
-  const { id } = req.params
-
-  const entradaId = Number(id)
-
-  const usuarioDB = await prisma.usuario.findUnique({ where: {id: req.userLogadoId }})
-  if (usuarioDB?.nivel !== 3) {
-    res.status(403).json({erro: "Acesso negado. Apenas usuários de nível 3 podem realizar exclusões"})
-  return
+  
+  const valida = entradaIdSchema.safeParse(req.params)
+  if(!valida.success) {
+    res.status(400).json({ erro: "Erro... ID da entrada deve ser um número válido."})
+    return
   }
+  
+  const {id} = valida.data
 
-  if (isNaN(entradaId)) {
-    res.status(400).json({ erro: "ID da entrada deve ser um número válido" })
+  const usuarioDB = await prisma.usuario.findUnique({where:{id:req.userLogadoId}})
+  if(usuarioDB?.nivel!== 3) {
+    res.status(403).json({erro:"Acesso negado. Apenas usuários de nível 3 podem realizar exclusões."})
     return
   }
 
-  if (!req.userLogadoNome || !req.userLogadoId) {
-  return res.status(400).json({ error: "Usuário não autenticado corretamente." });
-}
+  const agora = new Date();
+  const inicioHoje = new Date(
+    Date.UTC(
+      agora.getUTCFullYear(),agora.getUTCMonth(), agora.getUTCDate(), 
+      0,0,0,0))
+  const fimHoje = new Date(
+    Date.UTC(
+      agora.getUTCFullYear(),agora.getUTCMonth(), agora.getUTCDate(), 
+      23,59,59,999))
+  const contagemDeletadosHoje = await prisma.log.count({
+    where: {
+      usuarioId: req.userLogadoId, 
+      descricao: "Entrada deletada", 
+      createdAt: {gte: inicioHoje, lte:fimHoje}}
+  })
+  if (contagemDeletadosHoje > 4) {
+    res.status(429).json({erro: "Transação Bloqueada. É proibido mais de 5 exclusões por dia." })
+    return
+  }
 
   try {
     const entrada = await prisma.entrada.findUnique({
-      where: { id: entradaId }
+      where: { id: Number(id), deleted:false }
     })
 
     if (!entrada) {
-      res.status(404).json({ erro: "Entrada não encontrada" })
+      res.status(404).json({ erro: "Registro de entrada não encontrado." })
       return
     }
 
+  if (!req.userLogadoNome || !req.userLogadoId) {
+  return res.status(400).json({ error: "Usuário não autenticado corretamente." });
+  }
+
     const [entradaDeletada, produtoAtualizado, logCriado] = await prisma.$transaction([
       prisma.entrada.update({
-        where: { id: entradaId },
+        where: { id: Number(id) },
         data: {deleted: true, deletedAt: new Date()}
       }),
       prisma.produto.update({
