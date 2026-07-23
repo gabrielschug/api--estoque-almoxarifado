@@ -46,6 +46,10 @@ router.post("/", async (req, res) => {
       res.status(400).json({ erro: "Usuário bloqueado. Contate o administrador do sistema."})
       return
     }
+    if (usuario.status == "INATIVO") {
+      res.status(400).json({ erro: "Usuário ainda não validado. Acesse o código de validação no seu email e tente"})
+      return
+    }
     // 3. Comparação de Senhas (Bcrypt)
     if (bcrypt.compareSync(senha, usuario.senha)) {
       
@@ -61,9 +65,9 @@ router.post("/", async (req, res) => {
         where: {id: usuario.id},
         data: {ultimoLogin: new Date()}
       })
-      let mensagemBoasVindas = "Bem-vindo. Este é o seu primeiro acesso ao sistema."
+      let mensagemBoasVindas = `Seja bem-vind@ ${usuario.nome}! Este é o seu primeiro acesso ao sistema.`
       if (dataUltimoAcesso) {
-        mensagemBoasVindas = `Bem-vindo. Seu último acesso foi em ${dataUltimoAcesso.toLocaleString('pt-BR')}`
+        mensagemBoasVindas = `Bem-vindo ${usuario.nome} novamente! Seu último acesso foi em ${dataUltimoAcesso.toLocaleString('pt-BR')}`
       }
       
       // Gera Log
