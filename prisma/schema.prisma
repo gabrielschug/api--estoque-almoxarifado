@@ -84,6 +84,7 @@ model Usuario {
   bloqueado         Boolean     @default(false)
   status            String      @default("INATIVO")
   codAtivacao       String?     @db.Char(4)
+  dispositivo       DispositivosUsuario[]
   @@map("usuarios")
 }
 
@@ -103,4 +104,11 @@ model TokenListaBloqueio {
   usuarioId   Int
   expiresAt   DateTime?   @default(now())
   @@map("tokens")
+}
+
+model DispositivosUsuario {
+  id          Int         @id @default(autoincrement())
+  usuario     Usuario     @relation(fields: [usuarioId], references: [id])
+  usuarioId   Int
+  dispositivo String?     @db.VarChar(500)
 }
