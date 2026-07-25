@@ -4,7 +4,7 @@ import bcrypt from 'bcrypt'
 import { z } from 'zod'
 import jwt from 'jsonwebtoken'
 import { geraCodigo } from "./utils/geraCodigo"
-import { enviaEmail__CodigoRecuperacao } from "./relatorios"
+import { enviaEmail__CodigoRecuperacao, enviaEmail__novoDispositivoAcessado } from "./relatorios"
 import { validaSenha } from "./utils/validaSenha"
 import { geraSenha } from "./utils/geraSenha"
 import { connect } from "node:http2"
@@ -22,6 +22,7 @@ const redefinirSchema = z.object({
 
 router.post("/", async (req, res) => {
   const {email, senha} = req.body
+  const dadoDispositivo = req.headers["user-agent"]
 
   // 1. Mensagem Genérica de Erro
   const mensagemErroLogin = "Usuário ou senha incorretos"
@@ -85,6 +86,23 @@ router.post("/", async (req, res) => {
         where:{id: usuario.id},
         data: {bloqueado: false, tentativasFalhas: 0}
       })
+
+      // Busca do dispositivo no banco
+      const dispositivo = await prisma.dispositivosUsuario.findFirst({
+        where: {usuarioId: usuario.id, dispositivo:dadoDispositivo}
+      })
+
+      // Se for novo dispositivo: salva no banco + envia email
+      if (!dispositivo) {
+        // dispositivo novo
+        // salvar registro
+        await prisma.dispositivosUsuario.create({
+          data: {usuarioId:usuario.id, dispositivo: dadoDispositivo}
+        })
+        //disparar email
+        enviaEmail__novoDispositivoAcessado(dadoDispositivo!!,usuario.email,usuario.nome)
+      }
+
 
       // 5. Acesso Liberado
       res.status(200).json({
