@@ -1,6 +1,6 @@
 import express from 'express'
 const app = express()
-const port = 3000
+const port = Number(process.env.PORT) || 3000
 
 import routesFornecedores from "./routes/fornecedores"
 import routesSecretarias from "./routes/secretarias"
@@ -31,6 +31,6 @@ app.get('/', (req, res) => {
   res.send('API: Sistema de Estoque')
 })
 
-app.listen(port, () => {
+app.listen(port, "0.0.0.0", () => {
   console.log(`Servidor Rodando na Porta: ${port}`)
 })
