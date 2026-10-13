@@ -15,7 +15,10 @@ const secretariaSchema = z.object({
 
 router.get("/", VerificaToken, async (req, res) => {
     try {
-        const secretarias = await prisma.secretaria.findMany()
+        const secretarias = await prisma.secretaria.findMany({
+            where: { deleted: false },
+            omit: {deleted: true, deletedAt: true}
+    })
         res.status(200).json(secretarias)
     } catch (error) {
         res.status(500).json({ erro: "Erro no servidor" })
@@ -57,7 +60,7 @@ router.put("/:id", VerificaToken, VerificaHorario, async (req, res) => {
 
     try {
         const secretaria = await prisma.secretaria.update({
-            where: { id: Number(id) },
+            where: { id: Number(id), deleted: false },
             data: { nome }
         })
         res.status(200).json(secretaria)
@@ -72,8 +75,9 @@ router.delete("/:id", VerificaToken, VerificaHorario, async (req, res) => {
 
     // realiza a exclusão da seleção
     try {
-        const secretaria = await prisma.secretaria.delete({
-            where: { id: Number(id) }
+        const secretaria = await prisma.secretaria.update({
+            where: { id: Number(id) },
+            data: {deleted: true, deletedAt: new Date()}
         })
         res.status(200).json(secretaria)
     } catch (error) {
@@ -89,7 +93,8 @@ router.get("/:id", VerificaToken, async (req, res) => {
 
     try {
         const secretaria = await prisma.secretaria.findUnique({
-            where: { id: secretariaId}
+            where: { id: secretariaId, deleted: false},
+            omit: {deleted: true, deletedAt: true}
         })
 
         if (!secretaria) {

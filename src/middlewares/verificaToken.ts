@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from 'jsonwebtoken'
+import { prisma } from "../../lib/prisma"
 
 interface TokenInterface {
   userLogadoId: number
@@ -16,7 +17,7 @@ declare global {
   }
 }
 
-export function VerificaToken(req:Request, res:Response, next:NextFunction) {
+export async function VerificaToken(req:Request, res:Response, next:NextFunction) {
   console.log("Solicitando Token...")
 
   const { authorization } = req.headers
@@ -27,6 +28,17 @@ export function VerificaToken(req:Request, res:Response, next:NextFunction) {
   }
 
   const token = authorization.split(" ")[1]
+
+  const bloqueado = await prisma.tokenListaBloqueio.findFirst({
+    where: {
+      token: token
+    }
+  })
+
+  if (bloqueado) {
+    res.status(401).json({erro: "Token revogado. Faça login novamente."})
+    return
+  }
 
   try {
     const decode = jwt.verify(token, process.env.JWT_SECRET as string)

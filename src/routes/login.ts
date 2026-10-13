@@ -4,7 +4,7 @@ import bcrypt from 'bcrypt'
 import { z } from 'zod'
 import jwt from 'jsonwebtoken'
 import { geraCodigo } from "./utils/geraCodigo"
-import { enviaEmail__CodigoRecuperacao } from "./relatorios"
+import { enviaEmail__CodigoRecuperacao, enviaEmail__novoDispositivoAcessado } from "./relatorios"
 import { validaSenha } from "./utils/validaSenha"
 import { geraSenha } from "./utils/geraSenha"
 import { connect } from "node:http2"
@@ -22,6 +22,7 @@ const redefinirSchema = z.object({
 
 router.post("/", async (req, res) => {
   const {email, senha} = req.body
+  const dadoDispositivo = req.headers["user-agent"]
 
   // 1. Mensagem Genérica de Erro
   const mensagemErroLogin = "Usuário ou senha incorretos"
@@ -42,6 +43,14 @@ router.post("/", async (req, res) => {
       res.status(400).json({ erro: mensagemErroLogin})
       return
     }
+    if (usuario.bloqueado) {
+      res.status(400).json({ erro: "Usuário bloqueado. Contate o administrador do sistema."})
+      return
+    }
+    if (usuario.status == "INATIVO") {
+      res.status(400).json({ erro: "Usuário ainda não validado. Acesse o código de validação no seu email e tente"})
+      return
+    }
     // 3. Comparação de Senhas (Bcrypt)
     if (bcrypt.compareSync(senha, usuario.senha)) {
       
@@ -57,9 +66,9 @@ router.post("/", async (req, res) => {
         where: {id: usuario.id},
         data: {ultimoLogin: new Date()}
       })
-      let mensagemBoasVindas = "Bem-vindo. Este é o seu primeiro acesso ao sistema."
+      let mensagemBoasVindas = `Seja bem-vind@ ${usuario.nome}! Este é o seu primeiro acesso ao sistema.`
       if (dataUltimoAcesso) {
-        mensagemBoasVindas = `Bem-vindo. Seu último acesso foi em ${dataUltimoAcesso.toLocaleString('pt-BR')}`
+        mensagemBoasVindas = `Bem-vindo ${usuario.nome} novamente! Seu último acesso foi em ${dataUltimoAcesso.toLocaleString('pt-BR')}`
       }
       
       // Gera Log
@@ -71,6 +80,29 @@ router.post("/", async (req, res) => {
             connect: { id: usuario.id}}
         }
         })
+
+      // Zera Tentativas de Login
+      await prisma.usuario.update({
+        where:{id: usuario.id},
+        data: {bloqueado: false, tentativasFalhas: 0}
+      })
+
+      // Busca do dispositivo no banco
+      const dispositivo = await prisma.dispositivosUsuario.findFirst({
+        where: {usuarioId: usuario.id, dispositivo:dadoDispositivo}
+      })
+
+      // Se for novo dispositivo: salva no banco + envia email
+      if (!dispositivo) {
+        // dispositivo novo
+        // salvar registro
+        await prisma.dispositivosUsuario.create({
+          data: {usuarioId:usuario.id, dispositivo: dadoDispositivo}
+        })
+        //disparar email
+        enviaEmail__novoDispositivoAcessado(dadoDispositivo!!,usuario.email,usuario.nome)
+      }
+
 
       // 5. Acesso Liberado
       res.status(200).json({
@@ -91,9 +123,24 @@ router.post("/", async (req, res) => {
             connect: { id: usuario.id}}
         }
       })
+      // Incrementa Tentativas de Login
+      if (usuario.tentativasFalhas <2) {
+      const tentativasLogin = await prisma.usuario.update({
+        where:{id: usuario.id},
+        data: {tentativasFalhas: {increment: 1} }
+      })
       res.status(400).json({ erro: mensagemErroLogin})
+
+      } else {
+      const bloqueioUsuario = await prisma.usuario.update({
+        where:{id: usuario.id},
+        data: {bloqueado: true, tentativasFalhas: 0}
+      })
+      res.status(400).json({ erro: "Usuário bloqueado. Contate o administrador do sistema."})
+      }
     }
   } catch (error) {
+    console.log(error)
     res.status(400).json({erro: error})
   }
 })

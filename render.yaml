@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: api-estoque-almoxarifado
+    runtime: node
+    buildCommand: npm ci --include=dev && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_VERSION
+        value: 22
+      - key: DATABASE_URL
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: MAILTRAP_EMAIL
+        sync: false
+      - key: MAILTRAP_SENHA
+        sync: false
